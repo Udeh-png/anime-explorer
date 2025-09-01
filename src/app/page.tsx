@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="h-90 flex items-center">
+    <div className="h-[400px] flex items-end">
       <div className="mx-auto w-fit">
         <p className="text-6xl font-bold text-center text-accent-one leading-15 mb-3">
           Discover Your Next <br /> Favorite Anime
