@@ -27,7 +27,7 @@ const MobileNavbar = ({ pathname }: { pathname: string }) => {
       </div>
 
       <div
-        className={`absolute right-10 px-2 w-[200px] h-50 rounded-xl gap-y-2 flex flex-col justify-between font-semibold opacity-0 transition-opacity shadow-[0_0_100px_8px_rgba(56,189,248,0.1))] bg-background ${
+        className={`fixed right-0 px-2 w-[200px] h-50 rounded-xl gap-y-2 flex flex-col justify-between font-semibold opacity-0 transition-opacity shadow-[0_0_100px_8px_rgba(56,189,248,0.1))] bg-background ${
           clickedMenu
             ? "opacity-100 pointer-events-auto"
             : "pointer-events-none"
@@ -74,7 +74,7 @@ export const Navbar = () => {
   const pathname = usePathname();
   return (
     <nav className="absolute left-1/2 top-10 -translate-x-1/2 h-[clamp(40px,6vw,80px)] w-[80%] rounded-xl flex items-center bg-[rgba(255,255,255,0.1)]">
-      <div className="flex justify-between md:grid md:grid-cols-[4fr_5fr_4fr] w-[80%] mx-auto items-center">
+      <div className="flex justify-between md:grid md:grid-cols-[4fr_5fr_4fr] w-full px-3 md:p-0 md:w-[80%] mx-auto items-center">
         <div
           className="font-extrabold text-[clamp(18px,2vw,24px)]"
           style={{
