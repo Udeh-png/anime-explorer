@@ -6,6 +6,7 @@ import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { IoMenuSharp, IoPersonCircle } from "react-icons/io5";
 import { LuX } from "react-icons/lu";
+import { motion } from "motion/react";
 
 const MobileNavbar = ({ pathname }: { pathname: string }) => {
   const [clickedMenu, setClickedMenu] = useState(false);
@@ -73,8 +74,8 @@ const MobileNavbar = ({ pathname }: { pathname: string }) => {
 export const Navbar = () => {
   const pathname = usePathname();
   return (
-    <nav className="absolute left-1/2 top-10 -translate-x-1/2 h-[clamp(40px,6vw,80px)] w-[80%] rounded-xl flex items-center bg-[rgba(255,255,255,0.1)]">
-      <div className="flex justify-between md:grid md:grid-cols-[4fr_5fr_4fr] w-full px-3 md:p-0 md:w-[80%] mx-auto items-center">
+    <motion.nav className="fixed left-1/2 top-10 -translate-x-1/2 h-[clamp(40px,6vw,80px)] w-[80%] rounded-xl flex items-center bg-[rgb(8,12,22)] z-100">
+      <div className="flex justify-between gap-x-7 md:grid md:grid-cols-[4fr_5fr_4fr] w-full px-3 md:p-0 md:w-[80%] mx-auto items-center">
         <div
           className="font-extrabold text-[clamp(18px,2vw,24px)]"
           style={{
@@ -96,7 +97,7 @@ export const Navbar = () => {
           </Link>
           <Link
             href={"/schedule"}
-            className={`relative ${pathname === "page" ? "nav-link" : ""}`}
+            className={`relative ${pathname === "/schedule" ? "nav-link" : ""}`}
           >
             Schedule
           </Link>
@@ -111,7 +112,7 @@ export const Navbar = () => {
         </div>
 
         <div className="flex justify-end">
-          <div className="flex justify-between gap-x-2 items-center">
+          <div className="flex justify-between gap-x-4 items-center">
             <Link
               href={"/user-profile"}
               className="font-semibold gap-x-1 hidden md:flex"
@@ -128,6 +129,6 @@ export const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
