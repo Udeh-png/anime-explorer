@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { IoMenuSharp, IoPersonCircle } from "react-icons/io5";
 import { LuX } from "react-icons/lu";
@@ -73,62 +73,110 @@ const MobileNavbar = ({ pathname }: { pathname: string }) => {
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const observedRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const [navAnimate, setNavAnimate] = useState({});
+  const [reached, setReached] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].intersectionRatio === 0) {
+          setNavAnimate({
+            width: "100%",
+            top: 0,
+          });
+          setReached(true);
+        } else if (entries[0].intersectionRatio >= 0.5) {
+          setNavAnimate({
+            width: "80%",
+          });
+          setReached(false);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+      }
+    );
+    if (observedRef.current && targetRef.current) {
+      const observed = observedRef.current;
+      const target = targetRef.current;
+      console.log(target.attributes.length);
+
+      observer.observe(observed);
+    }
+  }, []);
   return (
-    <motion.nav className="fixed left-1/2 top-10 -translate-x-1/2 h-[clamp(40px,6vw,80px)] w-[80%] rounded-xl flex items-center bg-[rgb(8,12,22)] z-100">
-      <div className="flex justify-between gap-x-7 md:grid md:grid-cols-[4fr_5fr_4fr] w-full px-3 md:p-0 md:w-[80%] mx-auto items-center">
-        <div
-          className="font-extrabold text-[clamp(18px,2vw,24px)]"
-          style={{
-            background:
-              "linear-gradient(to right, var(--accent-one), var(--accent-two))",
-            backgroundClip: "text",
-            color: "transparent",
-          }}
-        >
-          <Link href={"/"}>Anime Explorer</Link>
-        </div>
+    <nav className="relative">
+      <div className="absolute -top-2 h-10 w-full" ref={observedRef}></div>
+      <motion.div
+        className={`fixed left-1/2 top-10 -translate-x-1/2 h-[clamp(40px,6vw,80px)] w-[80%] flex items-center bg-[rgb(8,12,22)] z-100 ${
+          reached ? "" : "rounded-xl"
+        }`}
+        ref={targetRef}
+        animate={navAnimate}
+        transition={{
+          duration: 0.3,
+        }}
+      >
+        <div className="flex justify-between gap-x-7 md:grid md:grid-cols-[4fr_5fr_4fr] w-full px-3 md:p-0 md:w-[80%] mx-auto items-center">
+          <div
+            className="font-extrabold text-[clamp(18px,2vw,24px)]"
+            style={{
+              background:
+                "linear-gradient(to right, var(--accent-one), var(--accent-two))",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            <Link href={"/"}>Anime Explorer</Link>
+          </div>
 
-        <div className="justify-center gap-15 font-light hidden md:flex">
-          <Link
-            href={"/"}
-            className={`relative ${pathname === "/" ? "nav-link" : ""}`}
-          >
-            Home
-          </Link>
-          <Link
-            href={"/schedule"}
-            className={`relative ${pathname === "/schedule" ? "nav-link" : ""}`}
-          >
-            Schedule
-          </Link>
-          <Link
-            href={"/favorites"}
-            className={`relative ${
-              pathname === "/favorites" ? "nav-link" : ""
-            }`}
-          >
-            Favorites
-          </Link>
-        </div>
-
-        <div className="flex justify-end">
-          <div className="flex justify-between gap-x-4 items-center">
+          <div className="justify-center gap-15 font-light hidden md:flex">
             <Link
-              href={"/user-profile"}
-              className="font-semibold gap-x-1 hidden md:flex"
+              href={"/"}
+              className={`relative ${pathname === "/" ? "nav-link" : ""}`}
             >
-              <IoPersonCircle className="text-2xl" />
-              <span className="hidden min-[1045px]:block">Profile</span>
+              Home
             </Link>
-            <Link href={"/search"} className="font-semibold flex gap-x-1">
-              <BiSearch className="md:text-2xl text-xl" />
-              <span className="hidden min-[1045px]:block">Search</span>
+            <Link
+              href={"/schedule"}
+              className={`relative ${
+                pathname === "/schedule" ? "nav-link" : ""
+              }`}
+            >
+              Schedule
             </Link>
+            <Link
+              href={"/favorites"}
+              className={`relative ${
+                pathname === "/favorites" ? "nav-link" : ""
+              }`}
+            >
+              Favorites
+            </Link>
+          </div>
 
-            <MobileNavbar pathname={pathname} />
+          <div className="flex justify-end">
+            <div className="flex justify-between gap-x-4 items-center">
+              <Link
+                href={"/user-profile"}
+                className="font-semibold gap-x-1 hidden md:flex"
+              >
+                <IoPersonCircle className="text-2xl" />
+                <span className="hidden min-[1045px]:block">Profile</span>
+              </Link>
+              <Link href={"/search"} className="font-semibold flex gap-x-1">
+                <BiSearch className="md:text-2xl text-xl" />
+                <span className="hidden min-[1045px]:block">Search</span>
+              </Link>
+
+              <MobileNavbar pathname={pathname} />
+            </div>
           </div>
         </div>
-      </div>
-    </motion.nav>
+      </motion.div>
+    </nav>
   );
 };

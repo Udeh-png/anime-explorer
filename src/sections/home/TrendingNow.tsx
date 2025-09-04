@@ -6,8 +6,12 @@ export const TrendingNow = () => {
 
   return (
     <div className="px-12 mt-8">
-      <div className="flex py-2 text-accent-one text-4xl gap-2 mb-1.5">
-        <FaFire />
+      <div className="flex py-2 text-4xl gap-2 mb-1.5 text-accent-one">
+        <FaFire
+          style={{
+            backgroundClip: "text",
+          }}
+        />
         <p className="font-semibold">Trending Now</p>
       </div>
       <div className="flex gap-5">
