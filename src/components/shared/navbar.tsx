@@ -1,180 +1,174 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { BiSearch } from "react-icons/bi";
-import { IoMenuSharp, IoPersonCircle } from "react-icons/io5";
-import { LuX } from "react-icons/lu";
-import { motion } from "motion/react";
-
-const MobileNavbar = ({ pathname }: { pathname: string }) => {
-  const [clickedMenu, setClickedMenu] = useState(false);
-  function handleMenuClick() {
-    setClickedMenu(!clickedMenu);
-  }
-  return (
-    <div className="">
-      <div onClick={handleMenuClick} className="ml-2 md:hidden">
-        {clickedMenu ? (
-          <div>
-            <LuX className="text-2xl font-semibold" />
-          </div>
-        ) : (
-          <div>
-            <IoMenuSharp className="text-2xl" />
-          </div>
-        )}
-      </div>
-
-      <div
-        className={`fixed right-0 px-2 w-[200px] h-50 rounded-xl gap-y-2 flex flex-col justify-between font-semibold opacity-0 transition-opacity shadow-[0_0_100px_8px_rgba(56,189,248,0.1))] bg-background ${
-          clickedMenu
-            ? "opacity-100 pointer-events-auto"
-            : "pointer-events-none"
-        }`}
-      >
-        <Link
-          href={"/profile"}
-          className={`relative rounded h-[50%] flex items-center w-full justify-start pl-2 ${
-            pathname === "/profile" ? "nav-link" : ""
-          }`}
-        >
-          <span>Profile</span>
-        </Link>
-        <Link
-          href={"/"}
-          className={`relative rounded h-[50%] flex items-center w-full justify-start pl-2 ${
-            pathname === "/" ? "nav-link" : ""
-          }`}
-        >
-          <span>Home</span>
-        </Link>
-        <Link
-          href={"/schedule"}
-          className={`relative rounded h-[50%] flex items-center w-full justify-start pl-2 ${
-            pathname === "/schedule" ? "nav-link" : ""
-          }`}
-        >
-          <span>Schedule</span>
-        </Link>
-        <Link
-          href={"/favorites"}
-          className={`relative rounded h-[50%] flex items-center w-full justify-start pl-2 ${
-            pathname === "/favorites" ? "nav-link" : ""
-          }`}
-        >
-          <span>Favorite</span>
-        </Link>
-      </div>
-    </div>
-  );
-};
+import { AiOutlineSchedule } from "react-icons/ai";
+import { BiHome } from "react-icons/bi";
+import { CiBookmark } from "react-icons/ci";
+import { FiX } from "react-icons/fi";
+import {
+  IoMenuSharp,
+  IoPersonCircle,
+  IoPersonCircleOutline,
+} from "react-icons/io5";
+import { MdFavoriteBorder } from "react-icons/md";
 
 export const Navbar = () => {
   const pathname = usePathname();
   const observedRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
+  const [search, setSearch] = useState("");
+  const [menuClick, setMenuClick] = useState(false);
   const [navAnimate, setNavAnimate] = useState({});
   const [reached, setReached] = useState(false);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].intersectionRatio === 0) {
-          setNavAnimate({
-            width: "100%",
-            top: 0,
-          });
-          setReached(true);
-        } else if (entries[0].intersectionRatio >= 0.5) {
-          setNavAnimate({
-            width: "80%",
-          });
-          setReached(false);
-        }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-      }
-    );
     if (observedRef.current && targetRef.current) {
       const observed = observedRef.current;
-      const target = targetRef.current;
-      console.log(target.attributes.length);
-
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].intersectionRatio <= 0.4) {
+            setNavAnimate({
+              top: 40,
+            });
+            setReached(true);
+            console.log("sup");
+          } else if (entries[0].intersectionRatio >= 0.5) {
+            setNavAnimate({
+              top: 0,
+            });
+            setReached(false);
+          }
+        },
+        {
+          root: null,
+          rootMargin: "0px",
+          threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        }
+      );
       observer.observe(observed);
     }
   }, []);
   return (
-    <nav className="relative">
-      <div className="absolute -top-2 h-10 w-full" ref={observedRef}></div>
+    <nav className={`relative`}>
+      <div
+        className="absolute h-10 top-0 left-0 w-full"
+        ref={observedRef}
+      ></div>
       <motion.div
-        className={`fixed left-1/2 top-10 -translate-x-1/2 h-[clamp(40px,6vw,80px)] w-[80%] flex items-center bg-[rgb(8,12,22)] z-100 ${
-          reached ? "" : "rounded-xl"
+        className={`absolute flex justify-between max-w-[1200px] px-8 min-[614px]:h-20 h-14 items-center top-0 left-1/2 -translate-x-1/2 w-full z-10 transition-[width] duration-500 ${
+          reached
+            ? "fixed bg-[rgba(8,12,22,0.4)] rounded-full max-[992px]:w-[80%] max-[614px]:w-[95%]"
+            : ""
         }`}
         ref={targetRef}
-        animate={navAnimate}
-        transition={{
-          duration: 0.3,
-        }}
+        animate={{ ...navAnimate }}
+        transition={{ type: "tween" }}
       >
-        <div className="flex justify-between gap-x-7 md:grid md:grid-cols-[4fr_5fr_4fr] w-full px-3 md:p-0 md:w-[80%] mx-auto items-center">
-          <div
-            className="font-extrabold text-[clamp(18px,2vw,24px)]"
-            style={{
-              background:
-                "linear-gradient(to right, var(--accent-one), var(--accent-two))",
-              backgroundClip: "text",
-              color: "transparent",
+        <h1 className="min-[614px]:text-2xl font-bold">Anime Explorer</h1>
+        <ul className="flex gap-8 max-[992px]:hidden">
+          <li className={pathname === "/" ? "relative nav-link" : ""}>Home</li>
+          <li className={pathname === "/schedule" ? "relative nav-link" : ""}>
+            Schedule
+          </li>
+          <li className={pathname === "/favorites" ? "relative nav-link" : ""}>
+            Favorites
+          </li>
+        </ul>
+        <div className="flex justify-center gap-x-10 max-[992px]:hidden">
+          <div>Profile</div>
+          <div>Search</div>
+        </div>
+
+        <div className="text-2xl hidden max-[992px]:block">
+          <IoMenuSharp
+            className="cursor-pointer"
+            onClick={() => {
+              setMenuClick(!menuClick);
             }}
-          >
-            <Link href={"/"}>Anime Explorer</Link>
-          </div>
-
-          <div className="justify-center gap-15 font-light hidden md:flex">
-            <Link
-              href={"/"}
-              className={`relative ${pathname === "/" ? "nav-link" : ""}`}
-            >
-              Home
-            </Link>
-            <Link
-              href={"/schedule"}
-              className={`relative ${
-                pathname === "/schedule" ? "nav-link" : ""
-              }`}
-            >
-              Schedule
-            </Link>
-            <Link
-              href={"/favorites"}
-              className={`relative ${
-                pathname === "/favorites" ? "nav-link" : ""
-              }`}
-            >
-              Favorites
-            </Link>
-          </div>
-
-          <div className="flex justify-end">
-            <div className="flex justify-between gap-x-4 items-center">
-              <Link
-                href={"/user-profile"}
-                className="font-semibold gap-x-1 hidden md:flex"
+          />
+          <AnimatePresence>
+            {menuClick && (
+              <motion.div
+                // key={"menu"}
+                initial={{
+                  scale: 0,
+                }}
+                animate={{
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                }}
+                className={`absolute w-60 py-4 text-lg rounded-2xl right-2 bg-[rgba(8,12,22,0.8)] z-10 `}
               >
-                <IoPersonCircle className="text-2xl" />
-                <span className="hidden min-[1045px]:block">Profile</span>
-              </Link>
-              <Link href={"/search"} className="font-semibold flex gap-x-1">
-                <BiSearch className="md:text-2xl text-xl" />
-                <span className="hidden min-[1045px]:block">Search</span>
-              </Link>
-
-              <MobileNavbar pathname={pathname} />
-            </div>
-          </div>
+                <ul className="flex flex-col px-3 text-[16px] gap-8">
+                  <li className="flex gap-2">
+                    <IoPersonCircleOutline className="text-2xl" />
+                    <Link href={"/profile"}>Profile</Link>
+                  </li>
+                  <li>
+                    <div className="relative overflow-clip w-full rounded-full border">
+                      <input
+                        type="text"
+                        className="pl-3 w-[89%] min-[614px]:h-10 h-6 outline-0"
+                        placeholder="Search"
+                        onChange={(e) => {
+                          setSearch(e.target.value);
+                        }}
+                        value={search}
+                      />
+                      <FiX className="absolute right-2 min-[614px]:top-3 top-1" />
+                    </div>
+                    <div className="h-30 p-2 overflow-auto relative scrollable mt-3">
+                      <ul className="flex flex-col gap-y-3 text-sm">
+                        <li className="grid grid-cols-[1fr_5fr_1fr] grid-rows-[28px] items-center text-sm">
+                          <div className="h-full"></div>
+                          <div className="ml-2">Anima Name</div>
+                          <div className="flex justify-center">
+                            <MdFavoriteBorder className="w-[70%] h-[70%]" />
+                          </div>
+                        </li>
+                      </ul>
+                      {search && (
+                        <Link
+                          href={`/search?${search}`}
+                          className="text-xs text-accent-one"
+                        >
+                          Show all results
+                        </Link>
+                      )}
+                    </div>
+                  </li>
+                  <li
+                    className={`flex justify-between items-center ${
+                      pathname === "/" ? "relative nav-link" : ""
+                    }`}
+                  >
+                    <Link href={"/"}>Home</Link>
+                    <BiHome className="text-2xl" />
+                  </li>
+                  <li
+                    className={`flex justify-between items-center ${
+                      pathname === "/schedule" ? "relative nav-link" : ""
+                    }`}
+                  >
+                    <Link href={"/schedule"}>Schedule</Link>
+                    <AiOutlineSchedule className="text-2xl" />
+                  </li>
+                  <li
+                    className={`flex justify-between items-center ${
+                      pathname === "/favorites" ? "relative nav-link" : ""
+                    }`}
+                  >
+                    <Link href={"/favorites"}>Favorites</Link>
+                    <MdFavoriteBorder className="text-2xl" />
+                  </li>
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </motion.div>
     </nav>

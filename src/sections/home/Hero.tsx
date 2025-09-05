@@ -1,7 +1,11 @@
+"use client";
+
+import { motion } from "motion/react";
+
 export const Hero = () => {
   return (
-    <div className="relative pt-[clamp(100px,8.5vw,122px)] flex items-center">
-      <div
+    <div className="relative pt-[clamp(100px,8.5vw,122px)] flex items-center overflow-x-clip">
+      <motion.div
         className="absolute -top-70 right-130 w-200 h-200 -z-10"
         style={{
           backgroundImage:
@@ -10,7 +14,17 @@ export const Hero = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
-      ></div>
+        animate={{
+          x: [0, 600, null, 0],
+          y: [0, 200, 200, 0],
+        }}
+        transition={{
+          duration: 20,
+          ease: "easeInOut",
+          repeat: Infinity,
+          times: [0, 0.5, 0.5, 1],
+        }}
+      ></motion.div>
       <div className="mx-auto w-fit">
         <p className="text-[clamp(32px,5vw,60px)] font-bold text-center text-accent-one mb-[clamp(7px,0.8vw,10px)]">
           Discover Your Next <br /> Favorite Anime

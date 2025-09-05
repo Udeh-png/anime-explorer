@@ -42,6 +42,24 @@ body {
   box-shadow: 0px 0px 30px 2px rgba(56, 189, 248, 0.2);
 }
 
+.scrollable::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: transparent; /* track color */
+  border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #888; /* scrollbar color */
+  border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #555; /* hover color */
+}
+
 @keyframes nav-link {
   from {
     transform: scaleX(0);

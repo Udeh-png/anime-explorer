@@ -4,7 +4,13 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
-export const Card = ({ favorites }: { favorites?: any[] }) => {
+export const Card = ({
+  title,
+  hasDub,
+}: {
+  title?: string;
+  hasDub?: boolean;
+}) => {
   const [clicked, setClicked] = useState(false);
   return (
     <div className="w-70 h-100 bg-no-repeat bg-center bg-[url(https://picsum.photos/id/1/500/600)] transition-all bg-[120%,120%] hover:bg-[130%,130%]  relative rounded-2xl duration-300 cursor-pointer">
