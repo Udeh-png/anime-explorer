@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "picsum.photos",
       },
+      {
+        hostname: "s4.anilist.co",
+      },
     ],
   },
 };

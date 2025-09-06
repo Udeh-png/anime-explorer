@@ -60,6 +60,10 @@ body {
   background: #555; /* hover color */
 }
 
+.mini-carrousel::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes nav-link {
   from {
     transform: scaleX(0);
