@@ -1,9 +1,8 @@
-// "use client";
+"use client";
 
-// import { useState } from "react";
-// import { motion } from "motion/react";
+import { useState } from "react";
+import { motion } from "motion/react";
 import Image from "next/image";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { MdFavoriteBorder } from "react-icons/md";
 
 export const Card = ({
@@ -17,8 +16,7 @@ export const Card = ({
   bgImage: string;
   color: string;
 }) => {
-  // const [clicked, setClicked] = useState(false);
-  // console.log(bgImage);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <div className="w-[230px] h-95 grid grid-rows-[5fr_1fr]">
@@ -34,7 +32,7 @@ export const Card = ({
             <MdFavoriteBorder className="text-2xl" />
           </div>
         </div>
-        <p className="text-xs">Sub | Dub</p>
+        <p className="text-xs">{hasDub ? "Sub | Dub" : "Sub only"}</p>
       </div>
     </div>
   );

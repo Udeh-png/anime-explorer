@@ -22,6 +22,23 @@ export async function getTenTrending(pageNo?: number): Promise<PageObject> {
             english
             romaji
           }
+          characters {
+            edges {
+              id
+              role
+              node {
+                name {
+                  full
+                }
+              }
+              voiceActors (language: ENGLISH) {
+                name {
+                  first
+                }
+                language
+              } 
+            }
+          }
         }
       }
     }
@@ -44,7 +61,7 @@ export async function getTenTrending(pageNo?: number): Promise<PageObject> {
       return await res.json();
     })
     .then((data) => {
-      // console.log(data)
+      // console.log(data);
       return data.data.Page;
     })
     .catch((e) => {

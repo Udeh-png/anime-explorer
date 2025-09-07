@@ -7,11 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 import { FaFire } from "react-icons/fa";
 import { LuRefreshCw } from "react-icons/lu";
-import {
-  TbChevronCompactLeft,
-  TbChevronCompactRight,
-  TbRefresh,
-} from "react-icons/tb";
+import { TbChevronCompactLeft, TbChevronCompactRight } from "react-icons/tb";
 
 export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
   const [pageObjectState, setPageObjectState] = useState(pageObject);
@@ -100,6 +96,7 @@ export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
                 bgImage={media.coverImage.large}
                 title={media.title.english || media.title.romaji}
                 color={media.coverImage.color}
+                hasDub={Boolean(media.characters.edges[0].voiceActors)}
               />
             );
           })}

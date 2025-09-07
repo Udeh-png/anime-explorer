@@ -32,5 +32,11 @@ export type PageObject = {
       english: string;
       romaji: string;
     };
+
+    characters: {
+      edges: {
+        voiceActors: object[] | null;
+      }[];
+    };
   }[];
 };
