@@ -62,6 +62,7 @@ body {
 
 .mini-carrousel::-webkit-scrollbar {
   display: none;
+  scroll-behavior: smooth;
 }
 
 @keyframes nav-link {
