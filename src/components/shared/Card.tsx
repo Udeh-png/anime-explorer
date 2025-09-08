@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { MdFavoriteBorder } from "react-icons/md";
@@ -17,6 +17,20 @@ export const Card = ({
   color: string;
 }) => {
   const [clicked, setClicked] = useState(false);
+  const slideContainerRef = useRef<HTMLParagraphElement>(null);
+  const slideRef = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (slideContainerRef.current) {
+      const slideContainer = slideContainerRef.current;
+      const hiddenPart =
+        slideContainer.scrollWidth - slideContainer.clientWidth;
+      if (hiddenPart > 0) {
+        slideContainer.style.setProperty("--text-slide-duration", "10s");
+      }
+
+      console.log(hiddenPart, title);
+    }
+  }, []);
 
   return (
     <div className="w-[230px] h-95 grid grid-rows-[5fr_1fr]">
@@ -25,14 +39,24 @@ export const Card = ({
       </div>
       <div className={`flex flex-col justify-center`}>
         <div className="grid grid-cols-[5fr_1fr]">
-          <p className="whitespace-nowrap overflow-hidden text-ellipsis">
-            {title}
+          <p
+            className="relative overflow-hidden text-sm font-semibold"
+            ref={slideContainerRef}
+          >
+            <span
+              className="whitespace-nowrap animated-text absolute left-0 top-0 text-ellipsis"
+              ref={slideRef}
+            >
+              {title}
+            </span>
           </p>
           <div className="flex justify-end">
             <MdFavoriteBorder className="text-2xl" />
           </div>
         </div>
-        <p className="text-xs">{hasDub ? "Sub | Dub" : "Sub only"}</p>
+        <p className="text-[10px] text-white/80">
+          {hasDub ? "Sub | Dub" : "Sub only"}
+        </p>
       </div>
     </div>
   );

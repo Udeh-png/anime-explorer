@@ -59,7 +59,7 @@ export const Navbar = () => {
       <motion.div
         className={`absolute flex justify-between max-w-[1200px] px-8 min-[614px]:h-20 h-14 items-center top-0 left-1/2 -translate-x-1/2 w-full z-10 transition-[width] duration-500 ${
           reached
-            ? "fixed bg-[rgb(8,12,22)] rounded-full max-[992px]:w-[80%] max-[614px]:w-[95%]"
+            ? "fixed bg-[rgba(8,12,22,0.8)] rounded-full max-[992px]:w-[80%] max-[614px]:w-[95%]"
             : ""
         }`}
         ref={targetRef}
@@ -68,17 +68,23 @@ export const Navbar = () => {
       >
         <h1 className="min-[614px]:text-2xl font-bold">Anime Explorer</h1>
         <ul className="flex gap-8 max-[992px]:hidden">
-          <li className={pathname === "/" ? "relative nav-link" : ""}>Home</li>
+          <li className={pathname === "/" ? "relative nav-link" : ""}>
+            <Link href={"/"}>Home</Link>
+          </li>
           <li className={pathname === "/schedule" ? "relative nav-link" : ""}>
-            Schedule
+            <Link href={"/schedule"}>Schedule</Link>
           </li>
           <li className={pathname === "/favorites" ? "relative nav-link" : ""}>
-            Favorites
+            <Link href={"/favorites"}>Favorites</Link>
           </li>
         </ul>
         <div className="flex justify-center gap-x-10 max-[992px]:hidden">
-          <div>Profile</div>
-          <div>Search</div>
+          <div>
+            <Link href={"/profile"}>Profile</Link>
+          </div>
+          <div>
+            <Link href={"/search"}>Search</Link>
+          </div>
         </div>
 
         <div className="text-2xl hidden max-[992px]:block">
