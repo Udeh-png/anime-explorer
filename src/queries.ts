@@ -24,7 +24,6 @@ export async function getTenTrending(pageNo?: number): Promise<PageObject> {
           }
           characters {
             edges {
-              id
               role
               node {
                 name {

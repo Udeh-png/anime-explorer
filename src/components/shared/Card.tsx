@@ -4,17 +4,20 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { MdFavoriteBorder } from "react-icons/md";
+import Link from "next/link";
 
 export const Card = ({
   title,
   hasDub,
   bgImage,
   color,
+  id,
 }: {
   title?: string;
   hasDub?: boolean;
   bgImage: string;
   color: string;
+  id: number;
 }) => {
   const [clicked, setClicked] = useState(false);
   const slideContainerRef = useRef<HTMLParagraphElement>(null);
@@ -27,13 +30,14 @@ export const Card = ({
       if (hiddenPart > 0) {
         slideContainer.style.setProperty("--text-slide-duration", "10s");
       }
-
-      console.log(hiddenPart, title);
     }
   }, []);
 
   return (
-    <div className="w-[230px] h-95 grid grid-rows-[5fr_1fr]">
+    <Link
+      href={`/details/${id}`}
+      className="w-[230px] h-95 grid grid-rows-[5fr_1fr] slide-text-container"
+    >
       <div className="relative">
         <Image src={bgImage} fill alt="" className=""></Image>
       </div>
@@ -58,6 +62,6 @@ export const Card = ({
           {hasDub ? "Sub | Dub" : "Sub only"}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };

@@ -3,7 +3,7 @@
 import { Card } from "@/components/shared/Card";
 import { getTenTrending } from "@/queries";
 import { PageObject } from "@/types";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 import { FaFire } from "react-icons/fa";
 import { LuRefreshCw } from "react-icons/lu";
@@ -15,6 +15,8 @@ export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
   const [mediaArray, setMediaArray] = useState(pageObject.media);
   const [loading, setLoading] = useState(false);
   const { currentPage, hasNextPage } = pageObjectState.pageInfo;
+  const [hasNextPageState, setHasNextPageState] = useState(hasNextPage);
+
   const carrouselRef = useRef<HTMLDivElement>(null);
 
   function scrollRight() {
@@ -37,30 +39,32 @@ export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
     setLoading(false);
     setPageObjectState(newPageObject);
     setMediaArray((prev) => [...prev, ...newPageObject.media]);
-    setTimeout(() => {
-      checkScrollPosition();
-    }, 1);
   }
 
   function checkScrollPosition() {
     if (carrouselRef.current) {
       const carrousel = carrouselRef.current;
       const scrollLeft = carrousel.scrollLeft;
-      if (scrollLeft <= 0) {
-        setAtEnd("left");
-        return;
-      }
-      if (scrollLeft + carrousel.clientWidth === carrousel.scrollWidth) {
-        setAtEnd("right");
-        return;
-      }
-      setAtEnd("");
+      setTimeout(() => {
+        if (scrollLeft <= 0) {
+          setAtEnd("left");
+          return;
+        }
+        if (scrollLeft + carrousel.clientWidth === carrousel.scrollWidth) {
+          setAtEnd("right");
+          return;
+        }
+        setAtEnd("");
+      }, 1);
     }
   }
 
   useEffect(() => {
     checkScrollPosition();
-  }, []);
+    if (currentPage === 5) {
+      setHasNextPageState(false);
+    }
+  }, [pageObjectState]);
 
   return (
     <div className="mt-8 overflow-clip">
@@ -75,7 +79,7 @@ export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
       >
         <div className="flex gap-x-3 w-fit">
           <motion.div
-            className="sticky text-accent-one transition-[background-image] left-16 top-0 flex items-center bottom-0 h-[318px] hover:bg-linear-to-b hover:from-transparent via-black/50 to-transparent text-6xl z-10"
+            className="sticky text-accent-one cursor-pointer left-16 top-0 flex items-center bottom-0 h-[318px] hover:bg-linear-to-b hover:from-transparent via-black/50 to-transparent text-6xl z-10"
             animate={
               atEnd === "left"
                 ? {
@@ -97,24 +101,26 @@ export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
                 title={media.title.english || media.title.romaji}
                 color={media.coverImage.color}
                 hasDub={Boolean(media.characters.edges[0].voiceActors)}
+                id={media.id}
               />
             );
           })}
-          {hasNextPage && (
+          {hasNextPageState && (
             <div className="w-[230px] h-75 flex items-center justify-center text-accent-one flex-col">
-              <div
+              <button
                 className=" cursor-pointer flex flex-col items-center justify-center"
                 onClick={loadMore}
+                disabled={loading}
               >
                 <LuRefreshCw
                   className={`text-6xl ${loading ? "animate-spin" : ""}`}
                 />
-                <p>Load More</p>
-              </div>
+                <span>Load More</span>
+              </button>
             </div>
           )}
           <motion.div
-            className="sticky text-accent-one transition-[background-image] right-19 top-0 flex items-center bottom-0 h-[318px] hover:bg-linear-to-b hover:from-transparent via-black/50 to-transparent text-6xl"
+            className="sticky text-accent-one cursor-pointer right-19 top-0 flex items-center bottom-0 h-[318px] hover:bg-linear-to-b hover:from-transparent via-black/50 to-transparent text-6xl"
             animate={
               atEnd === "right"
                 ? {

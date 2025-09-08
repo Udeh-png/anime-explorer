@@ -66,7 +66,11 @@ export const Navbar = () => {
         animate={{ ...navAnimate }}
         transition={{ type: "tween" }}
       >
-        <h1 className="min-[614px]:text-2xl font-bold">Anime Explorer</h1>
+        <Link href={"/"}>
+          <h1 className="min-[614px]:text-2xl font-bold bg-clip-text bg-linear-to-r from-accent-one to-accent-two text-transparent">
+            Anime Explorer
+          </h1>
+        </Link>
         <ul className="flex gap-8 max-[992px]:hidden">
           <li className={pathname === "/" ? "relative nav-link" : ""}>
             <Link href={"/"}>Home</Link>
