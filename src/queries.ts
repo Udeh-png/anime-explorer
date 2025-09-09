@@ -1,6 +1,32 @@
 import { CardData, PageObject } from "./types";
 
-export async function getTenTrending(pageNo?: number): Promise<PageObject> {
+export type PresetType = "trending" | "classics";
+
+export async function getTenTrending({
+  pageNo = 1,
+  type = "trending",
+  customSort,
+  customFilter,
+}: {
+  pageNo?: number;
+  type?: PresetType;
+  customSort?: string[];
+  customFilter?: {};
+}): Promise<PageObject> {
+  const presets: Record<PresetType, { sort: string[]; filter: object }> = {
+    trending: {
+      sort: ["TRENDING_DESC"],
+      filter: {},
+    },
+
+    classics: {
+      sort: ["SCORE_DESC"],
+      filter: { startDate_lesser: "20100000" },
+    },
+  };
+  const preset: { sort: string[]; filter: object } = presets[type];
+  const sort = customSort || preset.sort;
+  const filter = customFilter || preset.filter;
   const query = `
     query {
       Page (page: ${pageNo || 1},perPage: 10) {
@@ -8,7 +34,9 @@ export async function getTenTrending(pageNo?: number): Promise<PageObject> {
           hasNextPage
           currentPage
         }
-        media (type: ANIME, sort: TRENDING_DESC) {
+        media (type: ANIME, ${Object.entries(filter).map(
+          ([key, value]) => `${key} : ${value}`
+        )}, sort: ${sort.join(",")}) {
           id
           trending
           bannerImage

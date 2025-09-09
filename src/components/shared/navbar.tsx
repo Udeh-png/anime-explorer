@@ -30,7 +30,7 @@ export const Navbar = () => {
         (entries) => {
           if (entries[0].intersectionRatio <= 0.4) {
             setNavAnimate({
-              top: 40,
+              top: 20,
             });
             setReached(true);
             console.log("sup");

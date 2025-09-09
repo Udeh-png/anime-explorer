@@ -1,15 +1,24 @@
 "use client";
 
 import { Card } from "@/components/shared/Card";
-import { getTenTrending } from "@/queries";
+import { getTenTrending, PresetType } from "@/queries";
 import { PageObject } from "@/types";
 import { motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
-import { FaFire } from "react-icons/fa";
 import { LuRefreshCw } from "react-icons/lu";
 import { TbChevronCompactLeft, TbChevronCompactRight } from "react-icons/tb";
 
-export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
+export const MiniCarousel = ({
+  pageObject,
+  type,
+  title,
+  icon,
+}: {
+  pageObject: PageObject;
+  type: PresetType;
+  title: string;
+  icon: React.ReactNode;
+}) => {
   const [pageObjectState, setPageObjectState] = useState(pageObject);
   const [atEnd, setAtEnd] = useState("");
   const [mediaArray, setMediaArray] = useState(pageObject.media);
@@ -35,7 +44,10 @@ export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
 
   async function loadMore() {
     setLoading(true);
-    const newPageObject = await getTenTrending(currentPage + 1);
+    const newPageObject = await getTenTrending({
+      pageNo: currentPage + 1,
+      type: type,
+    });
     setLoading(false);
     setPageObjectState(newPageObject);
     setMediaArray((prev) => [...prev, ...newPageObject.media]);
@@ -67,10 +79,10 @@ export const MiniCarousel = ({ pageObject }: { pageObject: PageObject }) => {
   }, [pageObjectState]);
 
   return (
-    <div className="mt-8 overflow-clip">
+    <div className="overflow-clip">
       <div className="flex py-2 text-4xl gap-2 mb-1.5 text-accent-one ml-8">
-        <FaFire />
-        <p className="font-semibold">Trending Now</p>
+        {icon}
+        <p className="font-semibold">{title}</p>
       </div>
       <div
         className="overflow-auto mini-carrousel scroll-smooth -ml-16 -mr-19 relative"

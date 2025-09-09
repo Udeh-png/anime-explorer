@@ -1,19 +1,38 @@
 import { getTenTrending } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
 import { MiniCarousel } from "@/components/home/MiniCarousel";
-import Image from "next/image";
-import { CiBookmark } from "react-icons/ci";
-import { FaFire } from "react-icons/fa";
-import { IoBookmark } from "react-icons/io5";
 import { PageObject } from "@/types";
+import { FaFire } from "react-icons/fa";
+import { FaDiamond } from "react-icons/fa6";
 
 export default async function Home() {
-  let pageObject: PageObject = await getTenTrending();
+  let trendingPageObject: PageObject = await getTenTrending({
+    type: "trending",
+  });
+  let classicsPageObject: PageObject = await getTenTrending({
+    type: "classics",
+  });
 
   return (
     <div>
       <Hero />
-      <MiniCarousel pageObject={pageObject} />
+      <div className="mt-8">
+        <MiniCarousel
+          pageObject={trendingPageObject}
+          type="trending"
+          title="Trending Now"
+          icon={<FaFire />}
+        />
+      </div>
+
+      <div className="mt-15">
+        <MiniCarousel
+          pageObject={classicsPageObject}
+          type="classics"
+          title="Classics"
+          icon={<FaDiamond />}
+        />
+      </div>
     </div>
   );
 }
