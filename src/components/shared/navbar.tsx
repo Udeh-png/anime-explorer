@@ -6,13 +6,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { BiHome } from "react-icons/bi";
-import { CiBookmark } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
-import {
-  IoMenuSharp,
-  IoPersonCircle,
-  IoPersonCircleOutline,
-} from "react-icons/io5";
+import { IoMenuSharp, IoPersonCircleOutline } from "react-icons/io5";
 import { MdFavoriteBorder } from "react-icons/md";
 
 export const Navbar = () => {

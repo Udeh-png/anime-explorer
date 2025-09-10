@@ -39,7 +39,7 @@ export type Media = {
 
 export type PageObject = {
   pageInfo: {
-    hasNextPage: Boolean;
+    hasNextPage: boolean;
     currentPage: number;
   };
   media: Media[];

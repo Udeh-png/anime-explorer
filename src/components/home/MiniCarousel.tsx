@@ -76,7 +76,7 @@ export const MiniCarousel = ({
     if (currentPage === 5) {
       setHasNextPageState(false);
     }
-  }, [pageObjectState]);
+  }, [currentPage]);
 
   return (
     <div className="overflow-clip">
@@ -85,7 +85,7 @@ export const MiniCarousel = ({
         <p className="font-semibold">{title}</p>
       </div>
       <div
-        className="overflow-auto mini-carrousel scroll-smooth -ml-15 -mr-19 relative"
+        className="overflow-auto mini-carrousel scroll-smooth -ml-15 -mr-15 relative"
         onScrollEnd={checkScrollPosition}
         ref={carrouselRef}
       >

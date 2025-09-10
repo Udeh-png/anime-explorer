@@ -25,7 +25,11 @@ export const Card = ({ media }: { media: Media }) => {
           alt={title}
           src={coverImage.extraLarge}
           className="object-cover transition-transform group-hover:scale-105"
-          sizes="(min-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          quality={30}
+          priority={false}
+          placeholder="blur"
+          blurDataURL={coverImage.medium}
+          sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
         />
         <div className="mask-linear-from-black mask-linear-from-75% mask-linear-to-transparent py-4 absolute bottom-0 left-0 w-full px-3 min-h-25 bg-linear-to-b from-transparent to-black/70 flex flex-col justify-center rounded-b-[inherit]">
           <p className="text-white font-semibold text-[15px] leading-tight mb-2 line-clamp-1 transition-colors">

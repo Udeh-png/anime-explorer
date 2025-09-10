@@ -3,12 +3,15 @@ import { Hero } from "@/sections/home/Hero";
 import { MiniCarousel } from "@/components/home/MiniCarousel";
 import { PageObject } from "@/types";
 import { FaFire } from "react-icons/fa";
+import { FaDiamond } from "react-icons/fa6";
 
 export default async function Home() {
-  let trendingPageObject: PageObject = await getTenTrending({
+  const trendingPageObject: PageObject = await getTenTrending({
     type: "trending",
   });
-  // let classicsPageObject: PageObject = await getTenTrending({});
+  const classicsPageObject: PageObject = await getTenTrending({
+    type: "classics",
+  });
 
   return (
     <div>
@@ -23,12 +26,12 @@ export default async function Home() {
       </div>
 
       <div className="mt-15">
-        {/* <MiniCarousel
+        <MiniCarousel
           pageObject={classicsPageObject}
           type="classics"
           title="Classics"
           icon={<FaDiamond />}
-        /> */}
+        />
       </div>
     </div>
   );

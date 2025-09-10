@@ -1,4 +1,4 @@
-import { CardData, PageObject } from "./types";
+import { PageObject } from "./types";
 
 export type PresetType = "trending" | "classics";
 
