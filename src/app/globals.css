@@ -7,7 +7,6 @@
   --accent-one: rgb(225, 29, 72);
   --accent-two: rgb(56, 189, 248);
   --accent-two-trans: rgba(56, 189, 248, 0.5);
-  --text-slide-duration: "";
 }
 
 @theme inline {
@@ -64,14 +63,6 @@ body {
 .mini-carrousel::-webkit-scrollbar {
   display: none;
   scroll-behavior: smooth;
-}
-
-.slide-text-container:hover .animated-text {
-  animation-name: sliding-text;
-  will-change: contents;
-  animation-duration: var(--text-slide-duration);
-  animation-iteration-count: 1;
-  animation-timing-function: linear;
 }
 
 @keyframes nav-link {

@@ -5,8 +5,8 @@ import { getTenTrending, PresetType } from "@/queries";
 import { PageObject } from "@/types";
 import { motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { LuRefreshCw } from "react-icons/lu";
-import { TbChevronCompactLeft, TbChevronCompactRight } from "react-icons/tb";
 
 export const MiniCarousel = ({
   pageObject,
@@ -85,13 +85,13 @@ export const MiniCarousel = ({
         <p className="font-semibold">{title}</p>
       </div>
       <div
-        className="overflow-auto mini-carrousel scroll-smooth -ml-16 -mr-19 relative"
+        className="overflow-auto mini-carrousel scroll-smooth -ml-15 -mr-19 relative"
         onScrollEnd={checkScrollPosition}
         ref={carrouselRef}
       >
         <div className="flex gap-x-3 w-fit">
           <motion.div
-            className="sticky text-accent-one cursor-pointer left-16 top-0 flex items-center bottom-0 h-[318px] hover:bg-linear-to-b hover:from-transparent via-black/50 to-transparent text-6xl z-10"
+            className="sticky cursor-pointer left-21 p-3 rounded-full top-1/2 h-fit bg-black/50 hover:bg-black/70 transition-colors flex items-center justify-center text-3xl -translate-y-1/2 z-10"
             animate={
               atEnd === "left"
                 ? {
@@ -103,22 +103,13 @@ export const MiniCarousel = ({
             }
             onClick={scrollLeft}
           >
-            <TbChevronCompactLeft />
+            <FaChevronLeft />
           </motion.div>
           {mediaArray.map((media, i) => {
-            return (
-              <Card
-                key={i}
-                bgImage={media.coverImage.large}
-                title={media.title.english || media.title.romaji}
-                color={media.coverImage.color}
-                hasDub={Boolean(media.characters.edges[0].voiceActors)}
-                id={media.id}
-              />
-            );
+            return <Card media={media} key={i} />;
           })}
           {hasNextPageState && (
-            <div className="w-[230px] h-75 flex items-center justify-center text-accent-one flex-col">
+            <div className="w-63 h-95 flex items-center justify-center text-accent-one flex-col">
               <button
                 className=" cursor-pointer flex flex-col items-center justify-center"
                 onClick={loadMore}
@@ -132,7 +123,7 @@ export const MiniCarousel = ({
             </div>
           )}
           <motion.div
-            className="sticky text-accent-one cursor-pointer right-19 top-0 flex items-center bottom-0 h-[318px] hover:bg-linear-to-b hover:from-transparent via-black/50 to-transparent text-6xl"
+            className="sticky cursor-pointer right-21 p-3 rounded-full top-1/2 h-fit bg-black/50 hover:bg-black/70 transition-colors flex items-center justify-center text-3xl -translate-y-1/2"
             animate={
               atEnd === "right"
                 ? {
@@ -144,34 +135,10 @@ export const MiniCarousel = ({
             }
             onClick={scrollRight}
           >
-            <TbChevronCompactRight />
+            <FaChevronRight />
           </motion.div>
         </div>
       </div>
     </div>
   );
 };
-
-{
-  /* <div
-  className="grid grid-rows-[8fr_1fr] gap-y-4 relative rounded-2xl p-4 w-70 h-100"
-  style={{
-    background: `url(${imgUrl})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  }}
->
-  <div className="absolute overflow-clip top-0 left-0 w-full h-full backdrop-blur-sm rounded-2xl"></div>
-  <div className="relative rounded-2xl overflow-clip">
-    <Image src={imgUrl} fill alt="img" className="object-fill" />
-  </div>
-  <div className="z-10">
-    <p>Anime Name</p>
-  </div>
-
-  <div className="text-3xl absolute bg-gradient-to-br p-2 rounded-full right-5 top-5">
-    <IoBookmark className="" />
-  </div>
-</div>; */
-}

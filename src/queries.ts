@@ -4,14 +4,16 @@ export type PresetType = "trending" | "classics";
 
 export async function getTenTrending({
   pageNo = 1,
+  perPage = 10,
   type = "trending",
   customSort,
   customFilter,
 }: {
   pageNo?: number;
+  perPage?: number;
   type?: PresetType;
   customSort?: string[];
-  customFilter?: {};
+  customFilter?: object;
 }): Promise<PageObject> {
   const presets: Record<PresetType, { sort: string[]; filter: object }> = {
     trending: {
@@ -29,17 +31,19 @@ export async function getTenTrending({
   const filter = customFilter || preset.filter;
   const query = `
     query {
-      Page (page: ${pageNo || 1},perPage: 10) {
+      Page (page: ${pageNo || 1},perPage: ${perPage}) {
         pageInfo {
           hasNextPage
           currentPage
         }
         media (type: ANIME, ${Object.entries(filter).map(
-          ([key, value]) => `${key} : ${value}`
+          ([key, value]) => `${key}:${value}`
         )}, sort: ${sort.join(",")}) {
           id
           trending
           bannerImage
+          averageScore
+          seasonYear
           coverImage {
             extraLarge
             large
