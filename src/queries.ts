@@ -1,6 +1,6 @@
 import { PageObject } from "./types";
 
-export type PresetType = "trending" | "classics" | "airing";
+export type PresetType = "trending" | "classics" | "airing" | "top_fifty";
 
 export async function getTenTrending({
   pageNo = 1,
@@ -31,6 +31,11 @@ export async function getTenTrending({
       filter: {
         status_not_in: "[FINISHED, HIATUS, NOT_YET_RELEASED, CANCELLED]",
       },
+    },
+
+    top_fifty: {
+      sort: ["SCORE_DESC"],
+      filter: {},
     },
   };
   const preset: { sort: string[]; filter: object } = presets[type];
@@ -99,7 +104,7 @@ export async function getTenTrending({
       return await res.json();
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       return data.data.Page;
     })
     .catch((e) => {

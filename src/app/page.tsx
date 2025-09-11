@@ -2,8 +2,10 @@ import { getTenTrending } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
 import { MiniCarousel } from "@/components/home/MiniCarousel";
 import { PageObject } from "@/types";
-import { FaFire } from "react-icons/fa";
+import { FaFire, FaMedal } from "react-icons/fa";
 import { FaDiamond } from "react-icons/fa6";
+import { MdEventAvailable } from "react-icons/md";
+import { HiOutlineSparkles } from "react-icons/hi";
 
 export default async function Home() {
   const trendingPageObj: Promise<PageObject> = getTenTrending({
@@ -18,8 +20,21 @@ export default async function Home() {
     type: "classics",
   });
 
-  const [trendingPageObject, airingPageObject, classicsPageObject] =
-    await Promise.all([trendingPageObj, airingPageObj, classicsPageObj]);
+  const topFiftyPageObj: Promise<PageObject> = getTenTrending({
+    type: "top_fifty",
+  });
+
+  const [
+    trendingPageObject,
+    airingPageObject,
+    classicsPageObject,
+    topFiftyPageObject,
+  ] = await Promise.all([
+    trendingPageObj,
+    airingPageObj,
+    classicsPageObj,
+    topFiftyPageObj,
+  ]);
 
   return (
     <div>
@@ -38,7 +53,7 @@ export default async function Home() {
           pageObject={airingPageObject}
           type="airing"
           title="Top Airing"
-          icon={<FaFire />}
+          icon={<MdEventAvailable />}
         />
       </div>
 
@@ -48,6 +63,15 @@ export default async function Home() {
           type="classics"
           title="Classics"
           icon={<FaDiamond />}
+        />
+      </div>
+
+      <div className="mt-15">
+        <MiniCarousel
+          pageObject={topFiftyPageObject}
+          type="top_fifty"
+          title="Top 50"
+          icon={<FaMedal />}
         />
       </div>
     </div>
