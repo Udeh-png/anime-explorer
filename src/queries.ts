@@ -1,6 +1,6 @@
 import { PageObject } from "./types";
 
-export type PresetType = "trending" | "classics";
+export type PresetType = "trending" | "classics" | "airing";
 
 export async function getTenTrending({
   pageNo = 1,
@@ -25,6 +25,13 @@ export async function getTenTrending({
       sort: ["SCORE_DESC"],
       filter: { startDate_lesser: "20100000" },
     },
+
+    airing: {
+      sort: ["SCORE_DESC"],
+      filter: {
+        status_not_in: "[FINISHED, HIATUS, NOT_YET_RELEASED, CANCELLED]",
+      },
+    },
   };
   const preset: { sort: string[]; filter: object } = presets[type];
   const sort = customSort || preset.sort;
@@ -36,7 +43,7 @@ export async function getTenTrending({
           hasNextPage
           currentPage
         }
-        media (type: ANIME, ${Object.entries(filter).map(
+        media (type: ANIME, isAdult: false, ${Object.entries(filter).map(
           ([key, value]) => `${key}:${value}`
         )}, sort: ${sort.join(",")}) {
           id
@@ -92,7 +99,7 @@ export async function getTenTrending({
       return await res.json();
     })
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       return data.data.Page;
     })
     .catch((e) => {

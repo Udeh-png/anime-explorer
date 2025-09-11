@@ -1,9 +1,33 @@
+"use client";
+
 import { Media } from "@/types";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { FaHeart, FaMicrophone, FaRegHeart, FaStar } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import {
+  FaHeart,
+  FaMicrophone,
+  FaRegHeart,
+  FaSpinner,
+  FaStar,
+} from "react-icons/fa";
+
+const Skeleton = () => {
+  return (
+    <div className="w-full h-full bg-card-background">
+      <div className="absolute flex items-center justify-between top-3 left-0 w-full px-2 ">
+        <div className="rounded w-13 h-6 bg-gray-300 animate-pulse "></div>
+        <div className="rounded w-13 h-5 bg-gray-300 animate-pulse "></div>
+      </div>
+      <div className="absolute bottom-0 left-0 w-full h-25 flex flex-col justify-center pl-2 ">
+        <div className="absolute right-2 bottom-[107%] w-12 h-12 bg-gray-300 animate-pulse rounded-full "></div>
+        <div className="w-[90%] bg-gray-300 animate-pulse h-4 mb-2 "></div>
+        <div className="w-[20%] bg-gray-300 animate-pulse h-4 "></div>
+      </div>
+    </div>
+  );
+};
 
 export const Card = ({ media }: { media: Media }) => {
   const {
@@ -15,80 +39,99 @@ export const Card = ({ media }: { media: Media }) => {
     seasonYear: year,
   } = media;
   const title = titleObject.english || titleObject.romaji;
-  const hasDub = Boolean(characters.edges[0].voiceActors);
+  const hasDub = Boolean(characters.edges[0]?.voiceActors);
   const [isFavorite, setIsFavorite] = useState(false);
+  const imageUrls = [
+    coverImage.extraLarge,
+    coverImage.large,
+    coverImage.medium,
+    null,
+  ];
+  const [imageUrlIndex, setImageUrlIndex] = useState(0);
+  const rating = Number(averageScore / 10).toFixed(1);
+
   return (
     <div className="w-63 relative h-95 rounded-2xl overflow-clip group">
-      <Link href={`/details/${id}`} className="w-full h-full">
-        <Image
-          fill
-          alt={title}
-          src={coverImage.extraLarge}
-          className="object-cover transition-transform group-hover:scale-105"
-          quality={30}
-          priority={false}
-          placeholder="blur"
-          blurDataURL={coverImage.medium}
-          sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
-        />
-        <div className="mask-linear-from-black mask-linear-from-75% mask-linear-to-transparent py-4 absolute bottom-0 left-0 w-full px-3 min-h-25 bg-linear-to-b from-transparent to-black/70 flex flex-col justify-center rounded-b-[inherit]">
-          <p className="text-white font-semibold text-[15px] leading-tight mb-2 line-clamp-1 transition-colors">
-            {title}
-          </p>
-          <p className="text-xs text-white/80">{year}</p>
-        </div>
-
-        <div className="absolute top-3 right-2 flex gap-x-[6px] items-center text-yellow-500 bg-black/70 px-[8px] py-[2px] rounded">
-          <FaStar />
-          <p className="text-[10px]">{averageScore / 10}</p>
-        </div>
-
-        {hasDub && (
-          <div className="absolute top-3 left-2 flex gap-x-1 items-center bg-green-500 px-[8px] py-[4px] rounded">
-            <FaMicrophone className="text-[10px]" />
-            <p className="text-[10px]">has dub</p>
+      <div>
+        <Link href={`/details/${id}`} className="w-full h-full">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <FaSpinner className="text-sm animate-spin" />
           </div>
-        )}
-      </Link>
-      <div
-        onClick={() => {
-          setIsFavorite(!isFavorite);
-        }}
-        className="absolute right-2 bottom-21 cursor-pointer"
-      >
-        <AnimatePresence>
-          {isFavorite ? (
-            <motion.section
-              initial={{
-                scale: 0,
-              }}
-              animate={{
-                scale: 1,
-              }}
-              exit={{
-                scale: 0,
-              }}
-              className="rounded-full bg-accent-one p-3 text-[22px]"
-            >
-              <FaHeart />
-            </motion.section>
-          ) : (
-            <motion.div
-              initial={{
-                scale: 0,
-              }}
-              animate={{
-                scale: 1,
-              }}
-              exit={{
-                scale: 0,
-              }}
-              className="rounded-full bg-black/80 p-3 text-[22px]"
-            >
-              <FaRegHeart />
-            </motion.div>
+          <Image
+            fill
+            alt={title}
+            src={imageUrls[imageUrlIndex]!}
+            onError={() => {
+              setImageUrlIndex((prev) => {
+                if (prev < 2) return prev + 1;
+                return 1;
+              });
+            }}
+            className="absolute object-cover transition-transform group-hover:scale-105 image"
+            priority={false}
+            placeholder="blur"
+            blurDataURL={coverImage.medium}
+            sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
+          />
+          <div className="mask-linear-from-black mask-linear-from-75% mask-linear-to-transparent py-4 absolute bottom-0 left-0 w-full px-3 min-h-25 bg-linear-to-b from-transparent to-black/70 flex flex-col justify-center rounded-b-[inherit]">
+            <p className="text-white font-semibold text-[15px] leading-tight mb-2 line-clamp-1 transition-colors">
+              {title}
+            </p>
+            <p className="text-xs text-white/80">{year}</p>
+          </div>
+
+          <div className="absolute top-3 right-2 flex gap-x-[6px] items-center text-yellow-500 bg-black/70 px-[8px] py-[2px] rounded">
+            <FaStar />
+            <p className="text-[10px]">{rating}</p>
+          </div>
+
+          {hasDub && (
+            <div className="absolute top-3 left-2 flex gap-x-1 items-center bg-green-500 px-[8px] py-[4px] rounded">
+              <FaMicrophone className="text-[10px]" />
+              <p className="text-[10px]">has dub</p>
+            </div>
           )}
-        </AnimatePresence>
+        </Link>
+        <div
+          onClick={() => {
+            setIsFavorite(!isFavorite);
+          }}
+          className="absolute right-2 bottom-21 cursor-pointer"
+        >
+          <AnimatePresence>
+            {isFavorite ? (
+              <motion.section
+                initial={{
+                  scale: 0,
+                }}
+                animate={{
+                  scale: 1,
+                }}
+                exit={{
+                  scale: 0,
+                }}
+                className="rounded-full bg-accent-one p-3 text-[22px]"
+              >
+                <FaHeart />
+              </motion.section>
+            ) : (
+              <motion.div
+                initial={{
+                  scale: 0,
+                }}
+                animate={{
+                  scale: 1,
+                }}
+                exit={{
+                  scale: 0,
+                }}
+                className="rounded-full bg-black/80 p-3 text-[22px]"
+              >
+                <FaRegHeart />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

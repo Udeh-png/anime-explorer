@@ -6,12 +6,20 @@ import { FaFire } from "react-icons/fa";
 import { FaDiamond } from "react-icons/fa6";
 
 export default async function Home() {
-  const trendingPageObject: PageObject = await getTenTrending({
+  const trendingPageObj: Promise<PageObject> = getTenTrending({
     type: "trending",
   });
-  const classicsPageObject: PageObject = await getTenTrending({
+
+  const airingPageObj: Promise<PageObject> = getTenTrending({
+    type: "airing",
+  });
+
+  const classicsPageObj: Promise<PageObject> = getTenTrending({
     type: "classics",
   });
+
+  const [trendingPageObject, airingPageObject, classicsPageObject] =
+    await Promise.all([trendingPageObj, airingPageObj, classicsPageObj]);
 
   return (
     <div>
@@ -21,6 +29,15 @@ export default async function Home() {
           pageObject={trendingPageObject}
           type="trending"
           title="Trending Now"
+          icon={<FaFire />}
+        />
+      </div>
+
+      <div className="mt-8">
+        <MiniCarousel
+          pageObject={airingPageObject}
+          type="airing"
+          title="Top Airing"
           icon={<FaFire />}
         />
       </div>
