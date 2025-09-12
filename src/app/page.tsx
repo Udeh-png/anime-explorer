@@ -1,4 +1,4 @@
-import { getTenTrending } from "@/queries";
+import { getPageObject } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
 import { MiniCarousel } from "@/components/home/MiniCarousel";
 import { PageObject } from "@/types";
@@ -8,19 +8,19 @@ import { MdEventAvailable } from "react-icons/md";
 import { HiOutlineSparkles } from "react-icons/hi";
 
 export default async function Home() {
-  const trendingPageObj: Promise<PageObject> = getTenTrending({
+  const trendingPageObj: Promise<PageObject> = getPageObject({
     type: "trending",
   });
 
-  const airingPageObj: Promise<PageObject> = getTenTrending({
+  const airingPageObj: Promise<PageObject> = getPageObject({
     type: "airing",
   });
 
-  const classicsPageObj: Promise<PageObject> = getTenTrending({
+  const classicsPageObj: Promise<PageObject> = getPageObject({
     type: "classics",
   });
 
-  const topFiftyPageObj: Promise<PageObject> = getTenTrending({
+  const topFiftyPageObj: Promise<PageObject> = getPageObject({
     type: "top_fifty",
   });
 

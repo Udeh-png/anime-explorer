@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/shared/Card";
-import { getTenTrending, PresetType } from "@/queries";
+import { getPageObject, PresetType } from "@/queries";
 import { PageObject } from "@/types";
 import { motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
@@ -44,7 +44,7 @@ export const MiniCarousel = ({
 
   async function loadMore() {
     setLoading(true);
-    const newPageObject = await getTenTrending({
+    const newPageObject = await getPageObject({
       pageNo: currentPage + 1,
       type: type,
     });

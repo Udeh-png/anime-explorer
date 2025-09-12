@@ -2,7 +2,7 @@ import { PageObject } from "./types";
 
 export type PresetType = "trending" | "classics" | "airing" | "top_fifty";
 
-export async function getTenTrending({
+export async function getPageObject({
   pageNo = 1,
   perPage = 10,
   type = "trending",
@@ -108,6 +108,6 @@ export async function getTenTrending({
       return data.data.Page;
     })
     .catch((e) => {
-      console.log(e + "this is an error");
+      console.error(e + "this is an error");
     });
 }
