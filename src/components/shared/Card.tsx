@@ -4,7 +4,7 @@ import { Media } from "@/types";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   FaHeart,
   FaMicrophone,
@@ -12,22 +12,6 @@ import {
   FaSpinner,
   FaStar,
 } from "react-icons/fa";
-
-const Skeleton = () => {
-  return (
-    <div className="w-full h-full bg-card-background">
-      <div className="absolute flex items-center justify-between top-3 left-0 w-full px-2 ">
-        <div className="rounded w-13 h-6 bg-gray-300 animate-pulse "></div>
-        <div className="rounded w-13 h-5 bg-gray-300 animate-pulse "></div>
-      </div>
-      <div className="absolute bottom-0 left-0 w-full h-25 flex flex-col justify-center pl-2 ">
-        <div className="absolute right-2 bottom-[107%] w-12 h-12 bg-gray-300 animate-pulse rounded-full "></div>
-        <div className="w-[90%] bg-gray-300 animate-pulse h-4 mb-2 "></div>
-        <div className="w-[20%] bg-gray-300 animate-pulse h-4 "></div>
-      </div>
-    </div>
-  );
-};
 
 export const Card = ({ media }: { media: Media }) => {
   const {
