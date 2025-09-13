@@ -34,7 +34,7 @@ export const Card = ({ media }: { media: Media }) => {
   ];
   const [imageUrlIndex, setImageUrlIndex] = useState(0);
   const rating = Number(averageScore / 10).toFixed(1);
-  //TODO: Add a "Add to WatchList button"
+  //TODO: Add a "Add to WatchList" button
   return (
     <div className="w-45 h-67 md:w-55 md:h-87 lg:w-63 relative lg:h-95 rounded-2xl overflow-clip group">
       <div>

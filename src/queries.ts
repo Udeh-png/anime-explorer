@@ -112,17 +112,19 @@ export async function getPageObject({
     });
 }
 
-async function getMediaWithId(id: number): Promise<Media> {
+export async function getMediaWithId(id: number): Promise<Media> {
   const query = `
-    Media (type: ANIME, id: ${id}) {
-      id
-      title: {
-        romaji
-        english
+    query {
+      Media (id: ${id}) {
+        id
+        title {
+          romaji
+          english
+        }
       }
     }
   `;
-  const url = "",
+  const url = "https://graphql.anilist.co",
     options = {
       method: "POST",
       headers: {
@@ -138,7 +140,8 @@ async function getMediaWithId(id: number): Promise<Media> {
       return await res.json();
     })
     .then((jsonResponse) => {
-      return jsonResponse.data;
+      // console.log(jsonResponse);
+      return jsonResponse.data.Media;
     })
     .catch((e) => {
       console.error(`Error ${e} occurred`);

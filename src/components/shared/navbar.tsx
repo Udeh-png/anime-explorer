@@ -28,7 +28,6 @@ export const Navbar = () => {
               top: 20,
             });
             setReached(true);
-            console.log("sup");
           } else if (entries[0].intersectionRatio >= 0.5) {
             setNavAnimate({
               top: 0,

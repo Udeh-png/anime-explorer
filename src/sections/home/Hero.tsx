@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 
+//Todo: make that moving circle stuff smaller and static on mobile
 export const Hero = () => {
   return (
     <div className="relative pt-[clamp(100px,8.5vw,122px)] flex items-center overflow-x-clip">
