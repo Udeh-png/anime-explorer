@@ -35,6 +35,8 @@ export type Media = {
       voiceActors: { name: string }[] | null;
     }[];
   };
+
+  isFavorite: boolean;
 };
 
 export type PageObject = {

@@ -1,4 +1,4 @@
-import { PageObject } from "./types";
+import { Media, PageObject } from "./types";
 
 export type PresetType = "trending" | "classics" | "airing" | "top_fifty";
 
@@ -103,11 +103,44 @@ export async function getPageObject({
     .then(async (res) => {
       return await res.json();
     })
-    .then((data) => {
-      // console.log(data);
-      return data.data.Page;
+    .then((jsonResponse) => {
+      // console.log(jsonResponse);
+      return jsonResponse.data.Page;
     })
     .catch((e) => {
       console.error(e + "this is an error");
+    });
+}
+
+async function getMediaWithId(id: number): Promise<Media> {
+  const query = `
+    Media (type: ANIME, id: ${id}) {
+      id
+      title: {
+        romaji
+        english
+      }
+    }
+  `;
+  const url = "",
+    options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query: query,
+      }),
+    };
+  return await fetch(url, options)
+    .then(async (res) => {
+      return await res.json();
+    })
+    .then((jsonResponse) => {
+      return jsonResponse.data;
+    })
+    .catch((e) => {
+      console.error(`Error ${e} occurred`);
     });
 }

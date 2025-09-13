@@ -21,10 +21,11 @@ export const Card = ({ media }: { media: Media }) => {
     averageScore,
     characters,
     seasonYear: year,
+    isFavorite,
   } = media;
   const title = titleObject.english || titleObject.romaji;
   const hasDub = Boolean(characters.edges[0]?.voiceActors);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(isFavorite);
   const imageUrls = [
     coverImage.extraLarge,
     coverImage.large,
@@ -33,7 +34,7 @@ export const Card = ({ media }: { media: Media }) => {
   ];
   const [imageUrlIndex, setImageUrlIndex] = useState(0);
   const rating = Number(averageScore / 10).toFixed(1);
-
+  //TODO: Add a "Add to WatchList button"
   return (
     <div className="w-45 h-67 md:w-55 md:h-87 lg:w-63 relative lg:h-95 rounded-2xl overflow-clip group">
       <div>
@@ -80,12 +81,12 @@ export const Card = ({ media }: { media: Media }) => {
         </Link>
         <div
           onClick={() => {
-            setIsFavorite(!isFavorite);
+            setIsFavorited(!isFavorited);
           }}
           className="absolute right-2 bottom-21 cursor-pointer"
         >
           <AnimatePresence>
-            {isFavorite ? (
+            {isFavorited ? (
               <motion.section
                 initial={{
                   scale: 0,
