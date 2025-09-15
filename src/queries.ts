@@ -117,9 +117,36 @@ export async function getMediaWithId(id: number): Promise<Media> {
     query {
       Media (id: ${id}) {
         id
+        trending
+        bannerImage
+        averageScore
+        seasonYear
+        description
+        coverImage {
+          extraLarge
+          large
+          medium
+          color
+        }
         title {
-          romaji
           english
+          romaji
+        }
+        characters {
+          edges {
+            role
+            node {
+              name {
+                full
+              }
+            }
+            voiceActors (language: ENGLISH) {
+              name {
+                first
+              }
+              language
+            } 
+          }
         }
       }
     }

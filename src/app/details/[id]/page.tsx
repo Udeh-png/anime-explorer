@@ -1,4 +1,5 @@
 import { getMediaWithId } from "@/queries";
+import { DetailsHero } from "@/sections/details/Hero";
 
 export default async function ({
   params,
@@ -7,7 +8,10 @@ export default async function ({
 }) {
   const id = parseInt((await params).id);
   const media = await getMediaWithId(id);
-  console.log(media);
 
-  return <div></div>;
+  return (
+    <div className="">
+      <DetailsHero media={media} />
+    </div>
+  );
 }

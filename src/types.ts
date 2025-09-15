@@ -19,6 +19,7 @@ export type Media = {
   bannerImage: string;
   averageScore: number;
   seasonYear: number;
+  description: string;
   coverImage: {
     extraLarge: string;
     large: string;

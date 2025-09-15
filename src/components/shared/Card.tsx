@@ -26,17 +26,10 @@ export const Card = ({ media }: { media: Media }) => {
   const title = titleObject.english || titleObject.romaji;
   const hasDub = Boolean(characters.edges[0]?.voiceActors);
   const [isFavorited, setIsFavorited] = useState(isFavorite);
-  const imageUrls = [
-    coverImage.extraLarge,
-    coverImage.large,
-    coverImage.medium,
-    null,
-  ];
-  const [imageUrlIndex, setImageUrlIndex] = useState(0);
   const rating = Number(averageScore / 10).toFixed(1);
   //TODO: Add a "Add to WatchList" button
   return (
-    <div className="w-45 h-67 md:w-55 md:h-87 lg:w-63 relative lg:h-95 rounded-2xl overflow-clip group">
+    <div className="w-45 h-67 md:w-55 md:h-87 lg:w-63 relative lg:h-95 overflow-clip group">
       <div>
         <Link href={`/details/${id}`} className="w-full h-full">
           <div className="absolute inset-0 flex items-center justify-center">
@@ -45,17 +38,10 @@ export const Card = ({ media }: { media: Media }) => {
           <Image
             fill
             alt={title}
-            src={imageUrls[imageUrlIndex]!}
-            onError={() => {
-              setImageUrlIndex((prev) => {
-                if (prev < 2) return prev + 1;
-                return 1;
-              });
-            }}
-            className="absolute object-cover transition-transform group-hover:scale-105 image"
-            priority={false}
+            src={coverImage.extraLarge}
             placeholder="blur"
             blurDataURL={coverImage.medium}
+            className="absolute object-cover transition-transform group-hover:scale-105 image"
             sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
           />
           <div className="mask-linear-from-black mask-linear-from-75% mask-linear-to-transparent py-4 absolute bottom-0 left-0 w-full px-1 md:px-3 min-h-15 md:h-25 bg-linear-to-b from-transparent to-black/70 flex flex-col justify-center rounded-b-[inherit]">
