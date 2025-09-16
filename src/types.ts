@@ -20,6 +20,9 @@ export type Media = {
   averageScore: number;
   seasonYear: number;
   description: string;
+  status: "FINISHED" | "HIATUS" | "RELEASING" | "NOT_YET_AIRING" | "CANCELLED";
+  format: "TV" | "OVA" | "ONA" | "TV_SHORT" | "MUSIC" | "MOVIE" | "SPECIAL";
+  popularity: number;
   coverImage: {
     extraLarge: string;
     large: string;
@@ -33,7 +36,7 @@ export type Media = {
 
   characters: {
     edges: {
-      voiceActors: { name: string }[] | null;
+      voiceActors: { name: string }[] | [];
     }[];
   };
 

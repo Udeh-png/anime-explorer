@@ -1,7 +1,6 @@
 "use client";
 
 import { Media } from "@/types";
-import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,6 +11,7 @@ import {
   FaSpinner,
   FaStar,
 } from "react-icons/fa";
+import { AnimatedButton } from "./AnimatedButton";
 
 export const Card = ({ media }: { media: Media }) => {
   const {
@@ -24,7 +24,7 @@ export const Card = ({ media }: { media: Media }) => {
     isFavorite,
   } = media;
   const title = titleObject.english || titleObject.romaji;
-  const hasDub = Boolean(characters.edges[0]?.voiceActors);
+  const hasDub = characters.edges.some((edge) => edge.voiceActors.length > 0);
   const [isFavorited, setIsFavorited] = useState(isFavorite);
   const rating = Number(averageScore / 10).toFixed(1);
   //TODO: Add a "Add to WatchList" button
@@ -69,41 +69,15 @@ export const Card = ({ media }: { media: Media }) => {
           onClick={() => {
             setIsFavorited(!isFavorited);
           }}
-          className="absolute right-2 bottom-21 cursor-pointer"
+          className="absolute right-2 bottom-21 cursor-pointer h-6 w-6 md:text-lg text-[10px] md:h-11 md:w-11 rounded-full"
         >
-          <AnimatePresence>
-            {isFavorited ? (
-              <motion.section
-                initial={{
-                  scale: 0,
-                }}
-                animate={{
-                  scale: 1,
-                }}
-                exit={{
-                  scale: 0,
-                }}
-                className="rounded-full bg-accent-one h-6 w-6 md:text-base text-[10px] md:h-10 md:w-10 flex justify-center items-center"
-              >
-                <FaHeart />
-              </motion.section>
-            ) : (
-              <motion.div
-                initial={{
-                  scale: 0,
-                }}
-                animate={{
-                  scale: 1,
-                }}
-                exit={{
-                  scale: 0,
-                }}
-                className="rounded-full bg-black/80 h-6 w-6 md:text-base text-[10px] md:h-10 md:w-10 flex justify-center items-center"
-              >
-                <FaRegHeart />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <AnimatedButton
+            condition={isFavorited}
+            styleOnFalse="bg-black/80"
+            styleOnTrue="bg-accent-one"
+            icon1={<FaHeart />}
+            icon2={<FaRegHeart />}
+          />
         </div>
       </div>
     </div>

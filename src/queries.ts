@@ -120,6 +120,9 @@ export async function getMediaWithId(id: number): Promise<Media> {
         trending
         bannerImage
         averageScore
+        status
+        popularity
+        format
         seasonYear
         description
         coverImage {
