@@ -22,6 +22,7 @@ export type Media = {
   description: string;
   status: "FINISHED" | "HIATUS" | "RELEASING" | "NOT_YET_AIRING" | "CANCELLED";
   format: "TV" | "OVA" | "ONA" | "TV_SHORT" | "MUSIC" | "MOVIE" | "SPECIAL";
+  genres: string[];
   popularity: number;
   coverImage: {
     extraLarge: string;

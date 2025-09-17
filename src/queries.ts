@@ -123,6 +123,7 @@ export async function getMediaWithId(id: number): Promise<Media> {
         status
         popularity
         format
+        genres
         seasonYear
         description
         coverImage {
