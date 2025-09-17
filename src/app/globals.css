@@ -31,7 +31,7 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  border: solid 1px var(--accent-one);
+  border: solid 1px;
   animation-fill-mode: forwards;
   animation-duration: 500ms;
   animation-iteration-count: 1;

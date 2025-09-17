@@ -34,7 +34,6 @@ export const DetailsHero = ({ media }: { media: Media }) => {
   } = media;
 
   const hasDub = characters.edges.some((edge) => edge.voiceActors.length > 0);
-  console.log(characters.edges);
 
   const averageScoreDes = (averageScore / 10).toFixed(1);
   const popularityString = popularity.toLocaleString("US-en");
@@ -59,7 +58,7 @@ export const DetailsHero = ({ media }: { media: Media }) => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute -bottom-30 left-5 min-[600px]:-bottom-50 min-[789px]:-bottom-60 min-[600px]:left-[8%] min-[789px]:left-[13%] w-35 min-[600px]:w-50 min-[789px]:w-fit">
+        <div className="absolute -bottom-30 left-5 min-[600px]:-bottom-50 min-[789px]:-bottom-60 min-[600px]:left-[8%] min-[1025px]:left-[13%] w-35 min-[600px]:w-50 min-[789px]:w-fit">
           <Image
             src={imageUrl}
             placeholder="blur"
@@ -70,23 +69,23 @@ export const DetailsHero = ({ media }: { media: Media }) => {
             height={380}
           />
 
-          <div className="absolute bottom-0 left-[110%] flex flex-col">
-            <div className="mb-2 min-[600px]:mb-3 min-[789px]:mb-3 overflow-clip max-w-145">
+          <div className="absolute bottom-0 left-[109%] flex flex-col">
+            <div className="mb-1 min-[600px]:mb-3 overflow-clip w-[52vw]">
               <p className="min-[600px]:text-[32px] min-[789px]:text-[38px] text-lg font-semibold text-nowrap leading-tight">
                 {titleObject.english || titleObject.romaji}
               </p>
-              <p className="text-white/80 min-[789px]:text-xs text-xs mb-1">
+              <p className="text-white/80 hidden min-[600px]:flex min-[789px]:text-xs text-[10px] min-[600px]:mb-1">
                 {year}
               </p>
               {titleObject.english && (
-                <p className="text-white/80 min-[789px]:text-base text-xs">
+                <p className="text-white/80 min-[789px]:text-base text-[10px]">
                   {titleObject.romaji}
                 </p>
               )}
             </div>
 
-            <div className="flex min-[600px]:text-[12px] min-[789px]:text-sm text-[10px] min-[600px]:gap-x-1 min-[789px]:gap-x-3 mb-3 min-[600px]:mb-2 min-[789px]:mb-5 gap-1 w-fit">
-              <div className="flex px-3 py-[1px] min-[789px]:py-[3px] justify-center bg-black gap-x-2 rounded-full items-center">
+            <div className="flex min-[600px]:text-[12px] min-[789px]:text-sm text-[10px] min-[600px]:gap-x-1 min-[789px]:gap-x-3 mb-1 min-[600px]:mb-2 min-[789px]:mb-5 gap-1 w-[50vw] flex-wrap">
+              <div className="flex px-3 py-[1px] min-[789px]:py-[3px] justify-center bg-black gap-x-1 rounded-full items-center">
                 <FaStar className="text-yellow-400" />
                 <p>{averageScoreDes}</p>
               </div>
@@ -101,7 +100,7 @@ export const DetailsHero = ({ media }: { media: Media }) => {
                 <p>{mediaFormat}</p>
               </div>
 
-              <div className="flex px-3 py-[2px] min-[789px]:py-[5px] bg-green-500 justify-center gap-x-2 rounded-full items-center">
+              <div className="flex px-3 py-[2px] min-[789px]:py-[5px] bg-green-500 justify-center gap-x-1 rounded-full items-center">
                 <FaMicrophoneAlt className="text-xs" />
                 <p>{hasDub ? "Dub" : "Subtitles"}</p>
               </div>

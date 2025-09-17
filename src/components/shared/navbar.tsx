@@ -66,13 +66,31 @@ export const Navbar = () => {
           </h1>
         </Link>
         <ul className="flex gap-8 max-[992px]:hidden">
-          <li className={pathname === "/" ? "relative nav-link" : ""}>
+          <li
+            className={
+              pathname === "/"
+                ? "relative nav-link after:border-accent-one!"
+                : ""
+            }
+          >
             <Link href={"/"}>Home</Link>
           </li>
-          <li className={pathname === "/schedule" ? "relative nav-link" : ""}>
+          <li
+            className={
+              pathname === "/schedule"
+                ? "relative nav-link after:border-accent-one!"
+                : ""
+            }
+          >
             <Link href={"/schedule"}>Schedule</Link>
           </li>
-          <li className={pathname === "/favorites" ? "relative nav-link" : ""}>
+          <li
+            className={
+              pathname === "/favorites"
+                ? "relative nav-link after:border-accent-one!"
+                : ""
+            }
+          >
             <Link href={"/favorites"}>Favorites</Link>
           </li>
         </ul>
@@ -147,7 +165,9 @@ export const Navbar = () => {
                   </li>
                   <li
                     className={`flex justify-between items-center ${
-                      pathname === "/" ? "relative nav-link" : ""
+                      pathname === "/"
+                        ? "relative nav-link after:border-accent-one!"
+                        : ""
                     }`}
                   >
                     <Link href={"/"}>Home</Link>
@@ -155,7 +175,9 @@ export const Navbar = () => {
                   </li>
                   <li
                     className={`flex justify-between items-center ${
-                      pathname === "/schedule" ? "relative nav-link" : ""
+                      pathname === "/schedule"
+                        ? "relative nav-link after:border-accent-one!"
+                        : ""
                     }`}
                   >
                     <Link href={"/schedule"}>Schedule</Link>
@@ -163,7 +185,9 @@ export const Navbar = () => {
                   </li>
                   <li
                     className={`flex justify-between items-center ${
-                      pathname === "/favorites" ? "relative nav-link" : ""
+                      pathname === "/favorites"
+                        ? "relative nav-link after:border-accent-one!"
+                        : ""
                     }`}
                   >
                     <Link href={"/favorites"}>Favorites</Link>
