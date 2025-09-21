@@ -24,6 +24,11 @@ export const Card = ({ media }: { media: Media }) => {
     isFavorite,
   } = media;
   const title = titleObject.english || titleObject.romaji;
+
+  const titleForUrl = title
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .trim();
   const hasDub = characters.edges.some((edge) =>
     edge.voiceActors.some(
       ({ language }) => language.toLocaleLowerCase() === "english"
@@ -35,7 +40,7 @@ export const Card = ({ media }: { media: Media }) => {
   return (
     <div className="w-45 h-67 md:w-55 md:h-87 lg:w-63 relative lg:h-95 overflow-clip group">
       <div>
-        <Link href={`/details/${id}`} className="w-full h-full">
+        <Link href={`/${id}/${titleForUrl}`} className="w-full h-full">
           <div className="absolute inset-0 flex items-center justify-center">
             <FaSpinner className="text-sm animate-spin" />
           </div>

@@ -200,10 +200,51 @@ export async function getMediaWithId(
       return await res.json();
     })
     .then((jsonResponse) => {
-      console.log(jsonResponse);
+      // console.log(jsonResponse);
       return jsonResponse.data.Media;
     })
     .catch((e) => {
       console.error(`Error ${e} occurred`);
     });
+}
+
+async function getCharacterWithId(charId: number) {
+  const query = `
+    query {
+      Character (id: ${charId}) {
+        name {
+          full
+          native
+          alternative
+          alternativeSpoiler
+        }
+        image {
+          large
+          medium
+        }
+        description (asHtml: true)
+        gender
+        age
+        dateOfBirth {
+          year
+          month
+          day
+        }
+        bloodType
+      }
+    }
+  `;
+
+  const url = "https://graphql.anilist.co",
+    options = {
+      method: "POST",
+      body: JSON.stringify({ query }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+  const res = await fetch(url, options);
+  const data = await res.json();
+  return data;
 }

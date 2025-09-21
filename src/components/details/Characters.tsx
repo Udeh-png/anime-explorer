@@ -7,7 +7,12 @@ import { FaChevronDown, FaChevronUp, FaHashtag } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 
 export const Characters = ({ media }: { media: Media }) => {
-  const { characters: chars, id } = media;
+  const { characters: chars, id, title: titleObject } = media;
+  const title = titleObject.english || titleObject.romaji;
+  const titleForUrl = title
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .trim();
   const [charsState, setCharsState] = useState(chars);
   const [charEdgesState, setCharEdgesState] = useState(charsState.edges);
   const scrollableRef = useRef<HTMLDivElement>(null);
@@ -34,8 +39,6 @@ export const Characters = ({ media }: { media: Media }) => {
     }
   }
 
-  useEffect(() => {}, []);
-
   return (
     <div
       className="grid min-[600px]:grid-cols-2 min-[790px]:grid-cols-3 gap-3 h-110 overflow-auto scrollable"
@@ -57,7 +60,7 @@ export const Characters = ({ media }: { media: Media }) => {
 
         return (
           <Link
-            href={`details/${id}/characters/${charId}`}
+            href={`/${id}/${titleForUrl}/${charId}`}
             className="h-29 p-4 flex flex-col justify-between rounded-lg bg-white/20"
             key={i}
           >

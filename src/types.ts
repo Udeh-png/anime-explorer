@@ -1,3 +1,5 @@
+import { number } from "motion";
+
 export type CardData = {
   id: number;
   cardImage: {
@@ -11,6 +13,28 @@ export type CardData = {
     romaji: string;
   };
   hasDub: boolean;
+};
+
+export type Character = {
+  name: {
+    full: string;
+    native: string;
+    alternative: string;
+    alternativeSpoiler: string;
+  };
+  image: {
+    large: string;
+    medium: string;
+  };
+  description: string;
+  gender: string;
+  age: number;
+  dateOfBirth: {
+    day: number;
+    month: number;
+    year: number;
+  };
+  bloodType: string;
 };
 
 export type Media = {
