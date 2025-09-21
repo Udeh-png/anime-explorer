@@ -41,7 +41,10 @@ export const DetailsHero = ({ media }: { media: Media }) => {
 
   const averageScoreDes = (averageScore / 10).toFixed(1);
   const popularityString = popularity.toLocaleString("US-en");
-  const [imageUrl, handleError] = usePersistentUrl(coverImage);
+  const [imageUrl, handleError] = usePersistentUrl(
+    [coverImage.extraLarge, coverImage.large, coverImage.medium],
+    "/"
+  );
   const mediaFormat = getMediaCategory(format);
 
   const [clickFavorite, setClickFavorite] = useState(false);

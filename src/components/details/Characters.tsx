@@ -66,18 +66,18 @@ export const Characters = ({ media }: { media: Media }) => {
           >
             <div className="flex justify-between">
               <div className="flex gap-x-3 items-center">
-                <div className="w-12 h-12 relative overflow-clip text-[10px] rounded-full">
+                <div className="min-w-12 h-12 relative overflow-clip text-[10px] rounded-full">
                   <Image
                     src={image.medium}
                     alt={`${name.full} image`}
                     fill
-                    sizes=""
+                    sizes="(>600px) 100vw"
                     className="object-cover"
                   ></Image>
                 </div>
                 <div>
                   <p className="text-sm w-full">{name.full}</p>
-                  <p className="text-xs text-white/50">
+                  <p className="text-xs text-white/50 line-clamp-1">
                     {name.native}
                     {name.alternative.map((name) => ", " + name)}
                   </p>
