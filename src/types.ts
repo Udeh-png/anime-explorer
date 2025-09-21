@@ -24,6 +24,9 @@ export type Media = {
   format: "TV" | "OVA" | "ONA" | "TV_SHORT" | "MUSIC" | "MOVIE" | "SPECIAL";
   genres: string[];
   popularity: number;
+  externalLinks: {
+    url: string;
+  }[];
   coverImage: {
     extraLarge: string;
     large: string;
@@ -36,8 +39,29 @@ export type Media = {
   };
 
   characters: {
+    pageInfo: {
+      currentPage: number;
+      hasNextPage: boolean;
+    };
     edges: {
-      voiceActors: { name: string }[] | [];
+      role: string;
+      node: {
+        id: number;
+        description: string;
+        age: number;
+        dateOfBirth: {
+          year: number;
+          month: number;
+          day: number;
+        };
+        name: { full: string; native: string };
+        image: { large: string; medium: string };
+      };
+      voiceActors: {
+        name: { first: string; last: string };
+        language: string;
+        image: { large: string; image: string };
+      }[];
     }[];
   };
 

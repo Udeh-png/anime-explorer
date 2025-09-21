@@ -33,7 +33,11 @@ export const DetailsHero = ({ media }: { media: Media }) => {
     status,
   } = media;
 
-  const hasDub = characters.edges.some((edge) => edge.voiceActors.length > 0);
+  const hasDub = characters.edges.some((edge) =>
+    edge.voiceActors.some(
+      ({ language }) => language.toLocaleLowerCase() === "english"
+    )
+  );
 
   const averageScoreDes = (averageScore / 10).toFixed(1);
   const popularityString = popularity.toLocaleString("US-en");

@@ -11,7 +11,7 @@ export default async function ({
   const media = await getMediaWithId(id);
 
   return (
-    <div>
+    <div className="pb-1000">
       <div className="h-70 min-[600px]:h-120 min-[790px]:h-130">
         <DetailsHero media={media} />
       </div>

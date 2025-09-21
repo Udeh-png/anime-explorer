@@ -24,7 +24,11 @@ export const Card = ({ media }: { media: Media }) => {
     isFavorite,
   } = media;
   const title = titleObject.english || titleObject.romaji;
-  const hasDub = characters.edges.some((edge) => edge.voiceActors.length > 0);
+  const hasDub = characters.edges.some((edge) =>
+    edge.voiceActors.some(
+      ({ language }) => language.toLocaleLowerCase() === "english"
+    )
+  );
   const [isFavorited, setIsFavorited] = useState(isFavorite);
   const rating = Number(averageScore / 10).toFixed(1);
   //TODO: Add a "Add to WatchList" button

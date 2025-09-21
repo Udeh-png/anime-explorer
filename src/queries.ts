@@ -43,7 +43,7 @@ export async function getPageObject({
   const filter = customFilter || preset.filter;
   const query = `
     query {
-      Page (page: ${pageNo || 1},perPage: ${perPage}) {
+      Page (page: ${pageNo},perPage: ${perPage}) {
         pageInfo {
           hasNextPage
           currentPage
@@ -112,7 +112,10 @@ export async function getPageObject({
     });
 }
 
-export async function getMediaWithId(id: number): Promise<Media> {
+export async function getMediaWithId(
+  id: number,
+  pageNo?: number
+): Promise<Media> {
   const query = `
     query {
       Media (id: ${id}) {
@@ -126,6 +129,9 @@ export async function getMediaWithId(id: number): Promise<Media> {
         genres
         seasonYear
         description
+        externalLinks {
+          url
+        }
         coverImage {
           extraLarge
           large
@@ -136,17 +142,39 @@ export async function getMediaWithId(id: number): Promise<Media> {
           english
           romaji
         }
-        characters {
+        characters (sort: FAVOURITES_DESC, perPage:24, page: ${pageNo || 1}) {
+          pageInfo {
+            currentPage
+            hasNextPage
+          }
           edges {
             role
             node {
+              id
+              description (asHtml: true)
+              age
+              dateOfBirth {
+                year
+                month
+                day
+              }
               name {
                 full
+                native
+              }
+              image {
+                large
+                medium
               }
             }
-            voiceActors (language: ENGLISH) {
+            voiceActors {
               name {
                 first
+                last
+              }
+              image {
+                large
+                medium
               }
               language
             } 
