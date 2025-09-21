@@ -42,11 +42,11 @@ export const Characters = ({ media }: { media: Media }) => {
       onScroll={loadOnScroll}
       ref={scrollableRef}
     >
-      <div className="h-110 w-3 absolute text-xs min-[600px]:flex left-[49.1%] min-[790px]:left-[33%] hidden flex-col justify-between">
+      <div className="h-110 w-3 absolute text-[10px] min-[600px]:flex left-[49.1%] min-[790px]:left-[33.1%] hidden flex-col justify-between">
         <FaChevronUp />
         <FaChevronDown />
       </div>
-      <div className="h-110 w-3 absolute cursor-cell min-[790px]:flex text-xs right-[33.1%] hidden flex-col justify-between text-wrap">
+      <div className="h-110 w-3 absolute min-[790px]:flex text-[10px] right-[33%] hidden flex-col justify-between text-wrap">
         <FaChevronUp />
         <FaChevronDown />
       </div>
@@ -63,22 +63,25 @@ export const Characters = ({ media }: { media: Media }) => {
           >
             <div className="flex justify-between">
               <div className="flex gap-x-3 items-center">
-                <div
-                  className="w-12 h-12 relative rounded-full"
-                  style={{
-                    background: `url("${image.large}")`,
-                    backgroundPosition: "top",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                  }}
-                ></div>
+                <div className="w-12 h-12 relative overflow-clip text-[10px] rounded-full">
+                  <Image
+                    src={image.medium}
+                    alt={`${name.full} image`}
+                    fill
+                    sizes=""
+                    className="object-cover"
+                  ></Image>
+                </div>
                 <div>
                   <p className="text-sm w-full">{name.full}</p>
-                  <p className="text-xs text-white/50">{name.native}</p>
+                  <p className="text-xs text-white/50">
+                    {name.native}
+                    {name.alternative.map((name) => ", " + name)}
+                  </p>
                 </div>
               </div>
               <div className="text-xs flex gap-1 items-center">
-                {day && month && year ? <FaCalendarDays /> : <FaHashtag />}
+                <FaCalendarDays />
 
                 <p className="">
                   {day && month && year

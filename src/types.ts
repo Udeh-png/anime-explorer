@@ -54,7 +54,7 @@ export type Media = {
           month: number;
           day: number;
         };
-        name: { full: string; native: string };
+        name: { full: string; native: string; alternative: string[] };
         image: { large: string; medium: string };
       };
       voiceActors: {

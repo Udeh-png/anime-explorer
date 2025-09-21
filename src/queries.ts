@@ -161,6 +161,7 @@ export async function getMediaWithId(
               name {
                 full
                 native
+                alternative
               }
               image {
                 large
@@ -199,7 +200,7 @@ export async function getMediaWithId(
       return await res.json();
     })
     .then((jsonResponse) => {
-      // console.log(jsonResponse);
+      console.log(jsonResponse);
       return jsonResponse.data.Media;
     })
     .catch((e) => {
