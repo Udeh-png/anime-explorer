@@ -16,25 +16,26 @@ export type CardData = {
 };
 
 export type Character = {
-  name: {
-    full: string;
-    native: string;
-    alternative: string;
-    alternativeSpoiler: string;
+  role: string;
+  node: {
+    id: number;
+    description: string;
+    age: number;
+    gender: string;
+    bloodType: string;
+    dateOfBirth: {
+      year: number;
+      month: number;
+      day: number;
+    };
+    name: { full: string; native: string; alternative: string[] };
+    image: { large: string; medium: string };
   };
-  image: {
-    large: string;
-    medium: string;
-  };
-  description: string;
-  gender: string;
-  age: number;
-  dateOfBirth: {
-    day: number;
-    month: number;
-    year: number;
-  };
-  bloodType: string;
+  voiceActors: {
+    name: { full: string };
+    languageV2: string;
+    image: { large: string; medium: string };
+  }[];
 };
 
 export type Media = {
@@ -67,26 +68,7 @@ export type Media = {
       currentPage: number;
       hasNextPage: boolean;
     };
-    edges: {
-      role: string;
-      node: {
-        id: number;
-        description: string;
-        age: number;
-        dateOfBirth: {
-          year: number;
-          month: number;
-          day: number;
-        };
-        name: { full: string; native: string; alternative: string[] };
-        image: { large: string; medium: string };
-      };
-      voiceActors: {
-        name: { first: string; last: string };
-        language: string;
-        image: { large: string; image: string };
-      }[];
-    }[];
+    edges: Character[];
   };
 
   isFavorite: boolean;

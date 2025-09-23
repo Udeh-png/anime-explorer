@@ -1,27 +1,15 @@
-"use client";
-
 import { Media } from "@/types";
-import { useEffect, useRef } from "react";
+import { DescriptionUi } from "../shared/DescriptionUtil";
 
 export const Overview = ({ media }: { media: Media }) => {
   const { description, genres } = media;
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  useEffect(() => {
-    if (descriptionRef.current) {
-      const descriptionContainer = descriptionRef.current;
-      descriptionContainer.innerHTML = description;
-    }
-  }, []);
   return (
     <div className="">
       <p className="min-[600px]:text-2xl text-base font-semibold mb-4">
         Synopsis
       </p>
 
-      <p
-        ref={descriptionRef}
-        className="mb-5 min-[600px]:text-sm text-[10px]"
-      ></p>
+      <DescriptionUi description={description} />
 
       <div>
         <p className="font-semibold min-[600px]:text-lg text-sm mb-2">Genres</p>

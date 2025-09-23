@@ -1,4 +1,4 @@
-import { Media, PageObject } from "./types";
+import { Character, Media, PageObject } from "./types";
 
 export type PresetType = "trending" | "classics" | "airing" | "top_fifty";
 
@@ -114,7 +114,7 @@ export async function getPageObject({
 
 export async function getMediaWithId(
   id: number,
-  pageNo?: number
+  CharacterPageNo?: number
 ): Promise<Media> {
   const query = `
     query {
@@ -142,7 +142,9 @@ export async function getMediaWithId(
           english
           romaji
         }
-        characters (sort: FAVOURITES_DESC, perPage:24, page: ${pageNo || 1}) {
+        characters (sort: FAVOURITES_DESC, perPage:24, page: ${
+          CharacterPageNo || 1
+        }) {
           pageInfo {
             currentPage
             hasNextPage
@@ -169,14 +171,6 @@ export async function getMediaWithId(
               }
             }
             voiceActors {
-              name {
-                first
-                last
-              }
-              image {
-                large
-                medium
-              }
               language
             } 
           }
@@ -208,29 +202,62 @@ export async function getMediaWithId(
     });
 }
 
-async function getCharacterWithId(charId: number) {
+export async function getCharacterWithId(
+  mediaId: number,
+  charId: number,
+  currentPage?: number
+): Promise<Character> {
   const query = `
     query {
-      Character (id: ${charId}) {
-        name {
-          full
-          native
-          alternative
-          alternativeSpoiler
+      Media (id: ${mediaId}) {
+        characters (sort: FAVOURITES_DESC, perPage: 50, page: ${
+          currentPage || 1
+        }) {
+          pageInfo {
+            currentPage
+            perPage
+            hasNextPage
+          }
+          edges {
+            id
+            role
+            media {
+              id
+            }
+            voiceActors {
+              languageV2
+              image {
+                large
+                medium
+              }
+              name {
+                full
+              }
+            }
+            node {
+              id
+              name {
+                full
+                native
+                alternative
+                alternativeSpoiler
+              }
+              image {
+                large
+                medium
+              }
+              description (asHtml: true)
+              dateOfBirth {
+                day
+                month
+                year
+              }
+              age
+              bloodType
+              gender
+            }
+          }
         }
-        image {
-          large
-          medium
-        }
-        description (asHtml: true)
-        gender
-        age
-        dateOfBirth {
-          year
-          month
-          day
-        }
-        bloodType
       }
     }
   `;
@@ -244,7 +271,27 @@ async function getCharacterWithId(charId: number) {
         Accept: "application/json",
       },
     };
-  const res = await fetch(url, options);
-  const data = await res.json();
-  return data;
+  return await fetch(url, options)
+    .then(async (res) => {
+      return await res.json();
+    })
+    .then(async (jsonResponse) => {
+      console.log(jsonResponse);
+      const media: Media = jsonResponse.data.Media;
+      const characterObj = media.characters;
+      const edges = media.characters.edges;
+      const character: any = edges.find((edge) => edge.node.id === charId);
+      if (character === undefined && characterObj.pageInfo.hasNextPage) {
+        return await getCharacterWithId(
+          mediaId,
+          charId,
+          characterObj.pageInfo.currentPage + 1
+        );
+      }
+
+      return character;
+    })
+    .catch((e) => {
+      console.error(`Error ${e} occurred`);
+    });
 }
