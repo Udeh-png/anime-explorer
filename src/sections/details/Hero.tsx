@@ -35,7 +35,7 @@ export const DetailsHero = ({ media }: { media: Media }) => {
 
   const hasDub = characters.edges.some((edge) =>
     edge.voiceActors.some(
-      ({ language }) => language.toLocaleLowerCase() === "english"
+      ({ languageV2 }) => languageV2.toLocaleLowerCase() === "english"
     )
   );
 

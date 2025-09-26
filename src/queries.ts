@@ -142,76 +142,8 @@ export async function getMediaWithId(
           english
           romaji
         }
-        characters (sort: FAVOURITES_DESC, perPage:24, page: ${
-          CharacterPageNo || 1
-        }) {
-          pageInfo {
-            currentPage
-            hasNextPage
-          }
-          edges {
-            role
-            node {
-              id
-              description (asHtml: true)
-              age
-              dateOfBirth {
-                year
-                month
-                day
-              }
-              name {
-                full
-                native
-                alternative
-              }
-              image {
-                large
-                medium
-              }
-            }
-            voiceActors {
-              language
-            } 
-          }
-        }
-      }
-    }
-  `;
-  const url = "https://graphql.anilist.co",
-    options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        query: query,
-      }),
-    };
-  return await fetch(url, options)
-    .then(async (res) => {
-      return await res.json();
-    })
-    .then((jsonResponse) => {
-      // console.log(jsonResponse);
-      return jsonResponse.data.Media;
-    })
-    .catch((e) => {
-      console.error(`Error ${e} occurred`);
-    });
-}
-
-export async function getCharacterWithId(
-  mediaId: number,
-  charId: number,
-  currentPage?: number
-): Promise<Character> {
-  const query = `
-    query {
-      Media (id: ${mediaId}) {
         characters (sort: FAVOURITES_DESC, perPage: 50, page: ${
-          currentPage || 1
+          CharacterPageNo || 1
         }) {
           pageInfo {
             currentPage
@@ -261,37 +193,77 @@ export async function getCharacterWithId(
       }
     }
   `;
-
   const url = "https://graphql.anilist.co",
     options = {
       method: "POST",
-      body: JSON.stringify({ query }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      body: JSON.stringify({
+        query: query,
+      }),
     };
   return await fetch(url, options)
     .then(async (res) => {
       return await res.json();
     })
-    .then(async (jsonResponse) => {
-      console.log(jsonResponse);
-      const media: Media = jsonResponse.data.Media;
-      const characterObj = media.characters;
-      const edges = media.characters.edges;
-      const character: any = edges.find((edge) => edge.node.id === charId);
-      if (character === undefined && characterObj.pageInfo.hasNextPage) {
-        return await getCharacterWithId(
-          mediaId,
-          charId,
-          characterObj.pageInfo.currentPage + 1
-        );
-      }
-
-      return character;
+    .then((jsonResponse) => {
+      // console.log(jsonResponse);
+      return jsonResponse.data.Media;
     })
     .catch((e) => {
       console.error(`Error ${e} occurred`);
     });
+}
+
+export async function getCharacterWithId(
+  mediaId: number,
+  charId: number,
+  currentPage?: number
+): Promise<Character> {
+  const media: Media = await getMediaWithId(mediaId, currentPage);
+  const characterObj = media.characters;
+  const edges = media.characters.edges;
+  const character: any = edges.find((edge) => edge.node.id === charId);
+  if (character === undefined && characterObj.pageInfo.hasNextPage) {
+    return await getCharacterWithId(
+      mediaId,
+      charId,
+      characterObj.pageInfo.currentPage + 1
+    );
+  }
+  return character;
+}
+
+export async function getCharacterFromSearch(
+  mediaId: number,
+  search: string
+): Promise<Character[]> {
+  const media: Media = await getMediaWithId(mediaId);
+  const edges = media.characters.edges;
+  const pageInfo = media.characters.pageInfo;
+  let currentPage = pageInfo.currentPage;
+  let hasNextPage = pageInfo.hasNextPage;
+  const allCharEdges = [...edges];
+  while (hasNextPage) {
+    currentPage++;
+    const moreCharEdges = await getMediaWithId(mediaId, currentPage);
+    allCharEdges.push(...moreCharEdges.characters.edges);
+    console.log(moreCharEdges.characters.pageInfo.currentPage);
+    if (currentPage < 14) {
+      hasNextPage = moreCharEdges.characters.pageInfo.hasNextPage;
+    } else {
+      break;
+    }
+  }
+
+  const searchQuery: string = search.toLowerCase();
+  const results = allCharEdges.filter((edge) => {
+    const charNameQuery = edge.node.name.full.toLowerCase();
+    if (charNameQuery.includes(searchQuery)) {
+      return edge;
+    }
+  });
+  return results;
 }
