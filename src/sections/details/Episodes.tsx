@@ -1,43 +1,39 @@
 "use client";
 
-import { ToggleButton } from "@/components/shared/ToggleButton";
 import { Media } from "@/types";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { CgPlayButton } from "react-icons/cg";
-import { FaRegPlayCircle } from "react-icons/fa";
-import { FaRegCirclePlay } from "react-icons/fa6";
-import {
-  HiOutlineSortAscending,
-  HiOutlineSortDescending,
-} from "react-icons/hi";
+import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
 export const Episodes = ({ media }: { media: Media }) => {
   const { streamingEpisodes } = media;
   const ascendingOrder = [...streamingEpisodes].reverse();
   const [episodesOrder, setEpisodesOrder] = useState(ascendingOrder);
+  const [isAscending, setIsAscending] = useState(true);
 
   return streamingEpisodes.length > 0 ? (
     <div>
-      <div className="flex">
+      <div className="flex justify-between">
         <div>
           <p className="min-[600px]:text-2xl text-base font-semibold min-[600px]:mb-2 mb-1">
             Episodes
           </p>
         </div>
 
-        <div className="flex w-full justify-end items-center gap-x-1 min-[600px]:text-sm text-xs">
-          <p>Asc</p>
-          <ToggleButton
-            handleToggle={(e) => {
-              if (e.target.checked) {
-                setEpisodesOrder(streamingEpisodes);
-                return;
-              }
-              setEpisodesOrder(ascendingOrder);
-            }}
-          />
-          <p>Desc</p>
+        <div
+          className="flex justify-end items-center gap-x-1 min-[600px]:text-3xl text-xs cursor-pointer"
+          onClick={() => {
+            if (isAscending) {
+              setEpisodesOrder(streamingEpisodes);
+              setIsAscending(false);
+              return;
+            }
+            setEpisodesOrder(ascendingOrder);
+            setIsAscending(true);
+          }}
+        >
+          {isAscending ? <HiSortDescending /> : <HiSortAscending />}
         </div>
       </div>
 
