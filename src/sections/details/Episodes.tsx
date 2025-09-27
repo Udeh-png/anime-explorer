@@ -14,7 +14,7 @@ export const Episodes = ({ media }: { media: Media }) => {
 
   return streamingEpisodes.length > 0 ? (
     <div>
-      <div className="flex justify-between">
+      <div className="flex gap-x-3 items-center">
         <div>
           <p className="min-[600px]:text-2xl text-base font-semibold min-[600px]:mb-2 mb-1">
             Episodes
