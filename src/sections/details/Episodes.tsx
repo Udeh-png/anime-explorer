@@ -42,7 +42,7 @@ export const Episodes = ({ media }: { media: Media }) => {
           const { thumbnail, title, url } = episode;
 
           return (
-            <Link href={url} key={i}>
+            <Link href={url} key={i} target="_blank">
               <div
                 className="relative min-[600px]:w-70 min-[600px]:h-40 w-45 h-25 flex items-end p-2 rounded"
                 style={{
