@@ -53,10 +53,20 @@ export type Media = {
   averageScore: number;
   seasonYear: number;
   description: string;
-  status: "FINISHED" | "HIATUS" | "RELEASING" | "NOT_YET_AIRING" | "CANCELLED";
+  status:
+    | "FINISHED"
+    | "HIATUS"
+    | "RELEASING"
+    | "NOT_YET_RELEASED"
+    | "CANCELLED";
   format: FormatEnum;
   genres: string[];
   popularity: number;
+  streamingEpisodes: {
+    title: string;
+    thumbnail: string;
+    url: string;
+  }[];
   relations: {
     edges: {
       relationType: string;
@@ -66,7 +76,7 @@ export type Media = {
           | "FINISHED"
           | "HIATUS"
           | "RELEASING"
-          | "NOT_YET_AIRING"
+          | "NOT_YET_RELEASED"
           | "CANCELLED";
         type: string;
         coverImage: {

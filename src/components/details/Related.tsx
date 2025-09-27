@@ -8,7 +8,7 @@ export const Related = ({ media }: { media: Media }) => {
   const relatedMedias = media.relations.edges;
 
   return (
-    <div className="flex flex-cpl flex-wrap gap-x-3">
+    <div className="flex flex-cpl flex-wrap gap-3">
       {relatedMedias.map(({ relationType, node }, i) => {
         const { coverImage, id, title: titleObj, status, type } = node;
         const title = titleObj.english || titleObj.romaji;
@@ -24,7 +24,7 @@ export const Related = ({ media }: { media: Media }) => {
                 src={coverImage.extraLarge}
                 alt={`${title} cover image`}
                 width={100}
-                height={70}
+                height={150}
               ></Image>
             </div>
             <div className="ml-1">

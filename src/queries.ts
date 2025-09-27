@@ -129,6 +129,11 @@ export async function getMediaWithId(
         genres
         seasonYear
         description
+        streamingEpisodes {
+          title
+          thumbnail
+          url
+        }
         relations {
           edges {
             relationType
