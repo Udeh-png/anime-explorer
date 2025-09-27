@@ -1,4 +1,12 @@
-import { number } from "motion";
+enum FormatEnum {
+  TV = "TV",
+  OVA = "OVA",
+  ONA = "ONA",
+  TV_SHORT = "TV Short",
+  MUSIC = "Music",
+  MOVIE = "Movie",
+  SPECIAL = "Special",
+}
 
 export type CardData = {
   id: number;
@@ -46,9 +54,33 @@ export type Media = {
   seasonYear: number;
   description: string;
   status: "FINISHED" | "HIATUS" | "RELEASING" | "NOT_YET_AIRING" | "CANCELLED";
-  format: "TV" | "OVA" | "ONA" | "TV_SHORT" | "MUSIC" | "MOVIE" | "SPECIAL";
+  format: FormatEnum;
   genres: string[];
   popularity: number;
+  relations: {
+    edges: {
+      relationType: string;
+      node: {
+        id: number;
+        status:
+          | "FINISHED"
+          | "HIATUS"
+          | "RELEASING"
+          | "NOT_YET_AIRING"
+          | "CANCELLED";
+        type: string;
+        coverImage: {
+          extraLarge: string;
+          large: string;
+          medium: string;
+        };
+        title: {
+          english: string;
+          romaji: string;
+        };
+      };
+    }[];
+  };
   externalLinks: {
     url: string;
   }[];

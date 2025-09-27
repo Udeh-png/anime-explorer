@@ -58,6 +58,8 @@ export const Characters = ({ media }: { media: Media }) => {
 
   //TODO: You know how i made it so the search only check the first 13 pages make it so it can load more on click or scroll or something
 
+  //TODO: Add loading spinners for loading more characters and searching
+
   return (
     <div className="">
       <div className="mb-3 flex justify-between">

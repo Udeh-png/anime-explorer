@@ -12,6 +12,7 @@ import {
   FaStar,
 } from "react-icons/fa";
 import { AnimatedButton } from "./AnimatedButton";
+import { formatTitle } from "@/utils/sharedUtils";
 
 export const Card = ({ media }: { media: Media }) => {
   const {
@@ -25,13 +26,10 @@ export const Card = ({ media }: { media: Media }) => {
   } = media;
   const title = titleObject.english || titleObject.romaji;
 
-  const titleForUrl = title
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .trim();
+  const titleForUrl = formatTitle(title);
   const hasDub = characters.edges.some((edge) =>
     edge.voiceActors.some(
-      ({ language }) => language.toLocaleLowerCase() === "english"
+      ({ languageV2 }) => languageV2.toLocaleLowerCase() === "english"
     )
   );
   const [isFavorited, setIsFavorited] = useState(isFavorite);

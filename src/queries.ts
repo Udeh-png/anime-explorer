@@ -78,7 +78,7 @@ export async function getPageObject({
                 name {
                   first
                 }
-                language
+                languageV2
               } 
             }
           }
@@ -129,6 +129,25 @@ export async function getMediaWithId(
         genres
         seasonYear
         description
+        relations {
+          edges {
+            relationType
+            node {
+              id
+              status
+              type
+              title {
+                english
+                romaji
+              }
+              coverImage {
+                extraLarge
+                large
+                medium
+              }
+            }
+          }
+        }
         externalLinks {
           url
         }
@@ -209,7 +228,7 @@ export async function getMediaWithId(
       return await res.json();
     })
     .then((jsonResponse) => {
-      // console.log(jsonResponse);
+      console.log(jsonResponse);
       return jsonResponse.data.Media;
     })
     .catch((e) => {

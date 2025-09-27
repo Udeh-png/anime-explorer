@@ -2,6 +2,7 @@
 
 import { Characters } from "@/components/details/Characters";
 import { Overview } from "@/components/details/Overview";
+import { Related } from "@/components/details/Related";
 import { Media } from "@/types";
 import { useState } from "react";
 
@@ -48,7 +49,7 @@ export const TabInterface = ({ media }: { media: Media }) => {
         ) : currentTab === "chars" ? (
           <Characters media={media} />
         ) : (
-          ""
+          <Related media={media} />
         )}
       </div>
     </div>
