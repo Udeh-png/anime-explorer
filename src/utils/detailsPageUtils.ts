@@ -9,14 +9,11 @@ export function getStatusMessage(mediaStatus: string): string {
     case "HIATUS":
       return "On Hiatus";
 
-    case "NOT_YET_AIRING":
-      return "Coming Soon";
-
     case "RELEASING":
       return "Still Airing";
 
     default:
-      return "";
+      return "Unreleased";
   }
 }
 

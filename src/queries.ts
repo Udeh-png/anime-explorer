@@ -228,7 +228,7 @@ export async function getMediaWithId(
       return await res.json();
     })
     .then((jsonResponse) => {
-      console.log(jsonResponse);
+      // console.log(jsonResponse);
       return jsonResponse.data.Media;
     })
     .catch((e) => {

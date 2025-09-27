@@ -15,7 +15,7 @@ export const Related = ({ media }: { media: Media }) => {
         const urlTitle = formatTitle(title);
         return (
           <Link
-            href={type.toLowerCase() === "anime" ? `${id}/${urlTitle}` : "/"}
+            href={type.toLowerCase() === "anime" ? `/${id}/${urlTitle}` : "/"}
             className={`grid grid-cols-[1fr_2fr] w-80 h-auto ${
               i % 2 == 0 ? "items-start" : "items-end"
             }`}
