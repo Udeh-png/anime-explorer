@@ -82,7 +82,7 @@ export const Characters = ({ media }: { media: Media }) => {
 
         {isSearching && (
           <button
-            className="mr-10 text-sm text-accent-one"
+            className="min-[600px]:mr-10 min-[600px]:text-sm text-xs text-accent-one"
             onClick={() => {
               setDisplayCharacters(charEdgesState);
               setIsSearching(false);
@@ -121,12 +121,12 @@ export const Characters = ({ media }: { media: Media }) => {
           return (
             <Link
               href={`/${id}/${titleForUrl}/${charId}`}
-              className="h-29 p-4 flex flex-col justify-between rounded-lg bg-white/20"
+              className="min-[600px]:h-29 min-[600px]:p-4 flex flex-col justify-between rounded-lg bg-white/20 p-2"
               key={i}
             >
-              <div className="flex justify-between">
+              <div className="flex justify-between mb-2">
                 <div className="flex gap-x-3 items-center">
-                  <div className="min-w-12 h-12 relative overflow-clip text-[10px] rounded-full">
+                  <div className="min-[600px]:min-w-12 min-[600px]:h-12 min-w-9 h-9 relative overflow-clip text-[10px] rounded-full">
                     <Image
                       src={image.medium}
                       alt={`${name.full} image`}
@@ -136,14 +136,16 @@ export const Characters = ({ media }: { media: Media }) => {
                     ></Image>
                   </div>
                   <div>
-                    <p className="text-sm w-full">{name.full}</p>
-                    <p className="text-xs text-white/50 line-clamp-1">
+                    <p className="min-[600px]:text-sm text-xs w-full">
+                      {name.full}
+                    </p>
+                    <p className="min-[600px]:text-xs text-[10px] text-white/50 line-clamp-1">
                       {name.native}
                       {name.alternative.map((name) => ", " + name)}
                     </p>
                   </div>
                 </div>
-                <div className="text-xs flex gap-1 items-center">
+                <div className="min-[600px]:text-xs text-[10px] flex gap-1 items-center">
                   <FaCalendarDays />
 
                   <p className="">
@@ -156,8 +158,8 @@ export const Characters = ({ media }: { media: Media }) => {
                 </div>
               </div>
               <div className="flex justify-start">
-                <p className="px-2 py-[1px] rounded-full text-xs bg-accent-two/50">
-                  {role}
+                <p className="px-2 py-[1px] rounded-full min-[600px]:text-xs text-[10px] bg-accent-two/50">
+                  {role.charAt(0) + role.slice(1, role.length).toLowerCase()}
                 </p>
               </div>
             </Link>

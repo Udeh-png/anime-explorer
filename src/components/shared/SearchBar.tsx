@@ -14,7 +14,7 @@ export const SearchBar = ({
 
   return (
     <form
-      className="relative border rounded-2xl overflow-hidden w-full max-w-md h-10 flex items-center"
+      className="relative border rounded-2xl overflow-hidden min-[600px]:w-full w-[85%] max-w-md min-[600px]:h-10 flex items-center"
       action={actionFunction}
     >
       <FaMagnifyingGlass className="absolute left-3 text-white/50 pointer-events-none" />
@@ -25,7 +25,7 @@ export const SearchBar = ({
         name="search-character"
         id="search-character"
         placeholder={labelText || "Search"}
-        className="w-full h-full pl-10 pr-3 outline-none bg-transparent"
+        className="w-full h-full pl-10 pr-3 outline-none bg-transparent min-[600px]:text-base text-sm"
       />
     </form>
   );
