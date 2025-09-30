@@ -128,10 +128,20 @@ export async function getMediaWithId(
         format
         genres
         seasonYear
+        season
         description
         episodes
+        nextAiringEpisode {
+          episode
+        }
         duration
         source
+        studios {
+          nodes {
+            name
+            siteUrl
+          }
+        }
         streamingEpisodes {
           title
           thumbnail

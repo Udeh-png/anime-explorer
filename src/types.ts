@@ -52,6 +52,7 @@ export type Media = {
   bannerImage: string;
   averageScore: number;
   seasonYear: number;
+  season: string;
   description: string;
   status:
     | "FINISHED"
@@ -62,6 +63,16 @@ export type Media = {
   format: FormatEnum;
   genres: string[];
   popularity: number;
+  episodes: number;
+  nextAiringEpisode: { episode: number };
+  studios: {
+    nodes: {
+      name: string;
+      siteUrl: string;
+    }[];
+  };
+  duration: number;
+  source: string;
   streamingEpisodes: {
     title: string;
     thumbnail: string;
@@ -114,6 +125,9 @@ export type Media = {
   };
 
   isFavorite: boolean;
+  isWatchListed: boolean;
+  favoriteCount: number;
+  watchListCount: number;
 };
 
 export type PageObject = {

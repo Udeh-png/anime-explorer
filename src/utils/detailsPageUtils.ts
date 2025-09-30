@@ -13,7 +13,7 @@ export function getStatusMessage(mediaStatus: string): string {
       return "Still Airing";
 
     default:
-      return "Unreleased";
+      return "Coming Soon";
   }
 }
 

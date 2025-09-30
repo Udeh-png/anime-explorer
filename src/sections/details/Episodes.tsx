@@ -9,8 +9,8 @@ import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 export const Episodes = ({ media }: { media: Media }) => {
   const { streamingEpisodes } = media;
   const ascendingOrder = [...streamingEpisodes].reverse();
-  const [episodesOrder, setEpisodesOrder] = useState(ascendingOrder);
-  const [isAscending, setIsAscending] = useState(true);
+  const [episodesOrder, setEpisodesOrder] = useState(streamingEpisodes);
+  const [isAscending, setIsAscending] = useState(false);
 
   return streamingEpisodes.length > 0 ? (
     <div>

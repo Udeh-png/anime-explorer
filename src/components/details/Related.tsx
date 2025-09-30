@@ -29,7 +29,7 @@ export const Related = ({ media }: { media: Media }) => {
             <p className="font-semibold">{title}</p>
             <p className="text-white/50">
               <span className="text-accent-two">{relationType}</span> &middot;{" "}
-              <span>{status}</span>
+              <span>{getStatusMessage(status)}</span>
             </p>
           </Link>
         );
