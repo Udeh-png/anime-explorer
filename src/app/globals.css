@@ -2,7 +2,7 @@
 
 :root {
   --background: rgb(11, 17, 31);
-  --card-background: rgb(6, 9, 17);
+  --card-background: rgb(16, 24, 40);
   --foreground: rgb(23, 23, 23);
   --accent-one: rgb(225, 29, 72);
   --accent-two: rgb(56, 189, 248);
@@ -49,12 +49,10 @@ body {
 
 .scrollable::-webkit-scrollbar-track {
   background: transparent; /* track color */
-  border-radius: 10px;
 }
 
 .scrollable::-webkit-scrollbar-thumb {
   background: #888; /* scrollbar color */
-  border-radius: 10px;
 }
 
 .scrollable::-webkit-scrollbar-thumb:hover {

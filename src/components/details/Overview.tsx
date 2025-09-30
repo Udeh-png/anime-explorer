@@ -14,7 +14,7 @@ export const Overview = ({ media }: { media: Media }) => {
       <div>
         <p className="font-semibold min-[600px]:text-lg text-sm mb-2">Genres</p>
 
-        <div className="flex gap-x-2">
+        <div className="flex gap-2 flex-wrap">
           {genres.map((genre, i) => (
             <span
               className="px-3 bg-white/20 py-1 rounded-full min-[600px]:text-sm text-[10px]"

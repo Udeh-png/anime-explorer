@@ -53,7 +53,7 @@ export const DetailsHero = ({ media }: { media: Media }) => {
   return (
     <div>
       <div
-        className={`h-40 min-[600px]:h-70 min-[789px]:h-70 w-full absolute top-0 left-0`}
+        className={`h-40 min-[600px]:h-70 min-[789px]:h-110 w-full absolute top-0 left-0`}
         style={{
           background: `${
             media.bannerImage
@@ -65,7 +65,13 @@ export const DetailsHero = ({ media }: { media: Media }) => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute -bottom-30 left-5 min-[600px]:-bottom-50 min-[789px]:-bottom-60 min-[600px]:left-[8%] min-[1025px]:left-[13%] w-35 min-[600px]:w-50 min-[789px]:w-fit">
+        <div
+          className="absolute inset-0 bg-background"
+          style={{
+            maskImage: "linear-gradient(to bottom,transparent,black)",
+          }}
+        ></div>
+        <div className="absolute max-[350px]:left-2 -bottom-30 left-5 min-[600px]:-bottom-50 min-[789px]:bottom-10 min-[600px]:left-[8%] min-[1025px]:left-[5%] w-35 min-[600px]:w-50 min-[789px]:w-fit">
           <Image
             src={imageUrl}
             placeholder="blur"
@@ -74,6 +80,7 @@ export const DetailsHero = ({ media }: { media: Media }) => {
             onError={handleError}
             width={250}
             height={380}
+            className="rounded-lg"
           />
 
           <div className="absolute bottom-0 left-[109%] flex flex-col">
@@ -117,7 +124,7 @@ export const DetailsHero = ({ media }: { media: Media }) => {
               </div>
             </div>
 
-            <div className="flex min-[789px]:gap-x-4 gap-x-1 items-center">
+            <div className="flex min-[789px]:gap-x-4 gap-x-1 items-center max-w-[100%]">
               <Link
                 href={""}
                 className="min-[600px]:w-26 min-[789px]:w-50 min-[600px]:h-9 min-[789px]:h-13 text-[10px] w-20 h-7 min-[600px]:text-[12px] min-[789px]:text-xl flex justify-center items-center bg-accent-two rounded-sm min-[789px]:rounded-lg"

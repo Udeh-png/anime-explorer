@@ -19,7 +19,6 @@ export const Characters = ({ media }: { media: Media }) => {
   const [displayCharacters, setDisplayCharacters] = useState(charEdgesState); // use this to render characters, all or search
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [isScrollable, setIsScrollable] = useState(false);
   const scrollableRef = useRef<HTMLDivElement>(null);
 
   async function loadMoreChars() {
@@ -42,19 +41,6 @@ export const Characters = ({ media }: { media: Media }) => {
       }
     }
   }
-
-  useEffect(() => {
-    const scrollable = scrollableRef.current;
-    if (scrollable) {
-      const scrollHeight = scrollable.scrollHeight;
-      const clientHeight = scrollable.clientHeight;
-      if (scrollHeight > clientHeight) {
-        setIsScrollable(true);
-      } else {
-        setIsScrollable(false);
-      }
-    }
-  }, [displayCharacters]);
 
   //TODO: You know how i made it so the search only check the first 13 pages make it so it can load more on click or scroll or something
 
@@ -93,7 +79,7 @@ export const Characters = ({ media }: { media: Media }) => {
         )}
       </div>
       <div
-        className="grid min-[600px]:grid-cols-2 min-[790px]:grid-cols-3 gap-3 max-h-110 overflow-auto scrollable"
+        className="grid min-[600px]:grid-cols-4 gap-3 grid-cols-2 max-h-110 overflow-auto scrollable justify-center pr-2"
         onScroll={() => {
           if (!isSearching) {
             loadOnScroll();
@@ -101,64 +87,31 @@ export const Characters = ({ media }: { media: Media }) => {
         }}
         ref={scrollableRef}
       >
-        {isScrollable && (
-          <div className="h-110 w-3 absolute text-[10px] min-[600px]:flex left-[49.1%] min-[790px]:left-[33.1%] hidden flex-col justify-between">
-            <FaChevronUp />
-            <FaChevronDown />
-          </div>
-        )}
-        {isScrollable && (
-          <div className="h-110 w-3 absolute min-[790px]:flex text-[10px] right-[33.05%] hidden flex-col justify-between text-wrap">
-            <FaChevronUp />
-            <FaChevronDown />
-          </div>
-        )}
         {displayCharacters.map((characterEdge, i) => {
           const { node, role } = characterEdge;
-          const { dateOfBirth, age, image, name, id: charId } = node;
-          const { day, month, year } = dateOfBirth;
+          const { image, name, id: charId } = node;
 
           return (
             <Link
               href={`/${id}/${titleForUrl}/${charId}`}
-              className="min-[600px]:h-29 min-[600px]:p-4 flex flex-col justify-between rounded-lg bg-white/20 p-2"
+              className="min-h-50 flex flex-col group"
               key={i}
             >
-              <div className="flex justify-between mb-2">
-                <div className="flex gap-x-3 items-center">
-                  <div className="min-[600px]:min-w-12 min-[600px]:h-12 min-w-9 h-9 relative overflow-clip text-[10px] rounded-full">
-                    <Image
-                      src={image.medium}
-                      alt={`${name.full} image`}
-                      fill
-                      sizes="(>600px) 100vw"
-                      className="object-cover"
-                    ></Image>
-                  </div>
-                  <div>
-                    <p className="min-[600px]:text-sm text-xs w-full">
-                      {name.full}
-                    </p>
-                    <p className="min-[600px]:text-xs text-[10px] text-white/50 line-clamp-1">
-                      {name.native}
-                      {name.alternative.map((name) => ", " + name)}
-                    </p>
-                  </div>
-                </div>
-                <div className="min-[600px]:text-xs text-[10px] flex gap-1 items-center">
-                  <FaCalendarDays />
-
-                  <p className="">
-                    {day && month && year
-                      ? `${String(day).padStart(2, "0")}/${String(
-                          month
-                        ).padStart(2, "0")}/${year}`
-                      : age}
-                  </p>
-                </div>
+              <div className="w-full h-full overflow-clip rounded-lg mb-1">
+                <div
+                  className="w-full h-full group-hover:scale-105 transition-transform max-[345px]:bg-contain bg-cover"
+                  style={{
+                    backgroundImage: `url(${image.large})`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                ></div>
               </div>
-              <div className="flex justify-start">
-                <p className="px-2 py-[1px] rounded-full min-[600px]:text-xs text-[10px] bg-accent-two/50">
+              <div className="text-center text-sm">
+                <p className="font-semibold line-clamp-1 group-hover:text-accent-two transition-colors">
+                  {name.full}
+                </p>
+                <p className="text-white/50 text-xs">
                   {role.charAt(0) + role.slice(1, role.length).toLowerCase()}
                 </p>
               </div>

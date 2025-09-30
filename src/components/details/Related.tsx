@@ -10,19 +10,15 @@ export const Related = ({ media }: { media: Media }) => {
   );
 
   return relatedAnime.length > 0 ? (
-    <div className="flex flex-cpl flex-wrap gap-3 max-h-110 overflow-auto scrollable">
+    <div className="grid min-[600px]:grid-cols-3 grid-cols-2 gap-3 max-h-110 overflow-auto scrollable pr-2">
       {relatedAnime.map(({ relationType, node }, i) => {
         const { coverImage, id, title: titleObj, status, type } = node;
         const title = titleObj.english || titleObj.romaji;
         const urlTitle = formatTitle(title);
         return (
-          <Link
-            href={`/${id}/${urlTitle}`}
-            className={`min-[600px]:w-40 w-30`}
-            key={i}
-          >
+          <Link href={`/${id}/${urlTitle}`} className={`text-xs`} key={i}>
             <div
-              className="w-full min-[600px]:h-60 h-50 rounded"
+              className="min-[600px]:h-50 h-50 rounded-lg mb-2 min-[600px]:max-w-67 w-full"
               style={{
                 backgroundImage: `url(${coverImage.extraLarge})`,
                 backgroundPosition: "center",
@@ -30,13 +26,11 @@ export const Related = ({ media }: { media: Media }) => {
                 backgroundRepeat: "no-repeat",
               }}
             ></div>
-            <div className="">
-              <div className="min-[600px]:text-xs text-[10px]">{title}</div>
-              <div className="min-[600px]:text-xs text-[10px] text-white/50">
-                <span className="text-accent-two">{relationType}</span> &middot;{" "}
-                {`${getStatusMessage(status)}`}
-              </div>
-            </div>
+            <p className="font-semibold">{title}</p>
+            <p className="text-white/50">
+              <span className="text-accent-two">{relationType}</span> &middot;{" "}
+              <span>{status}</span>
+            </p>
           </Link>
         );
       })}

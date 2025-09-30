@@ -129,6 +129,9 @@ export async function getMediaWithId(
         genres
         seasonYear
         description
+        episodes
+        duration
+        source
         streamingEpisodes {
           title
           thumbnail
