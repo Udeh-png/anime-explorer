@@ -51,7 +51,7 @@ export const Navbar = () => {
         ref={observedRef}
       ></div>
       <motion.div
-        className={`absolute flex justify-between max-w-[1200px] px-8 min-[614px]:h-20 h-14 items-center top-0 left-1/2 -translate-x-1/2 w-full z-10 transition-[width] duration-500 ${
+        className={`absolute flex justify-between max-w-[1200px] px-8 min-[614px]:h-14 h-14 items-center top-0 left-1/2 -translate-x-1/2 w-full z-10 transition-[width] duration-500 ${
           reached
             ? "fixed bg-[rgba(8,12,22,0.8)] rounded-full max-[992px]:w-[80%] max-[614px]:w-[85%]"
             : ""
