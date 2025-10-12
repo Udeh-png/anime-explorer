@@ -2,13 +2,25 @@
 
 import { Days } from "@/components/schedule/days";
 import { FilterDropDown } from "@/components/schedule/filterDropdown";
-import { Checkbox } from "@/components/shared/Checkbox";
-import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { FaCalendar, FaFilter } from "react-icons/fa";
-import { FaCheck } from "react-icons/fa6";
 
 export const ScheduleHeder = () => {
   const [view, setView] = useState<"week" | "day">("week");
+  const [openFilters, setOpenFilters] = useState(false);
+  const dropdownContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const dropdownContainer = dropdownContainerRef.current;
+    document.addEventListener("click", (e) => {
+      if (dropdownContainer) {
+        if (!dropdownContainer.contains(e.target as Element)) {
+          setOpenFilters(false);
+        }
+      }
+    });
+  }, []);
 
   function handleWeekView() {
     setView("week");
@@ -51,12 +63,37 @@ export const ScheduleHeder = () => {
             </button>
           </div>
 
-          <div className="flex relative items-center gap-2 bg-card-background w-30 justify-center rounded-lg">
-            <FilterDropDown />
-            <span>
-              <FaFilter />
-            </span>
-            <span>Filter</span>
+          <div className="relative" ref={dropdownContainerRef}>
+            <button
+              className="flex items-center gap-2 bg-card-background w-30 rounded-lg justify-center h-full cursor-pointer"
+              onClick={() => setOpenFilters(!openFilters)}
+            >
+              <span>
+                <FaFilter />
+              </span>
+              <span>Filter</span>
+            </button>
+            <AnimatePresence>
+              {openFilters && (
+                <motion.div
+                  transition={{
+                    type: "tween",
+                    duration: 0.03,
+                  }}
+                  initial={{
+                    opacity: 0,
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                >
+                  <FilterDropDown />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

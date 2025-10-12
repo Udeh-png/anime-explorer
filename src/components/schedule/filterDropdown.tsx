@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Checkbox } from "../shared/Checkbox";
 
 export const FilterDropDown = () => {
   return (
-    <div className="text-[13px] absolute w-70 min-h-100 top-full right-0 mt-2 flex flex-col gap-y-4 rounded-lg p-3 bg-card-background backdrop-blur-xs">
+    <div className="text-[13px] absolute w-70 min-h-100 top-full right-0 mt-2 flex flex-col gap-y-4 rounded-lg p-3 bg-card-background backdrop-blur-xs caret-transparent">
       <div>
         <p>Genre</p>
         <div className="flex mt-1.5 flex-wrap gap-2">
