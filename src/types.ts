@@ -137,3 +137,12 @@ export type PageObject = {
   };
   media: Media[];
 };
+
+export type Schedule = {
+  id: number;
+  airingAt: number;
+  timeUntilAiring: number;
+  episode: number;
+  mediaId: number;
+  media: Media;
+};

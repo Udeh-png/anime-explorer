@@ -1,4 +1,6 @@
+import { Schedule } from "motion";
 import { Character, Media, PageObject } from "./types";
+import { timeConverter } from "./utils/sharedUtils";
 
 export type PresetType = "trending" | "classics" | "airing" | "top_fifty";
 
@@ -303,4 +305,52 @@ export async function getCharacterFromSearch(
     }
   });
   return results;
+}
+
+export async function getSchedules(date: Date): Promise<Schedule[]> {
+  const dateFormat: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    day: "numeric",
+    month: "long",
+  };
+  const timestamp = Math.round(timeConverter(date.getTime(), "toSecs"));
+  const timestamp24hrs = Math.round(timestamp + 3600 * 24);
+
+  const query = `
+    query {
+      Page {
+        airingSchedules (airingAt_greater: ${timestamp}, airingAt_lesser: ${timestamp24hrs}) {
+          airingAt
+          episode
+          media {
+            title {
+              english
+              romaji
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const url = "https://graphql.anilist.co",
+    options = {
+      method: "POST",
+      body: JSON.stringify({ query }),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+    };
+
+  return await fetch(url, options)
+    .then(async (res) => {
+      return await res.json();
+    })
+    .then((jsonResponse) => {
+      return jsonResponse.data.Page.airingSchedules;
+    })
+    .catch((e) => {
+      console.error(`Error ${e} occurred`);
+    });
 }

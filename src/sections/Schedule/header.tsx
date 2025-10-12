@@ -1,8 +1,11 @@
 "use client";
 
 import { Days } from "@/components/schedule/days";
+import { FilterDropDown } from "@/components/schedule/filterDropdown";
+import { Checkbox } from "@/components/shared/Checkbox";
 import { useState } from "react";
 import { FaCalendar, FaFilter } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa6";
 
 export const ScheduleHeder = () => {
   const [view, setView] = useState<"week" | "day">("week");
@@ -48,12 +51,13 @@ export const ScheduleHeder = () => {
             </button>
           </div>
 
-          <button className="flex items-center gap-2 bg-card-background w-30 justify-center rounded-lg">
+          <div className="flex relative items-center gap-2 bg-card-background w-30 justify-center rounded-lg">
+            <FilterDropDown />
             <span>
               <FaFilter />
             </span>
             <span>Filter</span>
-          </button>
+          </div>
         </div>
       </div>
 

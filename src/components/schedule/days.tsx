@@ -22,9 +22,9 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
       days.push(newDate);
     }
   } else {
-    for (let i = 0; i < 6; i++) {
-      const newDate = new Date(date.toISOString());
-      date.setDate(date.getDate() + 1);
+    for (let i = 0; i < 7; i++) {
+      const newDate = new Date();
+      newDate.setDate(constDate.getDate() + i);
       days.push(newDate);
     }
   }
