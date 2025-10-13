@@ -1,42 +1,31 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Day } from "./day";
 import { ScheduleContext } from "@/utils/contexts/SchedulesContexts";
 import { getWeekDay, getWholeDate } from "@/utils/schedulesPageUtils";
+import { monthDays, weekDays } from "./data/WeekAndMonth";
 
 export const Days = ({ view }: { view: "week" | "day" }) => {
-  const constDate = new Date();
-  const date = new Date(constDate.getFullYear(), constDate.getMonth(), 1);
-  const days: Date[] = [];
   const selectedDayUiRef = useRef<HTMLDivElement>(null);
   const { selectedDay, setSelectedDay } = useContext(ScheduleContext);
-
-  if (view === "day") {
-    while (date.getMonth() === constDate.getMonth()) {
-      const newDate = new Date(date.toISOString());
-      date.setDate(date.getDate() + 1);
-      days.push(newDate);
-    }
-  } else {
-    const date = new Date();
-    date.setDate(new Date().getDate() - new Date().getDay());
-    for (let i = 0; i < 7; i++) {
-      const newDate = new Date();
-
-      newDate.setDate(date.getDate() + i);
-      days.push(newDate);
-    }
-  }
+  const [days, setDays] = useState<Date[]>([]);
 
   useEffect(() => {
-    const selectedDayUi = selectedDayUiRef.current;
-    if (selectedDayUi) {
-      selectedDayUi.scrollIntoView({
+    if (view === "week") {
+      setDays(weekDays);
+    } else {
+      setDays(monthDays);
+    }
+  }, [view]);
+
+  useEffect(() => {
+    if (selectedDayUiRef.current) {
+      selectedDayUiRef.current.scrollIntoView({
         behavior: "smooth",
         inline: "center",
         block: "nearest",
       });
     }
-  }, [view]);
+  }, [days]);
 
   return (
     <div className="flex gap-3 h-25 overflow-auto scrollable items-center">
@@ -46,6 +35,7 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
         const isToday = dayDate === todayDate;
         const dayName = getWeekDay(day, "short");
         const dateNum = day.getDate();
+        const isSelectedDay = selectedDay === dayDate;
 
         return (
           <Day
@@ -54,8 +44,8 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
             numberOfShows={i + 2}
             isToday={isToday}
             key={i}
-            ref={selectedDay === dayDate ? selectedDayUiRef : null}
-            isSelectedDay={selectedDay === dayDate}
+            ref={isSelectedDay ? selectedDayUiRef : null}
+            isSelectedDay={isSelectedDay}
             onClick={() => {
               setSelectedDay(dayDate);
             }}
