@@ -30,11 +30,11 @@ export const Day = forwardRef(
           {weekDay} {date}
         </p>
         {isToday && (
-          <p className="text-xs px-2.5 py-[1px] rounded bg-green-500 w-fit">
+          <p className="text-xs px-2.5 py-[1px] rounded-full bg-green-500 w-fit">
             Today
           </p>
         )}
-        <p className="text-xs text-white/50">{numberOfShows} shows</p>
+        <p className="text-xs text-white/60">{numberOfShows} shows</p>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/shared/navbar";
 
@@ -11,6 +11,21 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const NotoSana = Noto_Sans({
+  variable: "--font-noto-sans",
+  subsets: [
+    "latin",
+    "cyrillic",
+    "cyrillic-ext",
+    "devanagari",
+    "greek",
+    "greek-ext",
+    "latin-ext",
+    "vietnamese",
+  ],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 const poppins = Poppins({
@@ -32,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${poppins.variable} ${geistMono.variable} antialiased p-2 font-poppins`}
+        className={`${geistSans.variable} ${poppins.variable} ${geistMono.variable} ${NotoSana.variable} antialiased p-2 font-poppins`}
       >
         <Navbar />
         {children}

@@ -5,14 +5,14 @@ export const WeekViewCard = ({
   dayOfWeek,
   showCount,
   isSelectedDay,
-  scheduleOne,
-  scheduleTwo,
+  animeOne,
+  animeTwo,
 }: {
   dayOfWeek?: string;
   showCount?: number;
   isSelectedDay?: boolean;
-  scheduleOne?: AiringSchedule;
-  scheduleTwo?: AiringSchedule;
+  animeOne?: AiringSchedule;
+  animeTwo?: AiringSchedule;
 }) => {
   return (
     <div

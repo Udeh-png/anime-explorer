@@ -7,7 +7,7 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
   const constDate = new Date();
   const date = new Date(constDate.getFullYear(), constDate.getMonth(), 1);
   const days: Date[] = [];
-  const todayUiRef = useRef<HTMLDivElement>(null);
+  const selectedDayUiRef = useRef<HTMLDivElement>(null);
   const { selectedDay, setSelectedDay } = useContext(ScheduleContext);
 
   if (view === "day") {
@@ -28,9 +28,9 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
   }
 
   useEffect(() => {
-    const todayUi = todayUiRef.current;
-    if (todayUi) {
-      todayUi.scrollIntoView({
+    const selectedDayUi = selectedDayUiRef.current;
+    if (selectedDayUi) {
+      selectedDayUi.scrollIntoView({
         behavior: "smooth",
         inline: "center",
         block: "nearest",
@@ -54,7 +54,7 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
             numberOfShows={i + 2}
             isToday={isToday}
             key={i}
-            ref={isToday ? todayUiRef : null}
+            ref={selectedDay === dayDate ? selectedDayUiRef : null}
             isSelectedDay={selectedDay === dayDate}
             onClick={() => {
               setSelectedDay(dayDate);

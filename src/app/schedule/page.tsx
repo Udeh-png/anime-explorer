@@ -1,4 +1,5 @@
-import { WeekView } from "@/components/schedule/weekView";
+import { ViewManager } from "@/components/schedule/viewManager";
+import { getSchedules } from "@/queries";
 import { ScheduleHeder } from "@/sections/Schedule/header";
 import { ScheduleContextProvider } from "@/utils/contexts/SchedulesContexts";
 
@@ -8,8 +9,7 @@ export default async function Schedule() {
     new Date().getMonth(),
     1
   );
-  // const firstOfTheMonthSchedule = await getSchedules(firstOfTheMonth);
-  // console.log(firstOfTheMonthSchedule);
+  const firstOfTheMonthSchedule = await getSchedules(firstOfTheMonth);
 
   return (
     <ScheduleContextProvider>
@@ -19,7 +19,7 @@ export default async function Schedule() {
         </div>
 
         <div className="py-7 px-10 bg-gray-950 h-full">
-          <WeekView />
+          <ViewManager />
         </div>
       </div>
     </ScheduleContextProvider>
