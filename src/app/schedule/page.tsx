@@ -1,5 +1,6 @@
-import { getSchedules } from "@/queries";
+import { WeekView } from "@/components/schedule/weekView";
 import { ScheduleHeder } from "@/sections/Schedule/header";
+import { ScheduleContextProvider } from "@/utils/contexts/SchedulesContexts";
 
 export default async function Schedule() {
   const firstOfTheMonth = new Date(
@@ -7,14 +8,20 @@ export default async function Schedule() {
     new Date().getMonth(),
     1
   );
-  const firstOfTheMonthSchedule = await getSchedules(firstOfTheMonth);
-  console.log(firstOfTheMonthSchedule);
+  // const firstOfTheMonthSchedule = await getSchedules(firstOfTheMonth);
+  // console.log(firstOfTheMonthSchedule);
 
   return (
-    <div>
+    <ScheduleContextProvider>
       <div>
-        <ScheduleHeder />
+        <div>
+          <ScheduleHeder />
+        </div>
+
+        <div className="py-7 px-10 bg-gray-950 h-full">
+          <WeekView />
+        </div>
       </div>
-    </div>
+    </ScheduleContextProvider>
   );
 }

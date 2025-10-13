@@ -138,7 +138,7 @@ export type PageObject = {
   media: Media[];
 };
 
-export type Schedule = {
+export type AiringSchedule = {
   id: number;
   airingAt: number;
   timeUntilAiring: number;

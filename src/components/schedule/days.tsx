@@ -1,19 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Day } from "./day";
+import { ScheduleContext } from "@/utils/contexts/SchedulesContexts";
+import { getWeekDay, getWholeDate } from "@/utils/schedulesPageUtils";
 
 export const Days = ({ view }: { view: "week" | "day" }) => {
-  const dateOption: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
   const constDate = new Date();
   const date = new Date(constDate.getFullYear(), constDate.getMonth(), 1);
   const days: Date[] = [];
   const todayUiRef = useRef<HTMLDivElement>(null);
-  const [selectedDay, setSelectedDay] = useState(
-    new Date().toLocaleDateString("en-US", dateOption)
-  );
+  const { selectedDay, setSelectedDay } = useContext(ScheduleContext);
 
   if (view === "day") {
     while (date.getMonth() === constDate.getMonth()) {
@@ -22,9 +17,12 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
       days.push(newDate);
     }
   } else {
+    const date = new Date();
+    date.setDate(new Date().getDate() - new Date().getDay());
     for (let i = 0; i < 7; i++) {
       const newDate = new Date();
-      newDate.setDate(constDate.getDate() + i);
+
+      newDate.setDate(date.getDate() + i);
       days.push(newDate);
     }
   }
@@ -32,19 +30,21 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
   useEffect(() => {
     const todayUi = todayUiRef.current;
     if (todayUi) {
-      todayUi.scrollIntoView({ behavior: "smooth", inline: "center" });
+      todayUi.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
     }
   }, [view]);
 
   return (
     <div className="flex gap-3 h-25 overflow-auto scrollable items-center">
       {days.map((day, i) => {
-        const todayDate = new Date().toLocaleDateString("en-US", dateOption);
-        const dayDate = day.toLocaleDateString("en-US", dateOption);
+        const todayDate = getWholeDate(new Date());
+        const dayDate = getWholeDate(day);
         const isToday = dayDate === todayDate;
-        const dayName = day.toLocaleDateString("en-US", {
-          weekday: "short",
-        });
+        const dayName = getWeekDay(day, "short");
         const dateNum = day.getDate();
 
         return (
@@ -55,9 +55,7 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
             isToday={isToday}
             key={i}
             ref={isToday ? todayUiRef : null}
-            className={`${
-              selectedDay === dayDate ? "bg-accent-two!" : ""
-            } transition-colors`}
+            isSelectedDay={selectedDay === dayDate}
             onClick={() => {
               setSelectedDay(dayDate);
             }}

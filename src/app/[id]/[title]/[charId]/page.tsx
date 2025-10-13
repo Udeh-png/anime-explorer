@@ -1,6 +1,7 @@
 import { DescriptionUi } from "@/components/shared/DescriptionUtil";
 import { getCharacterWithId } from "@/queries";
 import { getOrdinal } from "@/utils/characterPageUtils";
+import { getMonth } from "@/utils/schedulesPageUtils";
 import Image from "next/image";
 
 export default async function ({
@@ -21,12 +22,7 @@ export default async function ({
     month = dateOfBirth.month,
     year = dateOfBirth.year;
   const dayOrdinal = getOrdinal(day);
-  const displayMonth = new Date(year, month - 1, day).toLocaleDateString(
-    "en-US",
-    {
-      month: "short",
-    }
-  );
+  const displayMonth = getMonth(new Date(year, month - 1, day), "short");
   const dob = `${dayOrdinal} ${displayMonth}${year ? `, ${year}` : ""}`;
 
   return (

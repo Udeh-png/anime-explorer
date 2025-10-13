@@ -2,12 +2,14 @@
 
 import { Days } from "@/components/schedule/days";
 import { FilterDropDown } from "@/components/schedule/filterDropdown";
+import { ScheduleContext } from "@/utils/contexts/SchedulesContexts";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaCalendar, FaFilter } from "react-icons/fa";
 
 export const ScheduleHeder = () => {
-  const [view, setView] = useState<"week" | "day">("week");
+  const { view, setView } = useContext(ScheduleContext);
+
   const [openFilters, setOpenFilters] = useState(false);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +32,7 @@ export const ScheduleHeder = () => {
     setView("day");
   }
   return (
+    // <ViewContextProvider>
     <div className="px-3 h-65 bg-gray-900 pb-5 flex flex-col justify-end">
       <div className="flex h-20 justify-between items-center">
         <div className="flex items-center gap-3">
@@ -100,5 +103,6 @@ export const ScheduleHeder = () => {
 
       <Days view={view} />
     </div>
+    // </ViewContextProvider>
   );
 };

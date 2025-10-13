@@ -1,5 +1,4 @@
-import { Schedule } from "motion";
-import { Character, Media, PageObject } from "./types";
+import { AiringSchedule, Character, Media, PageObject } from "./types";
 import { timeConverter } from "./utils/sharedUtils";
 
 export type PresetType = "trending" | "classics" | "airing" | "top_fifty";
@@ -307,7 +306,7 @@ export async function getCharacterFromSearch(
   return results;
 }
 
-export async function getSchedules(date: Date): Promise<Schedule[]> {
+export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
   const dateFormat: Intl.DateTimeFormatOptions = {
     year: "numeric",
     day: "numeric",

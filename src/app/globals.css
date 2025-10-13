@@ -2,7 +2,7 @@
 
 :root {
   --background: rgb(11, 17, 31);
-  --card-background: rgba(128, 128, 128, 0.2);
+  --card-background: rgba(54, 65, 83, 0.3);
   --foreground: rgb(23, 23, 23);
   --accent-one: rgb(225, 29, 72);
   --accent-two: rgb(56, 189, 248);
