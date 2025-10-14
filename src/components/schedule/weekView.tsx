@@ -1,29 +1,39 @@
+import { AiringSchedule } from "@/types";
 import { WeekViewCard } from "./weekViewCard";
 import { getWeekDay, getWholeDate } from "@/utils/schedulesPageUtils";
 
-export const WeekView = ({ selectedDay }: { selectedDay: string }) => {
-  const date = new Date();
-  const weekDays: Date[] = [];
-
-  date.setDate(new Date().getDate() - new Date().getDay());
-  for (let i = 0; i < 7; i++) {
-    const newDate = new Date();
-
-    newDate.setDate(date.getDate() + i);
-    weekDays.push(newDate);
-  }
+export const WeekView = ({
+  weeksAiringSchedules,
+  selectedDate,
+}: {
+  weeksAiringSchedules: AiringSchedule[][];
+  selectedDate: string;
+}) => {
   return (
     <div className="grid grid-cols-4 gap-6">
-      {weekDays.map((weekDay, i) => {
-        const dayOfWeek = getWeekDay(weekDay, "long");
-        const day = getWholeDate(weekDay);
+      {weeksAiringSchedules.map((daySchedules, i) => {
+        const noCornDaySchedules = daySchedules.filter(
+          (daySchedule) => !daySchedule.media.isAdult
+        );
+        const showsCount = noCornDaySchedules.length;
+        const weekDay = new Date(noCornDaySchedules[0].airingAt * 1000);
+        const animeSchedule1 = noCornDaySchedules[0];
+        const animeSchedule2 = noCornDaySchedules[1];
+        const dayOfWeek = getWeekDay(
+          new Date(noCornDaySchedules[0].airingAt * 1000),
+          "long"
+        );
+        const weekDayDate = getWholeDate(weekDay);
+        const isSelectedDate = weekDayDate === selectedDate;
 
         return (
           <WeekViewCard
             dayOfWeek={dayOfWeek}
-            showCount={3}
+            showCount={showsCount}
             key={i}
-            isSelectedDay={day === selectedDay}
+            isSelectedDate={isSelectedDate}
+            animeOne={animeSchedule1}
+            animeTwo={animeSchedule2}
           />
         );
       })}

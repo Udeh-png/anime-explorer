@@ -54,6 +54,7 @@ export type Media = {
   seasonYear: number;
   season: string;
   description: string;
+  isAdult: boolean;
   status:
     | "FINISHED"
     | "HIATUS"

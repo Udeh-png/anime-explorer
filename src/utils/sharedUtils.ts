@@ -6,14 +6,20 @@ export function formatTitle(title: string) {
 }
 
 export function timeConverter(
-  seconds: number,
-  operation: "toMillis" | "toSecs"
+  time: number,
+  operation:
+    | "secsToMillis"
+    | "millisToSecs"
+    | "hoursToMillis"
+    | "hoursToSeconds"
 ): number {
   switch (operation) {
-    case "toMillis":
-      return seconds * 1000;
-    case "toSecs":
-      return seconds / 1000;
+    case "secsToMillis":
+      return time * 1000;
+    case "millisToSecs":
+      return time / 1000;
+    case "hoursToMillis":
+      return time * 60 * 60 * 1000;
     default:
       return NaN;
   }

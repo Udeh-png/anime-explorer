@@ -7,21 +7,21 @@ export const Day = forwardRef(
       date,
       numberOfShows,
       isToday,
-      isSelectedDay,
+      isSelectedDate,
       ...props
     }: {
       weekDay: string;
       date: number;
       numberOfShows: number;
       isToday: boolean;
-      isSelectedDay: boolean;
+      isSelectedDate: boolean;
     } & React.HtmlHTMLAttributes<HTMLDivElement>,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
       <div
         className={`min-w-27 cursor-pointer max-h-22 h-22 rounded-lg text-center flex flex-col items-center justify-center gap-y-1 bg-card-background caret-transparent transition-colors ${
-          isSelectedDay ? "bg-accent-two!" : ""
+          isSelectedDate ? "bg-accent-two!" : ""
         }`}
         ref={ref}
         {...props}

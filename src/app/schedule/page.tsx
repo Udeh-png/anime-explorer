@@ -1,15 +1,17 @@
-import { ViewManager } from "@/components/schedule/viewManager";
+import { weekDays } from "@/components/schedule/data/WeekAndMonth";
+import { ViewManager } from "@/sections/Schedule/viewManager";
 import { getSchedules } from "@/queries";
 import { ScheduleHeder } from "@/sections/Schedule/header";
+import { AiringSchedule } from "@/types";
 import { ScheduleContextProvider } from "@/utils/contexts/SchedulesContexts";
 
 export default async function Schedule() {
-  const firstOfTheMonth = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    1
-  );
-  const firstOfTheMonthSchedule = await getSchedules(firstOfTheMonth);
+  const requestArray: Promise<AiringSchedule[]>[] = [];
+  weekDays.forEach((weekDay) => {
+    requestArray.push(getSchedules(weekDay));
+  });
+
+  const weeksAiringSchedules = await Promise.all(requestArray);
 
   return (
     <ScheduleContextProvider>
@@ -19,7 +21,7 @@ export default async function Schedule() {
         </div>
 
         <div className="py-7 px-10 bg-gray-950 h-full">
-          <ViewManager />
+          <ViewManager weeksAiringSchedules={weeksAiringSchedules} />
         </div>
       </div>
     </ScheduleContextProvider>

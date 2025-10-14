@@ -307,12 +307,12 @@ export async function getCharacterFromSearch(
 }
 
 export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
-  const dateFormat: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    day: "numeric",
-    month: "long",
-  };
-  const timestamp = Math.round(timeConverter(date.getTime(), "toSecs"));
+  const timestamp = Math.round(
+    timeConverter(
+      date.getTime() - timeConverter(date.getHours(), "hoursToMillis"),
+      "millisToSecs"
+    )
+  );
   const timestamp24hrs = Math.round(timestamp + 3600 * 24);
 
   const query = `
@@ -321,7 +321,14 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
         airingSchedules (airingAt_greater: ${timestamp}, airingAt_lesser: ${timestamp24hrs}) {
           airingAt
           episode
+          mediaId
           media {
+            isAdult
+            coverImage {
+              medium
+              large
+              extraLarge
+            }
             title {
               english
               romaji

@@ -25,3 +25,25 @@ export const getMonth = (
     month: format,
   });
 };
+
+export const normalizeTime = (
+  date: Date,
+  {
+    hrsCycle,
+    hours = true,
+    mins = true,
+    secs = true,
+  }: {
+    hrsCycle: "h12" | "h24" | "h23";
+    hours?: boolean;
+    mins?: boolean;
+    secs?: boolean;
+  }
+): string => {
+  return date.toLocaleTimeString("en-US", {
+    hour: hours ? "2-digit" : undefined,
+    minute: mins ? "2-digit" : undefined,
+    second: secs ? "2-digit" : undefined,
+    hourCycle: hrsCycle,
+  });
+};

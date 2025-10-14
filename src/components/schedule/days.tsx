@@ -5,8 +5,8 @@ import { getWeekDay, getWholeDate } from "@/utils/schedulesPageUtils";
 import { monthDays, weekDays } from "./data/WeekAndMonth";
 
 export const Days = ({ view }: { view: "week" | "day" }) => {
-  const selectedDayUiRef = useRef<HTMLDivElement>(null);
-  const { selectedDay, setSelectedDay } = useContext(ScheduleContext);
+  const selectedDateUiRef = useRef<HTMLDivElement>(null);
+  const { selectedDate, setSelectedDate } = useContext(ScheduleContext);
   const [days, setDays] = useState<Date[]>([]);
 
   useEffect(() => {
@@ -18,8 +18,8 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
   }, [view]);
 
   useEffect(() => {
-    if (selectedDayUiRef.current) {
-      selectedDayUiRef.current.scrollIntoView({
+    if (selectedDateUiRef.current) {
+      selectedDateUiRef.current.scrollIntoView({
         behavior: "smooth",
         inline: "center",
         block: "nearest",
@@ -35,7 +35,7 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
         const isToday = dayDate === todayDate;
         const dayName = getWeekDay(day, "short");
         const dateNum = day.getDate();
-        const isSelectedDay = selectedDay === dayDate;
+        const isSelectedDate = selectedDate === dayDate;
 
         return (
           <Day
@@ -44,10 +44,10 @@ export const Days = ({ view }: { view: "week" | "day" }) => {
             numberOfShows={i + 2}
             isToday={isToday}
             key={i}
-            ref={isSelectedDay ? selectedDayUiRef : null}
-            isSelectedDay={isSelectedDay}
+            ref={isSelectedDate ? selectedDateUiRef : null}
+            isSelectedDate={isSelectedDate}
             onClick={() => {
-              setSelectedDay(dayDate);
+              setSelectedDate(dayDate);
             }}
           />
         );

@@ -6,15 +6,15 @@ import { getWholeDate } from "../schedulesPageUtils";
 type ScheduleContextType = {
   view: "week" | "day";
   setView: Dispatch<SetStateAction<"week" | "day">>;
-  selectedDay: string;
-  setSelectedDay: Dispatch<SetStateAction<string>>;
+  selectedDate: string;
+  setSelectedDate: Dispatch<SetStateAction<string>>;
 };
 
 export const ScheduleContext = createContext<ScheduleContextType>({
   view: "week",
   setView: () => {},
-  selectedDay: "",
-  setSelectedDay: () => {},
+  selectedDate: "",
+  setSelectedDate: () => {},
 });
 
 export const ScheduleContextProvider = ({
@@ -23,10 +23,10 @@ export const ScheduleContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [view, setView] = useState<"week" | "day">("week");
-  const [selectedDay, setSelectedDay] = useState(getWholeDate(new Date()));
+  const [selectedDate, setSelectedDate] = useState(getWholeDate(new Date()));
   return (
     <ScheduleContext.Provider
-      value={{ view, setView, selectedDay, setSelectedDay }}
+      value={{ view, setView, selectedDate, setSelectedDate }}
     >
       {children}
     </ScheduleContext.Provider>
