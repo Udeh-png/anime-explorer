@@ -12,9 +12,9 @@ export const WeekView = ({
   return (
     <div className="grid grid-cols-4 gap-6">
       {weeksAiringSchedules.map((daySchedules, i) => {
-        const noCornDaySchedules = daySchedules.filter(
-          (daySchedule) => !daySchedule.media.isAdult
-        );
+        const noCornDaySchedules = daySchedules
+          .filter((daySchedule) => !daySchedule.media.isAdult)
+          .sort((a, b) => b.media.popularity - a.media.popularity);
         const showsCount = noCornDaySchedules.length;
         const weekDay = new Date(noCornDaySchedules[0].airingAt * 1000);
         const animeSchedule1 = noCornDaySchedules[0];

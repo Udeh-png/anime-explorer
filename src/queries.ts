@@ -323,6 +323,7 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
           episode
           mediaId
           media {
+            popularity
             isAdult
             coverImage {
               medium
