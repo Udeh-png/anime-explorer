@@ -288,7 +288,7 @@ export async function getCharacterFromSearch(
     currentPage++;
     const moreCharEdges = await getMediaWithId(mediaId, currentPage);
     allCharEdges.push(...moreCharEdges.characters.edges);
-    console.log(moreCharEdges.characters.pageInfo.currentPage);
+    // console.log(moreCharEdges.characters.pageInfo.currentPage);
     if (currentPage < 14) {
       hasNextPage = moreCharEdges.characters.pageInfo.hasNextPage;
     } else {
@@ -341,13 +341,15 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
   `;
 
   const url = "https://graphql.anilist.co",
-    options = {
+    options: RequestInit = {
       method: "POST",
       body: JSON.stringify({ query }),
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
       },
+      cache: "force-cache",
+      next: { revalidate: 86400 },
     };
 
   return await fetch(url, options)

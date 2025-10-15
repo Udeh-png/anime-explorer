@@ -4,16 +4,16 @@ import { ScheduleContext } from "@/utils/contexts/SchedulesContexts";
 import { getWeekDay, getWholeDate } from "@/utils/schedulesPageUtils";
 import { monthDays, weekDays } from "./data/WeekAndMonth";
 
-export const Days = ({ view }: { view: "week" | "day" }) => {
+export const Days = ({ view }: { view: string | null }) => {
   const selectedDateUiRef = useRef<HTMLDivElement>(null);
   const { selectedDate, setSelectedDate } = useContext(ScheduleContext);
   const [days, setDays] = useState<Date[]>([]);
 
   useEffect(() => {
-    if (view === "week") {
-      setDays(weekDays);
-    } else {
+    if (view === "day") {
       setDays(monthDays);
+    } else {
+      setDays(weekDays);
     }
   }, [view]);
 

@@ -4,12 +4,13 @@ import { Days } from "@/components/schedule/days";
 import { FilterDropDown } from "@/components/schedule/filterDropdown";
 import { ScheduleContext } from "@/utils/contexts/SchedulesContexts";
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
 import { FaCalendar, FaFilter } from "react-icons/fa";
 
 export const ScheduleHeder = () => {
-  const { view, setView } = useContext(ScheduleContext);
-
+  const view = useSearchParams().get("view");
   const [openFilters, setOpenFilters] = useState(false);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
@@ -24,15 +25,7 @@ export const ScheduleHeder = () => {
     });
   }, []);
 
-  function handleWeekView() {
-    setView("week");
-  }
-
-  function handleDayView() {
-    setView("day");
-  }
   return (
-    // <ViewContextProvider>
     <div className="px-3 h-65 bg-gray-900 pb-5 flex flex-col justify-end">
       <div className="flex h-20 justify-between items-center">
         <div className="flex items-center gap-3">
@@ -48,22 +41,22 @@ export const ScheduleHeder = () => {
         </div>
         <div className="flex gap-x-3 h-12">
           <div className="bg-card-background flex items-center justify-center w-41 p-1 rounded-lg">
-            <button
-              className={`w-full h-full rounded-[inherit] transition-colors cursor-pointer ${
-                view === "week" ? "bg-accent-two" : ""
+            <Link
+              href={"schedule?view=week"}
+              className={`w-full h-full rounded-[inherit] flex items-center justify-center transition-colors cursor-pointer ${
+                view === "week" || !view ? "bg-accent-two" : ""
               }`}
-              onClick={handleWeekView}
             >
               Week
-            </button>
-            <button
-              className={`w-full h-full rounded-[inherit] transition-colors cursor-pointer ${
+            </Link>
+            <Link
+              href={"schedule?view=day"}
+              className={`w-full h-full rounded-[inherit] flex items-center justify-center transition-colors cursor-pointer ${
                 view === "day" ? "bg-accent-two" : ""
               }`}
-              onClick={handleDayView}
             >
               Day
-            </button>
+            </Link>
           </div>
 
           <div className="relative" ref={dropdownContainerRef}>
@@ -103,6 +96,5 @@ export const ScheduleHeder = () => {
 
       <Days view={view} />
     </div>
-    // </ViewContextProvider>
   );
 };

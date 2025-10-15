@@ -5,22 +5,24 @@ import { useContext } from "react";
 import { WeekView } from "../../components/schedule/weekView";
 import { DayView } from "../../components/schedule/dayView";
 import { AiringSchedule } from "@/types";
+import { useSearchParams } from "next/navigation";
 
 export const ViewManager = ({
   weeksAiringSchedules,
 }: {
   weeksAiringSchedules: AiringSchedule[][];
 }) => {
-  const { view, selectedDate } = useContext(ScheduleContext);
+  const { selectedDate } = useContext(ScheduleContext);
+  const view = useSearchParams().get("view");
   return (
     <div>
-      {view === "week" ? (
+      {view === "day" ? (
+        <DayView />
+      ) : (
         <WeekView
           weeksAiringSchedules={weeksAiringSchedules}
           selectedDate={selectedDate}
         />
-      ) : (
-        <DayView />
       )}
     </div>
   );
