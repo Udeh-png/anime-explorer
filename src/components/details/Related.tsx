@@ -12,7 +12,7 @@ export const Related = ({ media }: { media: Media }) => {
   return relatedAnime.length > 0 ? (
     <div className="grid min-[600px]:grid-cols-3 grid-cols-2 gap-3 max-h-110 overflow-auto scrollable pr-2">
       {relatedAnime.map(({ relationType, node }, i) => {
-        const { coverImage, id, title: titleObj, status, type } = node;
+        const { coverImage, id, title: titleObj, status } = node;
         const title = titleObj.english || titleObj.romaji;
         const urlTitle = formatTitle(title);
         return (

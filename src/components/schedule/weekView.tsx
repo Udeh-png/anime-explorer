@@ -4,10 +4,10 @@ import { getWeekDay, getWholeDate } from "@/utils/schedulesPageUtils";
 
 export const WeekView = ({
   weeksAiringSchedules,
-  selectedDate,
+  selectedDay,
 }: {
   weeksAiringSchedules: AiringSchedule[][];
-  selectedDate: string;
+  selectedDay: string | null;
 }) => {
   return (
     <div className="grid grid-cols-4 gap-6">
@@ -24,7 +24,8 @@ export const WeekView = ({
           "long"
         );
         const weekDayDate = getWholeDate(weekDay);
-        const isSelectedDate = weekDayDate === selectedDate;
+        const isSelectedDate =
+          weekDayDate === getWholeDate(new Date(Number(selectedDay)));
 
         return (
           <WeekViewCard

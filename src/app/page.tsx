@@ -5,7 +5,6 @@ import { PageObject } from "@/types";
 import { FaFire, FaMedal } from "react-icons/fa";
 import { FaDiamond } from "react-icons/fa6";
 import { MdEventAvailable } from "react-icons/md";
-import { HiOutlineSparkles } from "react-icons/hi";
 
 export default async function Home() {
   const trendingPageObj: Promise<PageObject> = getPageObject({

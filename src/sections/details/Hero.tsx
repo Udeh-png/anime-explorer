@@ -14,21 +14,19 @@ import {
   FaRegBookmark,
   FaRegHeart,
 } from "react-icons/fa";
-import { FaClapperboard, FaPlus, FaStar } from "react-icons/fa6";
+import { FaClapperboard, FaStar } from "react-icons/fa6";
 import { getMediaCategory, getStatusMessage } from "@/utils/detailsPageUtils";
 import { AnimatedButton } from "@/components/shared/AnimatedButton";
 import { FiShare } from "react-icons/fi";
 
 export const DetailsHero = ({ media }: { media: Media }) => {
   const {
-    id,
     title: titleObject,
     coverImage,
     averageScore,
     characters,
     seasonYear: year,
     popularity,
-    isFavorite,
     format,
     status,
   } = media;

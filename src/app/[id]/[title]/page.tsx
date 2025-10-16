@@ -4,7 +4,7 @@ import { DetailsHero } from "@/sections/details/Hero";
 import { TabInterface } from "@/sections/details/TabInterface";
 import { Specification } from "@/sections/details/Specifications";
 
-export default async function ({
+export default async function DetailsPage({
   params,
 }: {
   params: Promise<{ id: string }>;

@@ -1,10 +1,7 @@
 import { getCharacterFromSearch, getMediaWithId } from "@/queries";
 import { Media } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { FaCalendarDays } from "react-icons/fa6";
+import { useRef, useState } from "react";
 import { SearchBar } from "../shared/SearchBar";
 
 export const Characters = ({ media }: { media: Media }) => {
@@ -15,9 +12,7 @@ export const Characters = ({ media }: { media: Media }) => {
     .replace(/\s+/g, "-")
     .trim();
   const [charsState, setCharsState] = useState(chars); //Use this for current page
-  const [charEdgesState, setCharEdgesState] = useState(charsState.edges); // Use this to set all characters
-  const [displayCharacters, setDisplayCharacters] = useState(charEdgesState); // use this to render characters, all or search
-  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [displayCharacters, setDisplayCharacters] = useState(charsState.edges); // use this to render characters, all or search
   const [isSearching, setIsSearching] = useState(false);
   const scrollableRef = useRef<HTMLDivElement>(null);
 
@@ -70,7 +65,7 @@ export const Characters = ({ media }: { media: Media }) => {
           <button
             className="min-[600px]:mr-10 min-[600px]:text-sm text-xs text-accent-one"
             onClick={() => {
-              setDisplayCharacters(charEdgesState);
+              setDisplayCharacters(charsState.edges);
               setIsSearching(false);
             }}
           >

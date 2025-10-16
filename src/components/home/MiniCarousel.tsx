@@ -59,23 +59,25 @@ export const MiniCarousel = ({
 
   function checkScrollPosition() {
     const carrousel = carrouselRef.current;
-    const scrollLeft = carrousel?.scrollLeft;
-    if (scrollLeft! <= 0) {
-      setAtEnd("left");
-      return;
-    }
-    if (scrollLeft! + carrousel?.clientWidth! === carrousel?.scrollWidth) {
-      setAtEnd("right");
-      if (!loading) {
-        loadMore();
-        setTimeout(() => {
-          carrousel.scrollLeft += 100;
-        }, 1);
+    if (carrousel) {
+      const scrollLeft = carrousel.scrollLeft;
+      if (scrollLeft <= 0) {
+        setAtEnd("left");
+        return;
       }
-      return;
-    }
+      if (scrollLeft + carrousel.clientWidth === carrousel.scrollWidth) {
+        setAtEnd("right");
+        if (!loading) {
+          loadMore();
+          setTimeout(() => {
+            carrousel.scrollLeft += 100;
+          }, 1);
+        }
+        return;
+      }
 
-    setAtEnd("");
+      setAtEnd("");
+    }
   }
 
   useEffect(() => {

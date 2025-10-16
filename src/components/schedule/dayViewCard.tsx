@@ -7,7 +7,9 @@ export const DayViewCard = () => {
       <div className="flex-1 border rounded-lg"></div>
       <div className="flex-10 font-noto-sans flex flex-col justify-between pb-2">
         <div>
-          <p className="font-semibold mb-2">Frieren: Beyond Journey's End</p>
+          <p className="font-semibold mb-2">
+            Frieren: Beyond Journey&#39;s End
+          </p>
 
           <div className="flex items-center gap-x-4 text-sm text-white/60">
             <p className="flex items-center gap-x-[3px]">

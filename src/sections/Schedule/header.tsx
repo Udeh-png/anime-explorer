@@ -2,15 +2,21 @@
 
 import { Days } from "@/components/schedule/days";
 import { FilterDropDown } from "@/components/schedule/filterDropdown";
-import { ScheduleContext } from "@/utils/contexts/SchedulesContexts";
+import { createQueryString } from "@/utils/sharedUtils";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaCalendar, FaFilter } from "react-icons/fa";
 
-export const ScheduleHeder = () => {
-  const view = useSearchParams().get("view");
+export const ScheduleHeder = ({
+  view,
+  selectedDay,
+}: {
+  view: string | null;
+  selectedDay: string | null;
+}) => {
+  const params = useSearchParams();
   const [openFilters, setOpenFilters] = useState(false);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +48,7 @@ export const ScheduleHeder = () => {
         <div className="flex gap-x-3 h-12">
           <div className="bg-card-background flex items-center justify-center w-41 p-1 rounded-lg">
             <Link
-              href={"schedule?view=week"}
+              href={`schedule?${createQueryString(params, "view", "week")}`}
               className={`w-full h-full rounded-[inherit] flex items-center justify-center transition-colors cursor-pointer ${
                 view === "week" || !view ? "bg-accent-two" : ""
               }`}
@@ -50,7 +56,7 @@ export const ScheduleHeder = () => {
               Week
             </Link>
             <Link
-              href={"schedule?view=day"}
+              href={`schedule?${createQueryString(params, "view", "day")}`}
               className={`w-full h-full rounded-[inherit] flex items-center justify-center transition-colors cursor-pointer ${
                 view === "day" ? "bg-accent-two" : ""
               }`}
@@ -94,7 +100,7 @@ export const ScheduleHeder = () => {
         </div>
       </div>
 
-      <Days view={view} />
+      <Days view={view} selectedDay={selectedDay} />
     </div>
   );
 };

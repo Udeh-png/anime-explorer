@@ -260,10 +260,13 @@ export async function getCharacterWithId(
   charId: number,
   currentPage?: number
 ): Promise<Character> {
+  function isCharacter(x: unknown): x is Character {
+    return !!x && typeof (x as Character).node.id === "number";
+  }
   const media: Media = await getMediaWithId(mediaId, currentPage);
   const characterObj = media.characters;
   const edges = media.characters.edges;
-  const character: any = edges.find((edge) => edge.node.id === charId);
+  const character: Character = edges.find(isCharacter)!;
   if (character === undefined && characterObj.pageInfo.hasNextPage) {
     return await getCharacterWithId(
       mediaId,

@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, InputHTMLAttributes } from "react";
+import { ForwardedRef, forwardRef } from "react";
 import { FaCheck } from "react-icons/fa";
 
 export const Checkbox = forwardRef(
@@ -6,7 +6,7 @@ export const Checkbox = forwardRef(
     {
       round,
       ...props
-    }: { round?: Boolean } & React.HTMLAttributes<HTMLInputElement>,
+    }: { round?: boolean } & React.HTMLAttributes<HTMLInputElement>,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
@@ -37,3 +37,5 @@ export const Checkbox = forwardRef(
     );
   }
 );
+
+Checkbox.displayName = "Checkbox";

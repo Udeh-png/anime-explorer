@@ -105,7 +105,7 @@ export const WeekViewCard = ({
               <p className="mb-0.5">Ep {animeTwo?.episode}</p>
               <div className="flex gap-x-1 items-center">
                 <FaClock />
-                <p>{animeOneAiringTime}</p>
+                <p>{animeTwoAiringTime}</p>
               </div>
             </div>
           </div>

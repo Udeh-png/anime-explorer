@@ -30,3 +30,5 @@ export const ToggleButton = forwardRef<
     </label>
   );
 });
+
+ToggleButton.displayName = "ToggleButton";

@@ -1,10 +1,10 @@
 import { DescriptionUi } from "@/components/shared/DescriptionUtil";
 import { getCharacterWithId } from "@/queries";
-import { getOrdinal } from "@/utils/characterPageUtils";
+import { getOrdinal } from "@/utils/sharedUtils";
 import { getMonth } from "@/utils/schedulesPageUtils";
 import Image from "next/image";
 
-export default async function ({
+export default async function CharacterDetailsPage({
   params,
 }: {
   params: Promise<{ id: string; charId: string }>;

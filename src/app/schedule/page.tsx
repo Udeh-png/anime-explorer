@@ -1,27 +1,39 @@
 import { weekDays } from "@/components/schedule/data/WeekAndMonth";
-import { ViewManager } from "@/sections/Schedule/viewManager";
+import { DayView } from "@/components/schedule/dayView";
+import { WeekView } from "@/components/schedule/weekView";
 import { getSchedules } from "@/queries";
 import { ScheduleHeder } from "@/sections/Schedule/header";
 import { AiringSchedule } from "@/types";
 import { ScheduleContextProvider } from "@/utils/contexts/SchedulesContexts";
 
-export default async function Schedule() {
+export default async function Schedule({
+  searchParams,
+}: {
+  searchParams: Promise<{ view: "day" | "week"; selectedDay: string }>;
+}) {
   const requestArray: Promise<AiringSchedule[]>[] = [];
   weekDays.forEach((weekDay) => {
     requestArray.push(getSchedules(weekDay));
   });
 
+  const { view, selectedDay } = await searchParams;
   const weeksAiringSchedules = await Promise.all(requestArray);
-
   return (
     <ScheduleContextProvider>
       <div>
-        <div>
-          <ScheduleHeder />
-        </div>
+        <ScheduleHeder view={view} selectedDay={selectedDay} />
 
         <div className="py-7 px-10 bg-gray-950 h-full">
-          <ViewManager weeksAiringSchedules={weeksAiringSchedules} />
+          <div>
+            {view === "day" ? (
+              <DayView selectedDay={selectedDay} />
+            ) : (
+              <WeekView
+                weeksAiringSchedules={weeksAiringSchedules}
+                selectedDay={selectedDay}
+              />
+            )}
+          </div>
         </div>
       </div>
     </ScheduleContextProvider>

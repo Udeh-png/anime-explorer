@@ -1,12 +1,17 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Day } from "./day";
-import { ScheduleContext } from "@/utils/contexts/SchedulesContexts";
-import { getWeekDay, getWholeDate } from "@/utils/schedulesPageUtils";
+import { getWholeDate } from "@/utils/schedulesPageUtils";
 import { monthDays, weekDays } from "./data/WeekAndMonth";
 
-export const Days = ({ view }: { view: string | null }) => {
-  const selectedDateUiRef = useRef<HTMLDivElement>(null);
-  const { selectedDate, setSelectedDate } = useContext(ScheduleContext);
+export const Days = ({
+  view,
+  selectedDay,
+}: {
+  view: string | null;
+  selectedDay: string | null;
+}) => {
+  const selectedDateUiRef = useRef<HTMLAnchorElement>(null);
+  const selectedDate = getWholeDate(new Date(Number(selectedDay)));
   const [days, setDays] = useState<Date[]>([]);
 
   useEffect(() => {
@@ -33,22 +38,15 @@ export const Days = ({ view }: { view: string | null }) => {
         const todayDate = getWholeDate(new Date());
         const dayDate = getWholeDate(day);
         const isToday = dayDate === todayDate;
-        const dayName = getWeekDay(day, "short");
-        const dateNum = day.getDate();
         const isSelectedDate = selectedDate === dayDate;
 
         return (
           <Day
-            weekDay={dayName}
-            date={dateNum}
-            numberOfShows={i + 2}
+            date={day}
             isToday={isToday}
             key={i}
             ref={isSelectedDate ? selectedDateUiRef : null}
             isSelectedDate={isSelectedDate}
-            onClick={() => {
-              setSelectedDate(dayDate);
-            }}
           />
         );
       })}

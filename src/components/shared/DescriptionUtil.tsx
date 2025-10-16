@@ -9,7 +9,7 @@ export const DescriptionUi = ({ description }: { description: string }) => {
       const descriptionContainer = descriptionRef.current;
       descriptionContainer.innerHTML = description;
     }
-  }, []);
+  }, [description]);
 
   return (
     <p
