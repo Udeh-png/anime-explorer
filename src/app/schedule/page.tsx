@@ -16,7 +16,9 @@ export default async function Schedule({
     requestArray.push(getSchedules(weekDay));
   });
 
-  const { view, selectedDay } = await searchParams;
+  const params = await searchParams;
+  const view = params.view || "week";
+  const selectedDay = params.selectedDay || String(Date.now());
   const weeksAiringSchedules = await Promise.all(requestArray);
   return (
     <ScheduleContextProvider>

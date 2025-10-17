@@ -50,7 +50,7 @@ export const ScheduleHeder = ({
             <Link
               href={`schedule?${createQueryString(params, "view", "week")}`}
               className={`w-full h-full rounded-[inherit] flex items-center justify-center transition-colors cursor-pointer ${
-                view === "week" || !view ? "bg-accent-two" : ""
+                view === "week" ? "bg-accent-two" : ""
               }`}
             >
               Week
