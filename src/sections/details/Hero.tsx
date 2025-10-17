@@ -124,7 +124,7 @@ export const DetailsHero = ({ media }: { media: Media }) => {
 
             <div className="flex min-[789px]:gap-x-4 gap-x-1 items-center max-w-[100%]">
               <Link
-                href={""}
+                href={media.externalLinks[0].url}
                 className="min-[600px]:w-26 min-[789px]:w-50 min-[600px]:h-9 min-[789px]:h-13 text-[10px] w-20 h-7 min-[600px]:text-[12px] min-[789px]:text-xl flex justify-center items-center bg-accent-two rounded-sm min-[789px]:rounded-lg"
               >
                 <BsPlay />

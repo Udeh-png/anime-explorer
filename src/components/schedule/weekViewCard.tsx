@@ -19,14 +19,14 @@ export const WeekViewCard = ({
   animeTwo?: AiringSchedule;
 }) => {
   const animeOneAiringTime = normalizeTime(
-    new Date(timeConverter(animeOne!.airingAt, "secsToMillis")),
+    timeConverter(animeOne!.airingAt, "secsToMillis"),
     {
       hrsCycle: "h23",
       secs: false,
     }
   );
   const animeTwoAiringTime = normalizeTime(
-    new Date(timeConverter(animeTwo!.airingAt, "secsToMillis")),
+    timeConverter(animeTwo!.airingAt, "secsToMillis"),
     {
       hrsCycle: "h23",
       secs: false,

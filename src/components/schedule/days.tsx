@@ -27,7 +27,6 @@ export const Days = ({
       selectedDateUiRef.current.scrollIntoView({
         behavior: "smooth",
         inline: "center",
-        block: "nearest",
       });
     }
   }, [days]);

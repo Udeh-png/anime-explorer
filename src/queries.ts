@@ -328,6 +328,9 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
           media {
             popularity
             isAdult
+            externalLinks {
+              url
+            }            
             coverImage {
               medium
               large
@@ -356,7 +359,10 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
     };
 
   return await fetch(url, options)
-    .then(async (res) => {
+    .then(async (res: Response) => {
+      if (res.ok === false) {
+        console.log(res, date);
+      }
       return await res.json();
     })
     .then((jsonResponse) => {

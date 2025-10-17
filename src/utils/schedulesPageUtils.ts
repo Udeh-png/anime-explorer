@@ -27,7 +27,7 @@ export const getMonth = (
 };
 
 export const normalizeTime = (
-  date: Date,
+  timeInMillis: number,
   {
     hrsCycle,
     hours = true,
@@ -40,10 +40,41 @@ export const normalizeTime = (
     secs?: boolean;
   }
 ): string => {
-  return date.toLocaleTimeString("en-US", {
+  return new Date(timeInMillis).toLocaleTimeString("en-US", {
     hour: hours ? "2-digit" : undefined,
     minute: mins ? "2-digit" : undefined,
     second: secs ? "2-digit" : undefined,
     hourCycle: hrsCycle,
   });
 };
+
+export function formatDuration(ms: number) {
+  const weeks = Math.floor(ms / 604800000);
+  ms %= 604800000;
+
+  const days = Math.floor(ms / 86400000);
+  ms %= 86400000;
+
+  const hours = Math.round(ms / 3600000);
+  ms %= 3600000;
+
+  const minutes = Math.round(ms / 60000);
+
+  const parts = [];
+
+  if (weeks > 0) {
+    parts.push(`${weeks}week${weeks !== 1 ? "s" : ""}`);
+  }
+
+  if (days > 0 || weeks > 0) {
+    parts.push(`${days}day${days !== 1 ? "s" : ""}`);
+  }
+
+  if (hours > 0 || days > 0 || weeks > 0) {
+    parts.push(`${hours}h`);
+  }
+
+  parts.push(`${minutes}m`);
+
+  return parts.join(" ");
+}
