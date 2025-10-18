@@ -261,7 +261,11 @@ export async function getCharacterWithId(
   currentPage?: number
 ): Promise<Character> {
   function isCharacter(x: unknown): x is Character {
-    return !!x && typeof (x as Character).node.id === "number";
+    return (
+      !!x &&
+      typeof (x as Character).node.id === "number" &&
+      (x as Character).node.id === charId
+    );
   }
   const media: Media = await getMediaWithId(mediaId, currentPage);
   const characterObj = media.characters;
@@ -291,7 +295,6 @@ export async function getCharacterFromSearch(
     currentPage++;
     const moreCharEdges = await getMediaWithId(mediaId, currentPage);
     allCharEdges.push(...moreCharEdges.characters.edges);
-    // console.log(moreCharEdges.characters.pageInfo.currentPage);
     if (currentPage < 14) {
       hasNextPage = moreCharEdges.characters.pageInfo.hasNextPage;
     } else {

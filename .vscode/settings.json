@@ -1,3 +1,12 @@
 {
-  "cSpell.words": ["Favorited", "FAVOURITES", "romaji", "Srcs"]
+  "cSpell.words": ["Favorited", "FAVOURITES", "romaji", "Srcs"],
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "never"
+  }
 }
