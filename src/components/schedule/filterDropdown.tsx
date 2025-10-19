@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { Checkbox } from "../shared/Checkbox";
 import { SchedulePageFilter } from "@/types";
-import { createQueryString } from "@/utils/sharedUtils";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { GenreButton } from "./genreButton";
 
 export const FilterDropDown = () => {
   const params = useSearchParams();
+  const router = useRouter();
   const checkBoxesInitialState = {
     solCheckBoxChecked: false,
     romanceCheckboxChecked: false,
@@ -63,7 +63,20 @@ export const FilterDropDown = () => {
   }
 
   const setFilterUrl = () => {
-    createQueryString(params, "", "");
+    const genres = filter.genre.join(",");
+    const formats = filter.format.join(",");
+    const searchParams = new URLSearchParams(params.toString());
+    if (genres && formats) {
+      searchParams.set("genre", genres);
+      searchParams.set("format", formats);
+    }
+    if (!genres && params.has("genre")) {
+      searchParams.delete("genre");
+    }
+    if (!formats && params.has("format")) {
+      searchParams.delete("format");
+    }
+    router.push("/schedule?" + searchParams);
   };
   return (
     <div className="text-[13px] absolute w-70 min-h-100 top-full right-0 mt-2 flex flex-col gap-y-4 rounded-lg p-3 bg-card-background backdrop-blur-xs caret-transparent z-10">
@@ -282,9 +295,7 @@ export const FilterDropDown = () => {
         </button>
         <button
           className="w-full h-full rounded-lg bg-accent-two cursor-pointer"
-          onClick={() => {
-            console.log(filter);
-          }}
+          onClick={() => setFilterUrl()}
         >
           Apply
         </button>
