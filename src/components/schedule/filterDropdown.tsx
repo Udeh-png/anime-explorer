@@ -1,34 +1,140 @@
 "use client";
 
+import { useState } from "react";
 import { Checkbox } from "../shared/Checkbox";
+import { SchedulePageFilter } from "@/types";
+import { createQueryString } from "@/utils/sharedUtils";
+import { useSearchParams } from "next/navigation";
+import { GenreButton } from "./genreButton";
 
 export const FilterDropDown = () => {
+  const params = useSearchParams();
+
+  const [filter, setFilter] = useState<SchedulePageFilter>({
+    genre: [],
+    format: [],
+    lists: [],
+  });
+
+  const [checkBoxesState, setCheckBoxStates] = useState({
+    solCheckBoxChecked: false,
+    romanceCheckboxChecked: false,
+    actionCheckboxChecked: false,
+    comedyCheckboxChecked: false,
+    dramaCheckBoxCheck: false,
+    adventureCheckboxChecked: false,
+  });
+
+  function setGenre(genreName: string, clicked: boolean) {
+    if (clicked) {
+      setFilter((prev) => {
+        if (!prev.genre.includes(genreName)) {
+          return { ...prev, genre: [...prev.genre, genreName] };
+        }
+        return prev;
+      });
+    } else {
+      setFilter((prev) => {
+        return {
+          ...prev,
+          genre: prev.genre.filter((e) => e !== genreName),
+        };
+      });
+    }
+  }
+
+  const setFilterUrl = () => {
+    createQueryString(params, "", "");
+  };
   return (
-    <div className="text-[13px] absolute w-70 min-h-100 top-full right-0 mt-2 flex flex-col gap-y-4 rounded-lg p-3 bg-card-background backdrop-blur-xs caret-transparent">
+    <div className="text-[13px] absolute w-70 min-h-100 top-full right-0 mt-2 flex flex-col gap-y-4 rounded-lg p-3 bg-card-background backdrop-blur-xs caret-transparent z-10">
       <div>
         <p>Genre</p>
         <div className="flex mt-1.5 flex-wrap gap-2">
-          <button
-            className="px-4 py-1.5 bg-card-background rounded-lg"
-            onClick={() => {}}
-          >
-            Action
-          </button>
-          <button
-            className="px-4 py-1.5 bg-card-background rounded-lg"
-            onClick={() => {}}
-          >
-            Romance
-          </button>
-          <button
-            className="px-4 py-1.5 bg-card-background rounded-lg"
-            onClick={() => {}}
-          >
-            Comedy
-          </button>
-          <button className="px-4 py-1.5 bg-card-background rounded-lg">
-            Slice Of Life
-          </button>
+          <GenreButton
+            id="solCheckBox"
+            title="Slice Of Life"
+            checked={checkBoxesState.solCheckBoxChecked}
+            onChange={(e) => {
+              setCheckBoxStates((prev) => {
+                const val = { ...prev, solCheckBoxChecked: e.target.checked };
+                setGenre("slice of life", val.solCheckBoxChecked);
+                return val;
+              });
+            }}
+          />
+          <GenreButton
+            id="romanceCheckBox"
+            title="Romance"
+            checked={checkBoxesState.romanceCheckboxChecked}
+            onChange={(e) => {
+              setCheckBoxStates((prev) => {
+                const val = {
+                  ...prev,
+                  romanceCheckboxChecked: e.target.checked,
+                };
+                setGenre("romance", val.romanceCheckboxChecked);
+                return val;
+              });
+            }}
+          />
+          <GenreButton
+            id="comedyCheckBox"
+            title="Comedy"
+            checked={checkBoxesState.comedyCheckboxChecked}
+            onChange={(e) => {
+              setCheckBoxStates((prev) => {
+                const val = {
+                  ...prev,
+                  comedyCheckboxChecked: e.target.checked,
+                };
+                setGenre("comedy", val.comedyCheckboxChecked);
+                return val;
+              });
+            }}
+          />
+          <GenreButton
+            id="actionCheckBox"
+            title="Action"
+            checked={checkBoxesState.actionCheckboxChecked}
+            onChange={(e) => {
+              setCheckBoxStates((prev) => {
+                const val = {
+                  ...prev,
+                  actionCheckboxChecked: e.target.checked,
+                };
+                setGenre("action", val.actionCheckboxChecked);
+                return val;
+              });
+            }}
+          />
+          <GenreButton
+            id="dramaCheckBox"
+            title="Drama"
+            checked={checkBoxesState.dramaCheckBoxCheck}
+            onChange={(e) => {
+              setCheckBoxStates((prev) => {
+                const val = { ...prev, dramaCheckBoxCheck: e.target.checked };
+                setGenre("drama", val.dramaCheckBoxCheck);
+                return val;
+              });
+            }}
+          />
+          <GenreButton
+            id="adventureCheckBox"
+            title="Adventure"
+            checked={checkBoxesState.adventureCheckboxChecked}
+            onChange={(e) => {
+              setCheckBoxStates((prev) => {
+                const val = {
+                  ...prev,
+                  adventureCheckboxChecked: e.target.checked,
+                };
+                setGenre("adventure", val.adventureCheckboxChecked);
+                return val;
+              });
+            }}
+          />
         </div>
       </div>
 
@@ -102,7 +208,20 @@ export const FilterDropDown = () => {
       </div>
 
       <div className="flex gap-3 w-full h-10">
-        <button className="w-full h-full bg-card-background rounded-lg cursor-pointer">
+        <button
+          className="w-full h-full bg-card-background-two rounded-lg cursor-pointer"
+          onClick={() => {
+            setFilter({ format: [], genre: [], lists: [] });
+            setCheckBoxStates({
+              solCheckBoxChecked: false,
+              romanceCheckboxChecked: false,
+              adventureCheckboxChecked: false,
+              comedyCheckboxChecked: false,
+              dramaCheckBoxCheck: false,
+              actionCheckboxChecked: false,
+            });
+          }}
+        >
           Clear All
         </button>
         <button className="w-full h-full rounded-lg bg-accent-two cursor-pointer">

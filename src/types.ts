@@ -147,3 +147,9 @@ export type AiringSchedule = {
   mediaId: number;
   media: Media;
 };
+
+export type SchedulePageFilter = {
+  genre: string[];
+  format: ["tv show" | "movie" | "OVA" | "ONA"] | [];
+  lists: ["favorite" | "watch list"] | [];
+};

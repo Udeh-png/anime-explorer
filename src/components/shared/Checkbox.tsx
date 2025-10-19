@@ -6,7 +6,7 @@ export const Checkbox = forwardRef(
     {
       round,
       ...props
-    }: { round?: boolean } & React.HTMLAttributes<HTMLInputElement>,
+    }: { round?: boolean } & React.InputHTMLAttributes<HTMLInputElement>,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
