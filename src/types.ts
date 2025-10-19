@@ -150,6 +150,6 @@ export type AiringSchedule = {
 
 export type SchedulePageFilter = {
   genre: string[];
-  format: ["tv show" | "movie" | "OVA" | "ONA"] | [];
+  format: string[];
   lists: ["favorite" | "watch list"] | [];
 };

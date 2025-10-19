@@ -9,21 +9,28 @@ import { GenreButton } from "./genreButton";
 
 export const FilterDropDown = () => {
   const params = useSearchParams();
-
-  const [filter, setFilter] = useState<SchedulePageFilter>({
-    genre: [],
-    format: [],
-    lists: [],
-  });
-
-  const [checkBoxesState, setCheckBoxStates] = useState({
+  const checkBoxesInitialState = {
     solCheckBoxChecked: false,
     romanceCheckboxChecked: false,
     actionCheckboxChecked: false,
     comedyCheckboxChecked: false,
     dramaCheckBoxCheck: false,
     adventureCheckboxChecked: false,
-  });
+    tv_showCheckboxChecked: false,
+    movieCheckboxChecked: false,
+    ovaCheckboxChecked: false,
+    onaCheckboxChecked: false,
+  };
+
+  const filterInitialState: SchedulePageFilter = {
+    genre: [],
+    format: [],
+    lists: [],
+  };
+
+  const [filter, setFilter] = useState<SchedulePageFilter>(filterInitialState);
+
+  const [checkBoxesState, setCheckBoxStates] = useState(checkBoxesInitialState);
 
   function setGenre(genreName: string, clicked: boolean) {
     if (clicked) {
@@ -35,10 +42,22 @@ export const FilterDropDown = () => {
       });
     } else {
       setFilter((prev) => {
-        return {
-          ...prev,
-          genre: prev.genre.filter((e) => e !== genreName),
-        };
+        return { ...prev, genre: prev.genre.filter((e) => e !== genreName) };
+      });
+    }
+  }
+
+  function setFormat(formatName: string, clicked: boolean) {
+    if (clicked) {
+      setFilter((prev) => {
+        if (!prev.format.includes(formatName)) {
+          return { ...prev, format: [...prev.format, formatName] };
+        }
+        return prev;
+      });
+    } else {
+      setFilter((prev) => {
+        return { ...prev, format: prev.format.filter((e) => e !== formatName) };
       });
     }
   }
@@ -145,15 +164,43 @@ export const FilterDropDown = () => {
             htmlFor="tv-checkbox"
             className="flex items-center gap-x-2 caret-transparent cursor-pointer"
           >
-            <Checkbox round id="tv-checkbox" />
-            <span>TV</span>
+            <Checkbox
+              round
+              id="tv-checkbox"
+              checked={checkBoxesState.tv_showCheckboxChecked}
+              onChange={() => {
+                setCheckBoxStates((prev) => {
+                  const val = {
+                    ...prev,
+                    tv_showCheckboxChecked: !prev.tv_showCheckboxChecked,
+                  };
+                  setFormat("tv show", val.tv_showCheckboxChecked);
+                  return val;
+                });
+              }}
+            />
+            <span>TV Show</span>
           </label>
 
           <label
             htmlFor="movie-checkbox"
             className="flex items-center gap-x-2 caret-transparent cursor-pointer"
           >
-            <Checkbox round id="movie-checkbox" />
+            <Checkbox
+              round
+              id="movie-checkbox"
+              checked={checkBoxesState.movieCheckboxChecked}
+              onChange={() => {
+                setCheckBoxStates((prev) => {
+                  const val = {
+                    ...prev,
+                    movieCheckboxChecked: !prev.movieCheckboxChecked,
+                  };
+                  setFormat("movie", val.movieCheckboxChecked);
+                  return val;
+                });
+              }}
+            />
             <span>Movie</span>
           </label>
 
@@ -161,28 +208,44 @@ export const FilterDropDown = () => {
             htmlFor="ova-checkbox"
             className="flex items-center gap-x-2 caret-transparent cursor-pointer"
           >
-            <Checkbox round id="ova-checkbox" />
+            <Checkbox
+              round
+              id="ova-checkbox"
+              checked={checkBoxesState.ovaCheckboxChecked}
+              onChange={() => {
+                setCheckBoxStates((prev) => {
+                  const val = {
+                    ...prev,
+                    ovaCheckboxChecked: !prev.ovaCheckboxChecked,
+                  };
+                  setFormat("ova", val.ovaCheckboxChecked);
+                  return val;
+                });
+              }}
+            />
             <span>OVA</span>
           </label>
-        </div>
-      </div>
 
-      <div>
-        <p>Status</p>
-        <div className="mt-1.5 flex flex-col gap-y-2">
           <label
-            htmlFor="airing-checkbox"
-            className="flex gap-x-2 cursor-pointer"
+            htmlFor="ona-checkbox"
+            className="flex items-center gap-x-2 caret-transparent cursor-pointer"
           >
-            <Checkbox id="airing-checkbox" />
-            <span>Airing</span>
-          </label>
-          <label
-            htmlFor="finished-checkbox"
-            className="flex gap-x-2 cursor-pointer"
-          >
-            <Checkbox id="finished-checkbox" />
-            <span>Finished</span>
+            <Checkbox
+              round
+              id="ona-checkbox"
+              checked={checkBoxesState.onaCheckboxChecked}
+              onChange={() => {
+                setCheckBoxStates((prev) => {
+                  const val = {
+                    ...prev,
+                    onaCheckboxChecked: !prev.onaCheckboxChecked,
+                  };
+                  setFormat("ona", val.onaCheckboxChecked);
+                  return val;
+                });
+              }}
+            />
+            <span>ONA</span>
           </label>
         </div>
       </div>
@@ -211,20 +274,18 @@ export const FilterDropDown = () => {
         <button
           className="w-full h-full bg-card-background-two rounded-lg cursor-pointer"
           onClick={() => {
-            setFilter({ format: [], genre: [], lists: [] });
-            setCheckBoxStates({
-              solCheckBoxChecked: false,
-              romanceCheckboxChecked: false,
-              adventureCheckboxChecked: false,
-              comedyCheckboxChecked: false,
-              dramaCheckBoxCheck: false,
-              actionCheckboxChecked: false,
-            });
+            setFilter(filterInitialState);
+            setCheckBoxStates(checkBoxesInitialState);
           }}
         >
           Clear All
         </button>
-        <button className="w-full h-full rounded-lg bg-accent-two cursor-pointer">
+        <button
+          className="w-full h-full rounded-lg bg-accent-two cursor-pointer"
+          onClick={() => {
+            console.log(filter);
+          }}
+        >
           Apply
         </button>
       </div>
