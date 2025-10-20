@@ -66,14 +66,14 @@ export const FilterDropDown = () => {
     const genres = filter.genre.join(",");
     const formats = filter.format.join(",");
     const searchParams = new URLSearchParams(params.toString());
-    if (genres && formats) {
+    if (genres) {
       searchParams.set("genre", genres);
-      searchParams.set("format", formats);
-    }
-    if (!genres && params.has("genre")) {
+    } else if (params.has("genre")) {
       searchParams.delete("genre");
     }
-    if (!formats && params.has("format")) {
+    if (formats) {
+      searchParams.set("format", formats);
+    } else if (params.has("format")) {
       searchParams.delete("format");
     }
     router.push("/schedule?" + searchParams);
