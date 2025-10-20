@@ -9,23 +9,26 @@ import { GenreButton } from "./genreButton";
 export const FilterDropDown = () => {
   const params = useSearchParams();
   const router = useRouter();
-  const checkBoxesInitialState = {
-    solCheckBoxChecked: false,
-    romanceCheckboxChecked: false,
-    actionCheckboxChecked: false,
-    comedyCheckboxChecked: false,
-    dramaCheckBoxCheck: false,
-    adventureCheckboxChecked: false,
-    tv_showCheckboxChecked: false,
-    movieCheckboxChecked: false,
-    ovaCheckboxChecked: false,
-    onaCheckboxChecked: false,
-  };
+  const allGenres = params.get("genre")?.split(",") || [];
+  const allFormats = params.get("format")?.split(",") || [];
 
   const filterInitialState: SchedulePageFilter = {
-    genre: [],
-    format: [],
+    genre: allGenres,
+    format: allFormats,
     lists: [],
+  };
+
+  const checkBoxesInitialState = {
+    solCheckBoxChecked: filterInitialState.genre.includes("slice of life"),
+    romanceCheckboxChecked: filterInitialState.genre.includes("romance"),
+    actionCheckboxChecked: filterInitialState.genre.includes("action"),
+    comedyCheckboxChecked: filterInitialState.genre.includes("comedy"),
+    dramaCheckBoxCheck: filterInitialState.genre.includes("drama"),
+    adventureCheckboxChecked: filterInitialState.genre.includes("adventure"),
+    tv_showCheckboxChecked: filterInitialState.format.includes("tv"),
+    movieCheckboxChecked: filterInitialState.format.includes("movie"),
+    ovaCheckboxChecked: filterInitialState.format.includes("ova"),
+    onaCheckboxChecked: filterInitialState.format.includes("ona"),
   };
 
   const [filter, setFilter] = useState<SchedulePageFilter>(filterInitialState);
@@ -68,11 +71,13 @@ export const FilterDropDown = () => {
     const searchParams = new URLSearchParams(params.toString());
     if (genres) {
       searchParams.set("genre", genres);
+      searchParams.set("view", "day");
     } else if (params.has("genre")) {
       searchParams.delete("genre");
     }
     if (formats) {
       searchParams.set("format", formats);
+      searchParams.set("view", "day");
     } else if (params.has("format")) {
       searchParams.delete("format");
     }
@@ -187,7 +192,7 @@ export const FilterDropDown = () => {
                     ...prev,
                     tv_showCheckboxChecked: !prev.tv_showCheckboxChecked,
                   };
-                  setFormat("tv show", val.tv_showCheckboxChecked);
+                  setFormat("tv", val.tv_showCheckboxChecked);
                   return val;
                 });
               }}
@@ -287,8 +292,19 @@ export const FilterDropDown = () => {
         <button
           className="w-full h-full bg-card-background-two rounded-lg cursor-pointer"
           onClick={() => {
-            setFilter(filterInitialState);
-            setCheckBoxStates(checkBoxesInitialState);
+            setFilter({ format: [], genre: [], lists: [] });
+            setCheckBoxStates({
+              actionCheckboxChecked: false,
+              adventureCheckboxChecked: false,
+              comedyCheckboxChecked: false,
+              dramaCheckBoxCheck: false,
+              movieCheckboxChecked: false,
+              onaCheckboxChecked: false,
+              ovaCheckboxChecked: false,
+              romanceCheckboxChecked: false,
+              solCheckBoxChecked: false,
+              tv_showCheckboxChecked: false,
+            });
           }}
         >
           Clear All

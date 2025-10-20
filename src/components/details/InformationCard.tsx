@@ -18,7 +18,9 @@ export const InformationCard = ({ media }: { media: Media }) => {
       <div className="flex flex-col gap-y-3 min-[600px]:text-base text-xs">
         <div className="flex justify-between">
           <p className="text-white/50">Episodes</p>
-          <p>{episodes || nextAiringEpisode.episode - 1}</p>
+          {nextAiringEpisode && (
+            <p>{episodes || nextAiringEpisode.episode - 1}</p>
+          )}
         </div>
         <div className="flex justify-between">
           <p className="text-white/50">Duration</p>

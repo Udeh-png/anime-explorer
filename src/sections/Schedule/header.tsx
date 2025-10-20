@@ -17,6 +17,11 @@ export const ScheduleHeder = ({
   selectedDay: string | null;
 }) => {
   const params = useSearchParams();
+  const genre = params.get("genre");
+  const format = params.get("format");
+  const genreArray = genre ? genre.split(",") : [];
+  const formatArray = format ? format.split(",") : [];
+  const filterCount = genreArray.length + formatArray.length;
   const [openFilters, setOpenFilters] = useState(false);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
@@ -67,9 +72,14 @@ export const ScheduleHeder = ({
 
           <div className="relative" ref={dropdownContainerRef}>
             <button
-              className="flex items-center gap-2 bg-card-background w-30 rounded-lg justify-center h-full cursor-pointer"
+              className="flex relative items-center gap-2 bg-card-background w-30 rounded-lg justify-center h-full cursor-pointer"
               onClick={() => setOpenFilters(!openFilters)}
             >
+              {filterCount > 0 && (
+                <span className="absolute w-4 h-4 top-0 -right-1 bg-accent-two text-xs rounded-full font-bold">
+                  {filterCount}
+                </span>
+              )}
               <span>
                 <FaFilter />
               </span>

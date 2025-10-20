@@ -331,6 +331,8 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
           media {
             popularity
             isAdult
+            genres
+            format
             externalLinks {
               url
             }            
