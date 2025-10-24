@@ -1,5 +1,12 @@
 {
-  "cSpell.words": ["blanka", "Favorited", "FAVOURITES", "romaji", "Srcs"],
+  "cSpell.words": [
+    "blanka",
+    "Favorited",
+    "FAVOURITES",
+    "romaji",
+    "Srcs",
+    "Watchlist"
+  ],
   "eslint.validate": [
     "javascript",
     "typescript",
