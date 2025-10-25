@@ -56,6 +56,10 @@ export async function getPageObject({
           trending
           bannerImage
           averageScore
+          genres
+          externalLinks{
+            url
+          }
           seasonYear
           coverImage {
             extraLarge

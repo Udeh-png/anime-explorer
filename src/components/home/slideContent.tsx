@@ -1,44 +1,94 @@
 "use client";
 
 import { Media } from "@/types";
-import Image from "next/image";
+import { formatTitle, getStarCount } from "@/utils/sharedUtils";
 import Link from "next/link";
-import { BiHeart } from "react-icons/bi";
-import { IoPlayOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { BiBookmark, BiHeart } from "react-icons/bi";
+import { FaPlay } from "react-icons/fa6";
+import {
+  TiStarFullOutline,
+  TiStarHalfOutline,
+  TiStarOutline,
+} from "react-icons/ti";
 
 export const SlideContent = ({ media }: { media: Media }) => {
-  const { bannerImage } = media;
+  const { bannerImage, coverImage, externalLinks, id, title, averageScore } =
+    media;
+  const averageScoreToFive = Number((averageScore / 10).toFixed(1));
+
+  const { emptyStars, fullStars, hasHalfStars } =
+    getStarCount(averageScoreToFive);
+  const mediaTitle = title.english || title.romaji;
+  const desktopImage = bannerImage || coverImage.extraLarge;
+  const mobileImage = coverImage.extraLarge;
+  const [isMobile, setIsMobile] = useState(false);
+  const imageUrl = isMobile ? mobileImage : desktopImage;
+  useEffect(() => {
+    setIsMobile(navigator.userAgent.toLowerCase().includes("mobi"));
+  }, []);
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="relative min-[1090px]:h-60 h-40 min-[1090px]:rounded-lg overflow-clip mb-6">
-        <Image
-          src={bannerImage}
-          alt=""
-          fill
-          className="object-cover"
-          sizes="min-1090px:100vw, 100vw"
-        />
-        <BiHeart className="absolute text-7xl bottom-0 right-0 min-[1090px]:size-10 size-9 px-1 py-1" />
-      </div>
-
-      <div className="flex justify-center min-[1090px]:gap-x-5 gap-x-2 min-[1090px]:text-base text-xs">
-        <Link
-          href={"/"}
-          className="bg-blue-400 min-[1090px]:px-5 min-[1090px]:py-2 px-1 py-1 min-[1090px]:rounded-lg flex items-center"
-        >
-          <IoPlayOutline className="text-2xl" />
-          <span>Start Watching</span>
-        </Link>
-
-        <Link
-          href={"/"}
-          className="min-[1090px]:px-5 flex items-center min-[1090px]:py-2 px-1 py-1 border-2 border-gray-400 min-[1090px]:rounded-lg "
-        >
-          View Details
-        </Link>
-        <button className="min-[1090px]:px-5 min-[1090px]:py-2 px-1 py-1 border-2 border-gray-400 min-[1090px]:rounded-lg">
-          Add To Watchlist
-        </button>
+    <div
+      className="mx-auto relative overflow-clip"
+      style={{
+        maskImage:
+          "linear-gradient(to bottom, var(--background) 60%, transparent",
+      }}
+    >
+      <div className="absolute inset-0 bg-black/30 z-5"></div>
+      <div
+        className={`relative min-[1090px]:h-110 h-120 overflow-clip`}
+        style={{
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="absolute min-[1090px]:top-auto min-[1090px]:bottom-50 top-5 bottom-20 min-[1090px]:left-25 left-4 z-10 space-y-4">
+          <p className="min-[1090px]:text-4xl text-2xl font-semibold line-clamp-2">
+            {mediaTitle}
+          </p>
+          <div className="flex gap-2 max-w-full flex-wrap">
+            {media.genres.map((genre, i) => (
+              <p
+                key={i}
+                className="px-2 py-0.5 bg-background/50 rounded-full text-xs min-[1090px]:text-sm"
+              >
+                {genre}
+              </p>
+            ))}
+          </div>
+          <div className="flex text-yellow-300 min-[1090px]:text-xl text-base">
+            {Array.from({ length: fullStars }).map((_, i) => (
+              <TiStarFullOutline key={i} />
+            ))}
+            {hasHalfStars && <TiStarHalfOutline />}
+            {Array.from({ length: emptyStars }).map((_, i) => (
+              <TiStarOutline key={i} />
+            ))}
+          </div>
+          <div className="flex min-[1090px]:gap-x-3 gap-x-2">
+            <Link
+              href={externalLinks[0].url}
+              type="blank"
+              className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 bg-blue-400 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2"
+            >
+              <FaPlay />
+              <span>Watch Now</span>
+            </Link>
+            <button className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 border-2 border-white min-[1090px]:flex hidden text-base rounded-lg items-center w-fit gap-x-2 text-white">
+              <BiBookmark className="text-lg" />
+              <span>Add To Watchlist</span>
+            </button>
+            <button className="min-[1090px]:text-3xl min-[1090px]:hidden text-lg min-[1090px]:p-2 px-[0.55rem] bg-black/50 rounded-full">
+              <BiBookmark />
+            </button>
+            <button className="min-[1090px]:text-3xl text-lg min-[1090px]:p-2 px-[0.55rem] bg-black/50 rounded-full">
+              <BiHeart />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

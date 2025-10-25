@@ -1,11 +1,16 @@
-import { getMediaWithId } from "@/queries";
+import { getPageObject } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
+import { getCurrentSeason } from "@/utils/sharedUtils";
 
 export default async function Home() {
-  const media = await getMediaWithId(1);
+  const pageObjs = await getPageObject({
+    customFilter: { status: "RELEASING", season: getCurrentSeason() },
+    customSort: ["POPULARITY_DESC"],
+    perPage: 5,
+  });
   return (
-    <div className="">
-      <Hero media={media} />
+    <div>
+      <Hero pageObjs={pageObjs} />
     </div>
   );
 }
