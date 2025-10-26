@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { BiChevronDown, BiSearch } from "react-icons/bi";
+import { BiChevronDown } from "react-icons/bi";
 
 export const Navbar = () => {
   return (

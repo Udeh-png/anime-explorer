@@ -5,7 +5,7 @@ import { formatTitle, getStarCount } from "@/utils/sharedUtils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BiBookmark, BiHeart } from "react-icons/bi";
-import { FaPlay } from "react-icons/fa6";
+import { FaPlay, FaPlus } from "react-icons/fa6";
 import {
   TiStarFullOutline,
   TiStarHalfOutline,
@@ -15,10 +15,7 @@ import {
 export const SlideContent = ({ media }: { media: Media }) => {
   const { bannerImage, coverImage, externalLinks, id, title, averageScore } =
     media;
-  const averageScoreToFive = Number((averageScore / 10).toFixed(1));
-
-  const { emptyStars, fullStars, hasHalfStars } =
-    getStarCount(averageScoreToFive);
+  const { emptyStars, fullStars, hasHalfStars } = getStarCount(averageScore, 5);
   const mediaTitle = title.english || title.romaji;
   const desktopImage = bannerImage || coverImage.extraLarge;
   const mobileImage = coverImage.extraLarge;
@@ -77,15 +74,9 @@ export const SlideContent = ({ media }: { media: Media }) => {
               <FaPlay />
               <span>Watch Now</span>
             </Link>
-            <button className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 border-2 border-white min-[1090px]:flex hidden text-base rounded-lg items-center w-fit gap-x-2 text-white">
-              <BiBookmark className="text-lg" />
+            <button className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 border-2 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2">
+              <FaPlus className="text-lg" />
               <span>Add To Watchlist</span>
-            </button>
-            <button className="min-[1090px]:text-3xl min-[1090px]:hidden text-lg min-[1090px]:p-2 px-[0.55rem] bg-black/50 rounded-full">
-              <BiBookmark />
-            </button>
-            <button className="min-[1090px]:text-3xl text-lg min-[1090px]:p-2 px-[0.55rem] bg-black/50 rounded-full">
-              <BiHeart />
             </button>
           </div>
         </div>

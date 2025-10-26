@@ -82,17 +82,22 @@ export function getCurrentSeason() {
   }
 }
 
-export function getStarCount(num: number): {
+export function getStarCount(
+  score: number,
+  totalStars: number
+): {
+  scoreInRange: number;
   fullStars: number;
   hasHalfStars: boolean;
   emptyStars: number;
 } {
-  const fullStars = Math.floor(num);
-  const hasHalfStars = num % 1 !== 0;
-  const emptyStars = 10 - (fullStars + (hasHalfStars ? 1 : 0));
-  console.log(num);
+  const scoreInRange = Number(((score * totalStars) / 100).toFixed(1));
+  const fullStars = Math.floor(scoreInRange);
+  const hasHalfStars = scoreInRange % 1 !== 0;
+  const emptyStars = totalStars - (fullStars + (hasHalfStars ? 1 : 0));
 
   return {
+    scoreInRange,
     fullStars,
     hasHalfStars,
     emptyStars,
