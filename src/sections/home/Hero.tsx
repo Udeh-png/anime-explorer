@@ -24,17 +24,6 @@ export const Hero = ({ pageObjs }: { pageObjs: PageObject }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      <div className="mt-5">
-        <div className="min-[1090px]:max-w-2xl min-[1090px]:w-2xl w-2xs relative mx-auto min-[1090px]:py-4 py-2 border focus-within:outline-2 focus-within:outline-blue-500/40 focus-within:border-blue-500 border-gray-400 flex rounded-full px-4 gap-x-2 group">
-          <CgSearch className="text-2xl text-gray-400 group-focus-within:text-blue-400 transition-colors" />
-          <input
-            type="text"
-            className="outline-0 w-full placeholder:caret-transparent overflow-ellipsis"
-            placeholder="Search title, genre, or studio..."
-          />
-        </div>
-      </div>
     </div>
   );
 };

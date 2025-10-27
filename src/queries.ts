@@ -40,7 +40,7 @@ export async function getPageObject({
     },
   };
   const preset: { sort: string[]; filter: object } = presets[type];
-  const sort = customSort || preset.sort;
+  const sort = customSort || preset.sort || ["SCORE_DESC"];
   const filter = customFilter || preset.filter;
   const query = `
     query {
@@ -49,13 +49,16 @@ export async function getPageObject({
           hasNextPage
           currentPage
         }
-        media (type: ANIME, isAdult: false, ${Object.entries(filter).map(
-          ([key, value]) => `${key}:${value}`
-        )}, sort: ${sort.join(",")}) {
+        media (type: ANIME, isAdult: false, format_not: MUSIC, ${Object.entries(
+          filter
+        ).map(([key, value]) => `${key}:${value}`)}, sort: ${sort.join(",")}) {
           id
           trending
           bannerImage
           averageScore
+          streamingEpisodes {
+            url
+          }
           genres
           externalLinks{
             url

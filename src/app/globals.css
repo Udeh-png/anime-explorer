@@ -28,3 +28,7 @@ body {
   background-color: var(--background);
   color: white;
 }
+
+.scrollable::-webkit-scrollbar {
+  height: 0;
+}

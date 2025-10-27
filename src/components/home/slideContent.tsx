@@ -3,8 +3,8 @@
 import { Media } from "@/types";
 import { formatTitle, getStarCount } from "@/utils/sharedUtils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BiBookmark, BiHeart } from "react-icons/bi";
 import { FaPlay, FaPlus } from "react-icons/fa6";
 import {
   TiStarFullOutline,
@@ -13,19 +13,32 @@ import {
 } from "react-icons/ti";
 
 export const SlideContent = ({ media }: { media: Media }) => {
-  const { bannerImage, coverImage, externalLinks, id, title, averageScore } =
-    media;
+  const {
+    bannerImage,
+    coverImage,
+    streamingEpisodes,
+    id,
+    title,
+    averageScore,
+  } = media;
   const { emptyStars, fullStars, hasHalfStars } = getStarCount(averageScore, 5);
+  const firstEpUrl = streamingEpisodes[0] ? streamingEpisodes[0].url : "";
+  const streamLink = firstEpUrl.slice(0, firstEpUrl.lastIndexOf("/"));
+
   const mediaTitle = title.english || title.romaji;
   const desktopImage = bannerImage || coverImage.extraLarge;
   const mobileImage = coverImage.extraLarge;
   const [isMobile, setIsMobile] = useState(false);
   const imageUrl = isMobile ? mobileImage : desktopImage;
+  const router = useRouter();
   useEffect(() => {
     setIsMobile(navigator.userAgent.toLowerCase().includes("mobi"));
   }, []);
   return (
     <div
+      onClick={() => {
+        console.log("hi");
+      }}
       className="mx-auto relative overflow-clip"
       style={{
         maskImage:
@@ -42,8 +55,8 @@ export const SlideContent = ({ media }: { media: Media }) => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute min-[1090px]:top-auto min-[1090px]:bottom-50 top-5 bottom-20 min-[1090px]:left-25 left-4 z-10 space-y-4">
-          <p className="min-[1090px]:text-4xl text-2xl font-semibold line-clamp-2">
+        <div className="absolute min-[1090px]:top-15 top-5 min-[1090px]:left-25 left-4 z-10 space-y-4">
+          <p className="min-[1090px]:text-4xl text-2xl font-semibold line-clamp-2 max-w-2xl">
             {mediaTitle}
           </p>
           <div className="flex gap-2 max-w-full flex-wrap">
@@ -56,7 +69,7 @@ export const SlideContent = ({ media }: { media: Media }) => {
               </p>
             ))}
           </div>
-          <div className="flex text-yellow-300 min-[1090px]:text-xl text-base">
+          <div className="flex text-yellow-300 min-[1090px]:text-xl text-lg">
             {Array.from({ length: fullStars }).map((_, i) => (
               <TiStarFullOutline key={i} />
             ))}
@@ -66,15 +79,26 @@ export const SlideContent = ({ media }: { media: Media }) => {
             ))}
           </div>
           <div className="flex min-[1090px]:gap-x-3 gap-x-2">
-            <Link
-              href={externalLinks[0].url}
-              type="blank"
-              className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 bg-blue-400 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2"
+            {firstEpUrl && (
+              <Link
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                href={streamLink}
+                target="_blank"
+                className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 bg-blue-400 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2"
+              >
+                <FaPlay />
+                <span>Watch Now</span>
+              </Link>
+            )}
+            <button
+              className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 border-2 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("ola");
+              }}
             >
-              <FaPlay />
-              <span>Watch Now</span>
-            </Link>
-            <button className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 border-2 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2">
               <FaPlus className="text-lg" />
               <span>Add To Watchlist</span>
             </button>
