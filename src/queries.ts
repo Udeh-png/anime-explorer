@@ -340,6 +340,13 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
             isAdult
             genres
             format
+            trending
+            bannerImage
+            description
+            genres
+            streamingEpisodes {
+              url
+            }
             externalLinks {
               url
             }            
@@ -378,6 +385,9 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
       return await res.json();
     })
     .then((jsonResponse) => {
+      if (jsonResponse.error) {
+        console.log(jsonResponse);
+      }
       return jsonResponse.data.Page.airingSchedules;
     })
     .catch((e) => {

@@ -1,20 +1,23 @@
-export const weekDays: Date[] = [];
 export const monthDays: Date[] = [];
 
 const currentDate = new Date();
-const firstWeekDay = new Date();
 const firstOfTheMonth = new Date(
   currentDate.getFullYear(),
   currentDate.getMonth(),
   1
 );
 
-firstWeekDay.setDate(new Date().getDate() - new Date().getDay());
-for (let i = 0; i < 7; i++) {
-  const newDate = new Date();
+export function getWeekDays(date: Date) {
+  const weekDays: Date[] = [];
+  const firstWeekDay = new Date();
+  firstWeekDay.setDate(date.getDate() - date.getDay());
+  for (let i = 0; i < 7; i++) {
+    const newDate = new Date();
 
-  newDate.setDate(firstWeekDay.getDate() + i);
-  weekDays.push(newDate);
+    newDate.setDate(firstWeekDay.getDate() + i);
+    weekDays.push(newDate);
+  }
+  return weekDays;
 }
 
 while (firstOfTheMonth.getMonth() === currentDate.getMonth()) {
