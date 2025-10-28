@@ -1,6 +1,7 @@
 import { MiniCarousel } from "@/components/home/MiniCarousel";
 import { getPageObject, getSchedules } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
+import { WeeksSchedule } from "@/sections/home/WeeksSchedule";
 import { getCurrentSeason } from "@/utils/sharedUtils";
 import Link from "next/link";
 import { FaPlay, FaPlus } from "react-icons/fa6";
@@ -48,7 +49,6 @@ export default async function Home() {
             viewMoreLink="/"
           />
         </div>
-
         <div className="min-[1090px]:mt-20 mt-15 mb-7 max-w-5xl mx-auto min-[1090px]:px-0 px-2">
           <div
             className="flex justify-end min-[1090px]:px-10 py-2"
@@ -93,7 +93,6 @@ export default async function Home() {
             </div>
           </div>
         </div>
-
         <div className="mb-5">
           <MiniCarousel
             pageObj={popularThisSeason}
@@ -101,6 +100,7 @@ export default async function Home() {
             viewMoreLink="/"
           />
         </div>
+        <WeeksSchedule />
       </div>
     </div>
   );

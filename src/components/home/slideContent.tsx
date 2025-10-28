@@ -4,7 +4,7 @@ import { Media } from "@/types";
 import { formatTitle, getStarCount } from "@/utils/sharedUtils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPlus } from "react-icons/fa6";
 import {
   TiStarFullOutline,
@@ -20,6 +20,7 @@ export const SlideContent = ({ media }: { media: Media }) => {
     id,
     title,
     averageScore,
+    description,
   } = media;
   const { emptyStars, fullStars, hasHalfStars } = getStarCount(averageScore, 5);
   const firstEpUrl = streamingEpisodes[0] ? streamingEpisodes[0].url : "";
@@ -30,10 +31,17 @@ export const SlideContent = ({ media }: { media: Media }) => {
   const mobileImage = coverImage.extraLarge;
   const [isMobile, setIsMobile] = useState(false);
   const imageUrl = isMobile ? mobileImage : desktopImage;
+
+  const descRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
   useEffect(() => {
     setIsMobile(navigator.userAgent.toLowerCase().includes("mobi"));
-  }, []);
+    const desc = descRef.current;
+    if (desc) {
+      desc.innerHTML = description;
+    }
+  }, [description]);
   return (
     <div
       onClick={() => {
@@ -55,7 +63,7 @@ export const SlideContent = ({ media }: { media: Media }) => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute min-[1090px]:top-15 top-5 min-[1090px]:left-25 left-4 z-10 space-y-4">
+        <div className="absolute min-[1090px]:top-10 top-5 min-[1090px]:left-25 left-4 z-10 space-y-3">
           <p className="min-[1090px]:text-4xl text-2xl font-semibold line-clamp-2 max-w-2xl">
             {mediaTitle}
           </p>
@@ -69,14 +77,20 @@ export const SlideContent = ({ media }: { media: Media }) => {
               </p>
             ))}
           </div>
-          <div className="flex text-yellow-300 min-[1090px]:text-xl text-lg">
-            {Array.from({ length: fullStars }).map((_, i) => (
-              <TiStarFullOutline key={i} />
-            ))}
-            {hasHalfStars && <TiStarHalfOutline />}
-            {Array.from({ length: emptyStars }).map((_, i) => (
-              <TiStarOutline key={i} />
-            ))}
+          <div className=" w-sm">
+            <p
+              ref={descRef}
+              className="line-clamp-5 text-white/90 mb-1 min-[1090px]:[display:-webkit-box] hidden"
+            ></p>
+            <div className="flex text-yellow-300 min-[1090px]:text-xl text-lg">
+              {Array.from({ length: fullStars }).map((_, i) => (
+                <TiStarFullOutline key={i} />
+              ))}
+              {hasHalfStars && <TiStarHalfOutline />}
+              {Array.from({ length: emptyStars }).map((_, i) => (
+                <TiStarOutline key={i} />
+              ))}
+            </div>
           </div>
           <div className="flex min-[1090px]:gap-x-3 gap-x-2">
             {firstEpUrl && (
@@ -93,7 +107,7 @@ export const SlideContent = ({ media }: { media: Media }) => {
               </Link>
             )}
             <button
-              className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 border-2 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2"
+              className="min-[1090px]:px-5 min-[1090px]:py-2 px-2 py-2 border-2 min-[1090px]:text-base text-sm rounded-lg flex items-center w-fit gap-x-2 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 console.log("ola");

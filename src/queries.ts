@@ -56,6 +56,7 @@ export async function getPageObject({
           trending
           bannerImage
           averageScore
+          description
           streamingEpisodes {
             url
           }
@@ -343,7 +344,6 @@ export async function getSchedules(date: Date): Promise<AiringSchedule[]> {
             trending
             bannerImage
             description
-            genres
             streamingEpisodes {
               url
             }
