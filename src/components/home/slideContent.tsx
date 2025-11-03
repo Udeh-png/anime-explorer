@@ -2,6 +2,7 @@
 
 import { Media } from "@/types";
 import { formatTitle, getStarCount } from "@/utils/sharedUtils";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -41,7 +42,7 @@ export const SlideContent = ({ media }: { media: Media }) => {
     if (desc) {
       desc.innerHTML = description;
     }
-  }, [description]);
+  }, []);
   return (
     <div
       onClick={() => {
@@ -49,24 +50,31 @@ export const SlideContent = ({ media }: { media: Media }) => {
       }}
       className="mx-auto relative overflow-clip"
       style={{
-        maskImage:
-          "linear-gradient(to bottom, var(--background) 60%, transparent",
+        maskImage: "linear-gradient(to bottom, black 70%, transparent",
       }}
     >
-      <div className="absolute inset-0 bg-black/30 z-5"></div>
-      <div
-        className={`relative min-[1090px]:h-110 h-120 overflow-clip`}
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="absolute min-[1090px]:top-10 top-5 min-[1090px]:left-25 left-4 z-10 space-y-3">
+      <div className="absolute inset-0 bg-linear-to-r from-black/40 from-10% to-transparent to-50% z-5"></div>
+      <div className={`relative min-[1090px]:h-110 h-120 overflow-clip`}>
+        <Image
+          src={imageUrl}
+          alt=""
+          fill
+          sizes="2920px"
+          className="object-cover"
+        />
+        <div className="absolute min-[1090px]:top-10 top-5 min-[1090px]:left-25 left-4 z-10 space-y-2">
           <p className="min-[1090px]:text-4xl text-2xl font-semibold line-clamp-2 max-w-2xl">
             {mediaTitle}
           </p>
+          <div className="flex text-yellow-300 min-[1090px]:text-2xl text-lg">
+            {Array.from({ length: fullStars }).map((_, i) => (
+              <TiStarFullOutline key={i} />
+            ))}
+            {hasHalfStars && <TiStarHalfOutline />}
+            {Array.from({ length: emptyStars }).map((_, i) => (
+              <TiStarOutline key={i} />
+            ))}
+          </div>
           <div className="flex gap-2 max-w-full flex-wrap">
             {media.genres.map((genre, i) => (
               <p
@@ -82,15 +90,6 @@ export const SlideContent = ({ media }: { media: Media }) => {
               ref={descRef}
               className="line-clamp-5 text-white/90 mb-1 min-[1090px]:[display:-webkit-box] hidden"
             ></p>
-            <div className="flex text-yellow-300 min-[1090px]:text-xl text-lg">
-              {Array.from({ length: fullStars }).map((_, i) => (
-                <TiStarFullOutline key={i} />
-              ))}
-              {hasHalfStars && <TiStarHalfOutline />}
-              {Array.from({ length: emptyStars }).map((_, i) => (
-                <TiStarOutline key={i} />
-              ))}
-            </div>
           </div>
           <div className="flex min-[1090px]:gap-x-3 gap-x-2">
             {firstEpUrl && (

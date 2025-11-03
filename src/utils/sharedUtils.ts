@@ -74,7 +74,7 @@ export function getCurrentSeason() {
       return "SUMMER";
     case "october":
       return "FALL";
-    case "NOVEMBER":
+    case "november":
       return "FALL";
 
     default:

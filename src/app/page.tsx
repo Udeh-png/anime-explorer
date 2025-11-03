@@ -41,7 +41,7 @@ export default async function Home() {
     <div className="h-500">
       <Hero pageObjs={heroCarouselAnime} />
 
-      <div className="max-w-[1300px] mx-auto min-[1090px]:pt-5 pt-5 min-[1090px]:p-0 px-2">
+      <div className="min-[1090px]:pt-5 pt-5 min-[1090px]:p-0 px-2">
         <div className="">
           <MiniCarousel
             pageObj={trendingAnime}
@@ -49,29 +49,38 @@ export default async function Home() {
             viewMoreLink="/"
           />
         </div>
-        <div className="min-[1090px]:mt-20 mt-15 mb-7 max-w-5xl mx-auto min-[1090px]:px-0 px-2">
+        <div className="min-[1090px]: relative mt-15 mb-7 max-w-5xl mx-auto min-[1090px]:px-0 px-2">
           <div
-            className="flex justify-end min-[1090px]:px-10 py-2"
+            className="flex justify-between items-center min-[1090px]:px-10 py-2 relative h-80"
             style={{
-              backgroundImage: `url("${yesterdayBestAiringEp.media.bannerImage}")`,
+              backgroundImage: `url("${
+                yesterdayBestAiringEp.media.bannerImage ||
+                yesterdayBestAiringEp.media.coverImage.extraLarge
+              }")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
             }}
           >
-            <div className="max-w-100 min-[1090px]:space-y-1">
-              <p className="min-[1090px]:text-3xl text-lg min-[1090px]:max-w-fit max-w-40 bg-clip-text font-semibold min-[1090px]:line-clamp-2 line-clamp-2">
+            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="text-center font-blanka text-4xl mb-2 tracking-widest">
+              <p className="mb-5">Yesterday&apos;s</p>
+              <p>Best Aired Episode...</p>
+            </div>
+            <div className="max-w-100 min-[1090px]:space-y-4 relative">
+              <div className="min-[1090px]:text-3xl text-lg min-[1090px]:max-w-fit max-w-40 bg-clip-text font-semibold min-[1090px]:line-clamp-2 line-clamp-2">
                 {yesterdayBestAiringEp.media.title.english ||
                   yesterdayBestAiringEp.media.title.english}
-              </p>
-              <div className="flex text-yellow-300 min-[1090px]:text-xl text-sm">
-                <TiStarFullOutline />
-                <TiStarFullOutline />
-                <TiStarFullOutline />
-                <TiStarFullOutline />
-                <TiStarFullOutline />
+
+                <div className="flex text-yellow-300 min-[1090px]:text-xl text-sm">
+                  <TiStarFullOutline />
+                  <TiStarFullOutline />
+                  <TiStarFullOutline />
+                  <TiStarFullOutline />
+                  <TiStarFullOutline />
+                </div>
               </div>
-              <p className="line-clamp-4 min-[1090px]:[display:-webkit-box] hidden text-white/70 text-sm">
+              <p className="line-clamp-4 min-[1090px]:[display:-webkit-box] hidden text-sm leading-relaxed">
                 {yesterdayBestAiringEp.media.description}
               </p>
 
@@ -100,7 +109,10 @@ export default async function Home() {
             viewMoreLink="/"
           />
         </div>
-        <WeeksSchedule />
+
+        <div className="mt-10 max-w-7xl mx-auto">
+          <WeeksSchedule />
+        </div>
       </div>
     </div>
   );

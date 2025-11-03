@@ -252,6 +252,9 @@ export async function getMediaWithId(
     };
   return await fetch(url, options)
     .then(async (res) => {
+      if (!res.ok) {
+        console.log(res);
+      }
       return await res.json();
     })
     .then((jsonResponse) => {
