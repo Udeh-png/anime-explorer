@@ -3,6 +3,7 @@
 @import "swiper/css/pagination";
 @import "swiper/css/autoplay";
 @import "swiper/css/navigation";
+@import "swiper/css/effect-fade";
 
 @font-face {
   font-family: "Blanka Regular";
@@ -33,4 +34,44 @@ body {
 
 .scrollable::-webkit-scrollbar {
   height: 0;
+}
+.custom-bullet {
+  width: 1.5rem;
+  height: 0.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: calc(infinity * 1px);
+  position: relative;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* Expand active bullet */
+.custom-bullet.swiper-pagination-bullet-active {
+  width: 3rem;
+}
+
+/* Progress bar inside bullet */
+.bullet-progress {
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: rgb(43, 127, 255);
+  transition: width 0.1s linear;
+}
+
+/* Animate progress on active bullet */
+.swiper-pagination-bullet-active .bullet-progress {
+  animation: fillProgress 5s linear forwards; /* Match autoplay delay */
+}
+
+@keyframes fillProgress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
