@@ -7,7 +7,7 @@ import { Swiper as Swipe, SwiperSlide } from "swiper/react";
 
 export const Hero = () => {
   return (
-    <div className="caret-transparent h-185">
+    <div className="caret-transparent md:h-185 h-[59.2vh]">
       <Swipe
         className="h-full"
         modules={[Navigation, Autoplay, EffectFade, Pagination]}
@@ -57,7 +57,7 @@ export const Hero = () => {
 
         <SwiperSlide>
           <HeroSliderContent
-            title="One Piece"
+            title="100 girls that really really really really really really really really really really really really really really really really really really really really like you"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. In quis sed repellendus nisi quo tempora cumque facere voluptatum doloremque, ipsum, fugit nostrum odit qui placeat inventore repellat eos temporibus delectus alias, modi ab deleniti. Ut sint nisi enim, placeat veniam modi quo vero cumque corrupti repudiandae id pariatur recusandae ipsum?"
           />
         </SwiperSlide>
@@ -92,16 +92,15 @@ export const Hero = () => {
           />
         </SwiperSlide>
 
-        <div className="w-15 absolute z-10 left-0 top-0 bottom-0 flex items-center justify-center text-5xl">
+        <div className="hidden w-15 absolute z-10 left-0 top-0 bottom-0 md:flex items-center justify-center text-5xl">
           <MdChevronLeft className="prevEl cursor-pointer absolute top-50" />
         </div>
-        <div className="w-15 absolute z-10 right-0 top-0 bottom-0 flex items-center justify-center text-5xl">
+        <div className="hidden w-15 absolute z-10 right-0 top-0 bottom-0 md:flex items-center justify-center text-5xl">
           <MdChevronRight className="nextEl cursor-pointer absolute top-50" />
         </div>
-        <div className="flex space-x-2! items-center mt-14 max-w-md pl-15 el absolute bottom-78 z-10"></div>
+        <div className="flex space-x-2! el absolute md:top-105! top-[98%]! bottom-auto! md:left-15! md:translate-0 -translate-x-1/2 left-1/2! z-10 w-fit!"></div>
       </Swipe>
     </div>
   );
 };
 // movieName: the mummy
-// h-185

@@ -14,15 +14,17 @@ export const HeroSliderContent = ({
   description: string;
 }) => {
   return (
-    <div className="pt-20 pl-15 h-full">
-      <div className="max-w-md">
-        <p className="font-bold text-7xl mb-5">{title}</p>
+    <div className="md:pt-15 md:pl-15 h-full flex md:items-stretch items-end md:justify-start justify-center pb-10">
+      <div className="flex flex-col md:items-start items-center">
+        <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left">
+          {title}
+        </p>
         <div className="text-xs text-white/60 font-light flex gap-x-2 items-center mb-3">
-          <span>Sub | Dub </span>
+          <span>Sub | Dub</span>
           <FaRegDotCircle className="text-[8px]" />
           <span className="italic">Action, Fantasy, Shonen</span>
         </div>
-        <p className="text-sm text-white/60 font-light line-clamp-4 mb-9 leading-relaxed">
+        <p className="md:[display:-webkit-box] max-w-md hidden text-sm text-white/60 font-light line-clamp-4 mb-9 leading-relaxed">
           {description}
         </p>
 
