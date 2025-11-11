@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { HTMLAttributes, useEffect, useRef } from "react";
 
-export const DescriptionUi = ({ description }: { description: string }) => {
+export const DescriptionUi = ({
+  description,
+  ...props
+}: { description: string } & HTMLAttributes<HTMLParagraphElement>) => {
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (descriptionRef.current) {
@@ -14,7 +17,8 @@ export const DescriptionUi = ({ description }: { description: string }) => {
   return (
     <p
       ref={descriptionRef}
-      className="mb-5 min-[600px]:text-sm text-[10px]"
+      {...props}
+      className="md:[display:-webkit-box] max-w-md hidden text-sm text-white/60 font-light line-clamp-4 mb-9 leading-relaxed"
     ></p>
   );
 };

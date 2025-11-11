@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import { FaClapperboard, FaStar } from "react-icons/fa6";
 import { getMediaCategory, getStatusMessage } from "@/utils/detailsPageUtils";
-import { AnimatedButton } from "@/components/shared/AnimatedButton";
+import { ActionButton } from "@/components/shared/ActionButton";
 import { FiShare } from "react-icons/fi";
 
 export const DetailsHero = ({ media }: { media: Media }) => {
@@ -138,11 +138,9 @@ export const DetailsHero = ({ media }: { media: Media }) => {
                   setClickAddToList(!clickAddToList);
                 }}
               >
-                <AnimatedButton
-                  styleOnFalse="bg-gray-500"
-                  styleOnTrue="bg-green-500"
-                  icon1={<FaBookmark />}
-                  icon2={<FaRegBookmark />}
+                <ActionButton
+                  iconOne={<FaBookmark />}
+                  iconTwo={<FaRegBookmark />}
                   condition={clickAddToList}
                 />
               </div>
@@ -152,12 +150,10 @@ export const DetailsHero = ({ media }: { media: Media }) => {
                   setClickFavorite(!clickFavorite);
                 }}
               >
-                <AnimatedButton
-                  styleOnFalse="bg-gray-500"
-                  styleOnTrue="bg-accent-one"
-                  icon1={<FaHeart />}
+                <ActionButton
+                  iconOne={<FaHeart />}
                   condition={clickFavorite}
-                  icon2={<FaRegHeart />}
+                  iconTwo={<FaRegHeart />}
                 />
               </div>
 

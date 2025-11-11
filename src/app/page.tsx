@@ -1,10 +1,16 @@
+import { getPageObject } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
 
-export default function Home() {
+export default async function Home() {
+  const peakTrendingAnime = await getPageObject({
+    customSort: ["TRENDING_DESC", "POPULARITY_DESC"],
+    perPage: 6,
+  });
+
   return (
     <div>
       <div>
-        <Hero />
+        <Hero peakTrendingAnime={peakTrendingAnime} />
       </div>
     </div>
   );

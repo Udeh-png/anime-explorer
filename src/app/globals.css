@@ -59,12 +59,11 @@ body {
   transform: scaleX(0);
   transform-origin: left;
   background: rgb(43, 127, 255);
-  transition: width 0.1s linear;
 }
 
 /* Animate progress on active bullet */
 .swiper-pagination-bullet-active .bullet-progress {
-  animation: fillProgress 5s linear forwards; /* Match autoplay delay */
+  animation: fillProgress 11.1s linear forwards; /* Match autoplay delay */
 }
 
 @keyframes fillProgress {
