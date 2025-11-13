@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "s4.anilist.co",
       },
+      {
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
 };

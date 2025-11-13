@@ -44,7 +44,14 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
 
   return (
     <div className="md:pt-15 md:pl-15 h-full flex md:items-stretch items-end md:justify-start justify-center pb-10 relative">
-      <Image src={"/"} alt="" fill sizes="" />
+      <Image
+        src={media.bannerImage}
+        alt=""
+        fill
+        sizes=""
+        className="object-cover"
+        quality={100}
+      />
       <div className="absolute inset-0 bg-black/20"></div>
       <div className="flex flex-col md:items-start items-center relative">
         <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left">
