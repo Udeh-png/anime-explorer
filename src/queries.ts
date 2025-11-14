@@ -51,9 +51,12 @@ export async function getPageObject({
         }
         media (type: ANIME, isAdult: false, format_not: MUSIC, ${Object.entries(
           filter
-        ).map(([key, value]) => `${key}:${value}`)}, sort: [${sort.join(
-    ","
-  )}]) {
+        ).map(
+          ([key, value]) =>
+            `${key}:${
+              typeof value === "object" ? `[${value.join(",")}]` : value
+            }`
+        )}, sort: [${sort.join(",")}]) {
           id
           trending
           bannerImage

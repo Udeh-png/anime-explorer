@@ -1,19 +1,14 @@
 "use client";
 
 import { HeroSliderContent } from "@/components/home/slideContent";
-import { PageObject } from "@/types";
+import { Media } from "@/types";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper as Swipe, SwiperSlide } from "swiper/react";
 
-export const Hero = ({
-  peakTrendingAnime,
-}: {
-  peakTrendingAnime: PageObject;
-}) => {
-  const ptaMedia = peakTrendingAnime.media;
+export const Hero = ({ peakTrendingAnime }: { peakTrendingAnime: Media[] }) => {
   return (
-    <div className="caret-transparent md:h-185 h-[59.2vh]">
+    <div className="caret-transparent md:h-185 h-[60vh]">
       <Swipe
         className="h-full"
         modules={[Navigation, Autoplay, EffectFade, Pagination]}
@@ -45,7 +40,7 @@ export const Hero = ({
           prevEl: ".prevEl",
         }}
       >
-        {ptaMedia.map((media, i) => {
+        {peakTrendingAnime.map((media, i) => {
           return (
             <SwiperSlide key={i}>
               <HeroSliderContent media={media} />

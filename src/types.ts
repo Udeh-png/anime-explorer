@@ -50,6 +50,7 @@ export type Media = {
   id: number;
   trending: number;
   bannerImage: string;
+  bannerImageMobile: string;
   averageScore: number;
   seasonYear: number;
   season: string;

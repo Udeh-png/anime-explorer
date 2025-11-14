@@ -49,10 +49,21 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         alt=""
         fill
         sizes=""
-        className="object-cover"
+        className="object-cover md:[display:initial] hidden"
         quality={100}
       />
-      <div className="absolute inset-0 bg-black/20"></div>
+
+      <Image
+        src={media.bannerImageMobile}
+        alt=""
+        fill
+        sizes=""
+        className="object-cover md:hidden [display:initial]"
+        quality={100}
+      />
+
+      <div className="absolute inset-0 hidden md:block bg-linear-to-r from-background to-transparent"></div>
+      {/* <div className="absolute inset-0 bg-linear-to-t from-background to-transparent"></div> */}
       <div className="flex flex-col md:items-start items-center relative">
         <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left">
           {title}
