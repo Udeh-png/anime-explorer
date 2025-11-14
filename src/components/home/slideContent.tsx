@@ -43,13 +43,21 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
   };
 
   return (
-    <div className="md:pt-15 md:pl-15 h-full flex md:items-stretch items-end md:justify-start justify-center pb-10 relative">
+    <div
+      className="
+  md:pt-15 md:pl-15 md:pb-0 pb-15
+  h-full flex md:items-stretch items-end md:justify-start justify-center
+  relative
+  md:mask-b-from-80% 
+  mask-b-from-93% 
+"
+    >
       <Image
         src={media.bannerImage}
         alt=""
         fill
         sizes=""
-        className="object-cover md:[display:initial] hidden"
+        className="object-cover md:block hidden"
         quality={100}
       />
 
@@ -58,21 +66,28 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         alt=""
         fill
         sizes=""
-        className="object-cover md:hidden [display:initial]"
+        className="object-cover md:hidden block"
         quality={100}
       />
 
-      <div className="absolute inset-0 hidden md:block bg-linear-to-r from-background to-transparent"></div>
-      {/* <div className="absolute inset-0 bg-linear-to-t from-background to-transparent"></div> */}
+      <div className="absolute inset-0 hidden md:block bg-linear-to-r from-[rgba(0,0,0,0.95)] to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-[rgba(0,0,0,0.95)] from-10% to-transparent to-50%"></div>
       <div className="flex flex-col md:items-start items-center relative">
         <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left">
           {title}
         </p>
-        <div className="text-xs text-white/60 font-light flex gap-x-2 items-center mb-3 max-w-md pr-1 md:px-0 px-2">
-          <span>{hasDub ? "Sub | Dub" : "Subtitle"}</span>
-          <FaRegDotCircle className="text-[8px]" />
-          <span className="italic line-clamp-1 pr-1">{genres.join(", ")}</span>
+        <div className="text-xs text-white/60 font-light flex items-center space-x-2 mb-3 md:max-w-md max-w-xs pr-1">
+          <span className="text-nowrap">
+            {hasDub ? "Sub | Dub" : "Subtitle"}
+          </span>
+
+          <FaRegDotCircle className="text-[8px] block min-w-fit" />
+
+          <span className="italic pr-1 text-nowrap overflow-hidden text-ellipsis">
+            {genres.join(", ")}
+          </span>
         </div>
+
         <DescriptionUi description={description} />
 
         <div className="flex gap-x-2.5">
