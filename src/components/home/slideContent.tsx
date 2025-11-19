@@ -43,15 +43,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
   };
 
   return (
-    <div
-      className="
-  md:pt-15 md:pl-15 md:pb-0 pb-15
-  h-full flex md:items-stretch items-end md:justify-start justify-center
-  relative
-  md:mask-b-from-80% 
-  mask-b-from-93% 
-"
-    >
+    <div className="md:pt-15 md:pl-15 md:pb-0 pb-15 h-full flex md:items-stretch items-end md:justify-start justify-center relative md:mask-b-from-97% mask-b-from-93%">
       <Image
         src={media.bannerImage}
         alt=""
@@ -70,10 +62,15 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         quality={100}
       />
 
-      <div className="absolute inset-0 hidden md:block bg-linear-to-r from-[rgba(0,0,0,0.95)] to-transparent"></div>
-      <div className="absolute inset-0 bg-linear-to-t from-[rgba(0,0,0,0.95)] from-10% to-transparent to-50%"></div>
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.95), transparent), linear-gradient(to top, rgba(0,0,0,0.95) 5%, transparent 15%)",
+        }}
+      ></div>
       <div className="flex flex-col md:items-start items-center relative">
-        <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left md:min-w-full max-w-2xs">
+        <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left md:max-w-full max-w-2xs">
           {title}
         </p>
         <div className="text-xs text-white/60 font-light flex items-center space-x-2 mb-3 md:max-w-md max-w-2xs pr-1">

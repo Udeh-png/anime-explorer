@@ -6,7 +6,7 @@ import { BiChevronDown } from "react-icons/bi";
 
 export const Navbar = () => {
   return (
-    <div className="sticky top-0 flex-wrap:h-18 h-13 z-50 bg-background backdrop-blur-sm">
+    <div className="sticky top-0 md:h-16 h-13 z-50 bg-background backdrop-blur-sm">
       <div className="max-w-7xl mx-auto flex items-center h-full min-[1090px]:justify-between justify-center">
         <div className="font-blanka min-[1090px]:text-3xl text-xl flex min-[1090px]:gap-x-2">
           <Image

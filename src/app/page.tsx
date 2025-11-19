@@ -1,3 +1,4 @@
+import { MiniCarousel } from "@/components/home/MiniCarousel";
 import { featuredAnime as featuredAnimeArr, featuredId } from "@/data";
 import { getPageObject } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
@@ -16,9 +17,13 @@ export default async function Home() {
   });
 
   return (
-    <div>
-      <div>
+    <div className="grid gap-y-15 grid-rows-2 grid-cols-1">
+      <div className="h-110">
         <Hero peakTrendingAnime={media} />
+      </div>
+
+      <div className="z-1 px-15">
+        <MiniCarousel />
       </div>
     </div>
   );

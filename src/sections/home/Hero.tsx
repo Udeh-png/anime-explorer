@@ -14,10 +14,12 @@ export const Hero = ({ peakTrendingAnime }: { peakTrendingAnime: Media[] }) => {
         modules={[Navigation, Autoplay, EffectFade, Pagination]}
         effect="fade"
         speed={1100}
+        simulateTouch={false}
         fadeEffect={{
           crossFade: true,
         }}
         loop
+        loopPreventsSliding={false}
         pagination={{
           el: ".el",
           clickable: true,

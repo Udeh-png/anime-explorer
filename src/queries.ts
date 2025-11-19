@@ -9,12 +9,14 @@ export async function getPageObject({
   type = "trending",
   customSort,
   customFilter,
+  cacheTimeMills,
 }: {
   pageNo?: number;
   perPage?: number;
   type?: PresetType;
   customSort?: string[];
   customFilter?: object;
+  cacheTimeMills?: number;
 }): Promise<PageObject> {
   const presets: Record<PresetType, { sort: string[]; filter: object }> = {
     trending: {
@@ -102,7 +104,7 @@ export async function getPageObject({
 `;
 
   const url = "https://graphql.anilist.co",
-    options = {
+    options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,6 +113,8 @@ export async function getPageObject({
       body: JSON.stringify({
         query: query,
       }),
+      cache: cacheTimeMills ? "force-cache" : "default",
+      next: cacheTimeMills ? { revalidate: cacheTimeMills } : {},
     };
 
   return await fetch(url, options)
