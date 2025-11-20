@@ -63,12 +63,14 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
       />
 
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 md:block hidden"
         style={{
           background:
             "linear-gradient(to right, rgba(0,0,0,0.95), transparent), linear-gradient(to top, rgba(0,0,0,0.95) 5%, transparent 15%)",
         }}
-      ></div>
+      />
+
+      <div className="absolute inset-0 md:hidden block bg-linear-to-t from-black from-12% to-transparent to-50%" />
       <div className="flex flex-col md:items-start items-center relative">
         <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left md:max-w-full max-w-2xs">
           {title}

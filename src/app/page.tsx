@@ -17,12 +17,12 @@ export default async function Home() {
   });
 
   return (
-    <div className="grid gap-y-15 grid-rows-2 grid-cols-1">
+    <div className="grid md:gap-y-15 gap-y-17 grid-rows-2 grid-cols-1">
       <div className="h-110">
         <Hero peakTrendingAnime={media} />
       </div>
 
-      <div className="z-1 px-15">
+      <div className="z-1 md:px-15 px-5">
         <MiniCarousel />
       </div>
     </div>

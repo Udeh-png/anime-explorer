@@ -1,19 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BiChevronDown, BiSearch } from "react-icons/bi";
+import { BiMenu, BiSearch } from "react-icons/bi";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { MdAccountCircle } from "react-icons/md";
 
 export function Navbar() {
   return (
     <div className="">
-      <div className="h-14 bg-background flex items-center px-4 justify-between">
-        <div className="flex gap-x-1">
+      <div className="h-14 bg-[rgb(25,25,25)] flex items-center px-4 justify-between text-white/80">
+        <div className="flex md:gap-x-1 gap-x-7 items-center">
+          <BiMenu className="md:hidden block text-3xl" />
           <Image src={"/AE_Logo.svg"} alt="" width={25} height={25} />
-          <p className="font-blanka text-xl tracking-widest pb-[2px]">
+          <p className="font-blanka text-xl tracking-widest pb-[2px] hidden md:inline-block text-white">
             <span className="text-accent-one">Ani</span>Explorer
           </p>
         </div>
 
-        <div className="flex gap-x-10">
+        <div className="gap-x-10 md:flex hidden">
           <ul className="contents">
             <li>
               <Link href={"/"}>Home</Link>
@@ -21,24 +24,19 @@ export function Navbar() {
             <li>
               <Link href={"/"}>Schedules</Link>
             </li>
-            <li>
-              <Link href={"/"}>Browse</Link>
-            </li>
-            <li className="flex items-center group cursor-pointer">
-              <p>Lists</p>
-              <BiChevronDown className="group-hover:rotate-180 transition-transform" />
+            <li className="flex items-center group cursor-pointer gap-x-2">
+              <p>Browse</p>
+              <IoMdArrowDropdown className="text-lg" />
             </li>
           </ul>
         </div>
 
-        <div className="flex gap-x-3 items-center">
-          <BiSearch className="text-2xl cursor-pointer" />
-          <Link href={"/"} className="px-5 py-1">
-            Log In
-          </Link>
-          <Link href={"/"} className="px-5 py-1 bg-accent-one">
-            Sign Up
-          </Link>
+        <div className="flex md:gap-x-10 gap-x-7 items-center">
+          <BiSearch className="text-[1.6rem] cursor-pointer" />
+          <div className="flex items-center gap-x-2 cursor-pointer">
+            <MdAccountCircle className="text-[2rem]" />
+            <IoMdArrowDropdown className="text-lg" />
+          </div>
         </div>
       </div>
     </div>
