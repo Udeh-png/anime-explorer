@@ -49,7 +49,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         alt=""
         fill
         sizes=""
-        className="object-cover md:block hidden"
+        className="object-cover md:block hidden select-none"
         quality={100}
       />
 
@@ -90,7 +90,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         <div className="flex gap-x-2.5">
           <Link
             href={streamingLink || externalLink}
-            className="flex items-center text-sm gap-x-2 px-4 bg-blue-500 uppercase"
+            className="flex items-center text-sm gap-x-2 px-4 bg-accent-one uppercase"
           >
             <FaPlay className="" />
             {streamingLink ? "Start Watching Now" : "See Socials"}

@@ -12,13 +12,20 @@
   src: local("Blanka Regular"), url("/Blanka-Regular.woff") format("woff");
 }
 
+html::selection {
+  background-color: rgb(30, 30, 30);
+  color: var(--accent-one);
+}
+
 :root {
   --background: rgb(0, 0, 0);
   --blanka: "Blanka Regular";
+  --accent-one: rgb(43, 127, 255);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-accent-one: var(--accent-one);
   --font-blanka: var(--blanka);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

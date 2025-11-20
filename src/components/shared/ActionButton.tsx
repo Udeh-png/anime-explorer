@@ -12,7 +12,7 @@ export const ActionButton = ({
   return (
     <button
       onClick={onClick}
-      className="border-2 border-blue-500 text-blue-500 flex justify-center items-center cursor-pointer"
+      className="border-2 border-accent-one text-accent-one flex justify-center items-center cursor-pointer"
     >
       {condition === true ? iconTwo : iconOne}
     </button>

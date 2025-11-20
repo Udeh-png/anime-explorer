@@ -23,7 +23,7 @@ const AiringSoonCard = ({
     <div className="flex-1 flex flex-col rounded-lg bg-[rgb(30,30,30)] border-2 border-white/30 h-full px-4 pt-4 pb-1">
       <div className="relative flex-3 rounded-lg overflow-clip">
         <Image src={imageSrc} alt="" fill sizes=""></Image>
-        <p className="absolute top-1 left-1 text-xxs px-1.5 py-0.5 bg-blue-500 font-semibold rounded">
+        <p className="absolute top-1 left-1 text-xxs px-1.5 py-0.5 bg-accent-one font-semibold rounded">
           EP {epNumber}
         </p>
       </div>
@@ -100,7 +100,7 @@ const AvailableNowCard = ({
             </div>
 
             <div className="flex gap-x-1 text-xs items-center">
-              <GoClockFill className="text-blue-500" />
+              <GoClockFill className="text-accent-one" />
               <p className="text-white/80">15 mins ago</p>
             </div>
           </div>
