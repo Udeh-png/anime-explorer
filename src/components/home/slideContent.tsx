@@ -3,18 +3,10 @@
 import { Media } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FaBookmark,
-  FaHeart,
-  FaPlay,
-  FaRegBookmark,
-  FaRegDotCircle,
-  FaRegHeart,
-} from "react-icons/fa";
+import { FaPlay, FaRegDotCircle } from "react-icons/fa";
 import { DescriptionUi } from "../shared/DescriptionUtil";
 import { streamingPlatforms } from "@/data";
-import { ActionButton } from "../shared/ActionButton";
-import { useState } from "react";
+import { FavoriteButton, LikeButton } from "../shared/ActionButtons";
 
 export const HeroSliderContent = ({ media }: { media: Media }) => {
   const title = media.title.english || media.title.romaji;
@@ -31,16 +23,6 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
     );
   })?.url;
   const externalLink = media.externalLinks[0].url;
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleFavoriteButtonClick = () => {
-    setIsFavorited((prev) => !prev);
-  };
-
-  const handleLikeButtonClick = () => {
-    setIsLiked((prev) => !prev);
-  };
 
   return (
     <div className="md:pt-15 md:pl-15 md:pb-0 pb-15 h-full flex md:items-stretch items-end md:justify-start justify-center relative md:mask-b-from-97% mask-b-from-93%">
@@ -98,19 +80,9 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
             {streamingLink ? "Start Watching Now" : "See Socials"}
           </Link>
           <div className="grid grid-cols-2 gap-x-2.5 w-23 h-10 text-xl">
-            <ActionButton
-              iconOne={<FaRegBookmark />}
-              iconTwo={<FaBookmark />}
-              condition={isFavorited}
-              onClick={handleFavoriteButtonClick}
-            />
+            <FavoriteButton />
 
-            <ActionButton
-              iconOne={<FaRegHeart />}
-              iconTwo={<FaHeart />}
-              condition={isLiked}
-              onClick={handleLikeButtonClick}
-            />
+            <LikeButton />
           </div>
         </div>
       </div>

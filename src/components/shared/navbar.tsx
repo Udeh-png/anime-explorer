@@ -6,8 +6,8 @@ import { MdAccountCircle } from "react-icons/md";
 
 export function Navbar() {
   return (
-    <div className="">
-      <div className="h-14 bg-[rgb(25,25,25)] flex items-center px-4 justify-between text-white/80">
+    <div className="sticky top-0 z-100">
+      <div className="h-14 w-full bg-[rgb(25,25,25)] flex items-center px-4 justify-between text-white/80">
         <div className="flex md:gap-x-1 gap-x-7 items-center">
           <BiMenu className="md:hidden block text-3xl" />
           <Image src={"/AE_Logo.svg"} alt="" width={25} height={25} />

@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import { FaClapperboard, FaStar } from "react-icons/fa6";
 import { getMediaCategory, getStatusMessage } from "@/utils/detailsPageUtils";
-import { ActionButton } from "@/components/shared/ActionButton";
+import { ActionButton } from "@/components/shared/ActionButtons";
 import { FiShare } from "react-icons/fi";
 
 export const DetailsHero = ({ media }: { media: Media }) => {
