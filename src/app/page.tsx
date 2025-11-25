@@ -17,8 +17,8 @@ export default async function Home() {
   });
 
   return (
-    <div className="grid md:gap-y-15 gap-y-17 grid-rows-2 grid-cols-1">
-      <div className="h-110">
+    <div className="grid md:gap-y-15 gap-y-10 grid-rows-2 grid-cols-1">
+      <div className="md:h-110">
         <Hero peakTrendingAnime={media} />
       </div>
 

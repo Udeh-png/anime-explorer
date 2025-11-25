@@ -16,7 +16,11 @@ export const FavoriteButton = ({ rounded }: { rounded?: boolean }) => {
       onClick={addToFavorite}
       className={`flex justify-center items-center cursor-pointer ${styles}`}
     >
-      {isFavorited === true ? <FaBookmark /> : <FaRegBookmark />}
+      {isFavorited === true ? (
+        <FaBookmark className="text-accent-one" />
+      ) : (
+        <FaRegBookmark />
+      )}
     </button>
   );
 };
@@ -36,7 +40,7 @@ export const LikeButton = ({ rounded }: { rounded?: boolean }) => {
       onClick={addToLikes}
       className={`flex justify-center items-center cursor-pointer ${styles}`}
     >
-      {isLiked === true ? <FaHeart /> : <FaRegHeart />}
+      {isLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
     </button>
   );
 };

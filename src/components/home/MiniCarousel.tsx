@@ -2,7 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Card } from "../shared/Card";
-import { Navigation } from "swiper/modules";
+import { FreeMode, Navigation } from "swiper/modules";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState } from "react";
 
@@ -21,17 +21,37 @@ export const MiniCarousel = () => {
         </p>
       </div>
 
-      <div className="pt-3.5 -mx-15">
+      <div className="pt-3.5 md:-mx-15 -mx-5">
         <Swiper
-          modules={[Navigation]}
+          className="mySwiper"
+          modules={[Navigation, FreeMode]}
           breakpoints={{
-            1024: {
-              slidesPerView: 5,
-              slidesPerGroup: 5,
-              slidesOffsetBefore: 50,
+            768: {
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+              slidesOffsetBefore: 48,
               slidesOffsetAfter: 40,
             },
+
+            821: {
+              slidesPerView: 4,
+              slidesPerGroup: 5,
+              slidesOffsetBefore: 48,
+              slidesOffsetAfter: 40,
+            },
+
+            1025: {
+              slidesPerView: 5,
+              slidesPerGroup: 5,
+              slidesOffsetBefore: 48,
+              slidesOffsetAfter: 40,
+              freeMode: false,
+            },
           }}
+          slidesPerView={2}
+          slidesOffsetBefore={16}
+          slidesOffsetAfter={12}
+          freeMode={true}
           onSlideChange={(swiper) => {
             if (swiper.isBeginning) {
               return setPosition("beginning");
@@ -53,7 +73,7 @@ export const MiniCarousel = () => {
           ))}
 
           <div
-            className={`text-4xl w-fit absolute top-1/2 -translate-y-1/2 z-5 cursor-pointer transition-opacity right-0 nextEl ${
+            className={`text-4xl w-fit absolute top-1/2 -translate-y-1/2 z-5 cursor-pointer transition-opacity md:block hidden right-0 nextEl ${
               position === "end"
                 ? "opacity-0 pointer-events-none"
                 : "opacity-100 pointer-events-auto"
@@ -62,7 +82,7 @@ export const MiniCarousel = () => {
             <FaChevronRight />
           </div>
           <div
-            className={`text-4xl w-fit absolute top-1/2 -translate-y-1/2 z-5 cursor-pointer transition-opacity left-0 prevEl ${
+            className={`text-4xl w-fit absolute top-1/2 -translate-y-1/2 z-5 cursor-pointer transition-opacity md:block hidden left-0 prevEl ${
               position === "beginning"
                 ? "opacity-0 pointer-events-none"
                 : "opacity-100 pointer-events-auto"
