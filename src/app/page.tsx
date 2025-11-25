@@ -22,7 +22,7 @@ export default async function Home() {
         <Hero peakTrendingAnime={media} />
       </div>
 
-      <div className="z-1 md:px-15 px-5">
+      <div className="z-1 lg:px-15 px-5">
         <MiniCarousel />
       </div>
     </div>

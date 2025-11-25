@@ -50,13 +50,13 @@ export const Hero = ({ peakTrendingAnime }: { peakTrendingAnime: Media[] }) => {
           );
         })}
 
-        <div className="hidden w-15 absolute z-10 left-0 top-0 bottom-0 md:flex items-center justify-center text-5xl">
+        <div className="hidden w-15 absolute z-10 left-0 top-0 bottom-0 lg:flex items-center justify-center text-5xl">
           <MdChevronLeft className="prevEl cursor-pointer absolute top-50" />
         </div>
-        <div className="hidden w-15 absolute z-10 right-0 top-0 bottom-0 md:flex items-center justify-center text-5xl">
+        <div className="hidden w-15 absolute z-10 right-0 top-0 bottom-0 lg:flex items-center justify-center text-5xl">
           <MdChevronRight className="nextEl cursor-pointer absolute top-50" />
         </div>
-        <div className="flex space-x-2! el absolute md:top-105! top-[94%]! bottom-auto! md:left-15! md:translate-0 -translate-x-1/2 left-1/2! z-1 w-fit!"></div>
+        <div className="flex space-x-2! el absolute md:top-105! top-[94%]! bottom-auto! md:left-5 lg:left-15! md:translate-0 -translate-x-1/2 left-1/2! z-1 w-fit!"></div>
       </Swipe>
     </div>
   );

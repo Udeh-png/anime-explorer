@@ -21,7 +21,7 @@ export const MiniCarousel = () => {
         </p>
       </div>
 
-      <div className="pt-3.5 md:-mx-15 -mx-5">
+      <div className="pt-3.5 lg:-mx-15 -mx-5">
         <Swiper
           className="mySwiper"
           modules={[Navigation, FreeMode]}
@@ -29,15 +29,15 @@ export const MiniCarousel = () => {
             768: {
               slidesPerView: 3,
               slidesPerGroup: 3,
-              slidesOffsetBefore: 48,
-              slidesOffsetAfter: 40,
+              slidesOffsetBefore: 10,
+              slidesOffsetAfter: 12,
             },
 
             821: {
               slidesPerView: 4,
               slidesPerGroup: 5,
-              slidesOffsetBefore: 48,
-              slidesOffsetAfter: 40,
+              slidesOffsetBefore: 14,
+              slidesOffsetAfter: 12,
             },
 
             1025: {

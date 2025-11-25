@@ -25,13 +25,13 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
   const externalLink = media.externalLinks[0].url;
 
   return (
-    <div className="md:pt-15 md:pl-15 md:pb-0 pb-15 h-full flex md:items-stretch items-end md:justify-start justify-center relative md:mask-b-from-97% mask-b-from-93%">
+    <div className="md:pt-15 lg:pl-15! md:pl-5 md:pb-0 pb-15 h-full flex md:items-stretch items-end md:justify-start justify-center relative md:mask-b-from-97% mask-b-from-93%">
       <Image
         src={media.bannerImage}
         alt=""
         fill
         sizes=""
-        className="object-cover md:block hidden select-none"
+        className="object-cover lg:block hidden select-none"
         quality={100}
       />
 
@@ -40,7 +40,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         alt=""
         fill
         sizes=""
-        className="object-cover md:hidden block"
+        className="object-cover lg:hidden block"
         quality={100}
       />
 
@@ -54,7 +54,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
 
       <div className="absolute inset-0 md:hidden block bg-linear-to-t from-black from-12% to-transparent to-50%" />
       <div className="flex flex-col md:items-start items-center relative">
-        <p className="font-bold md:text-7xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left md:max-w-full max-w-2xs">
+        <p className="font-bold lg:text-7xl! md:text-5xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left md:max-w-full max-w-2xs">
           {title}
         </p>
         <div className="text-xs text-white/60 font-light flex items-center space-x-2 mb-3 md:max-w-md max-w-2xs pr-1">
