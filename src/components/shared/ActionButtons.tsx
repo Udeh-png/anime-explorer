@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { FaBookmark, FaHeart, FaRegBookmark, FaRegHeart } from "react-icons/fa";
 
-export const FavoriteButton = ({ rounded }: { rounded?: boolean }) => {
-  const [isFavorited, setIsFavorited] = useState(false);
+export const WatchListButton = ({
+  rounded,
+  initialIsWatchListed,
+}: {
+  rounded?: boolean;
+  initialIsWatchListed: boolean;
+}) => {
+  const [isWatchListed, setIsWatchListed] = useState(initialIsWatchListed);
 
-  const addToFavorite = () => {
-    setIsFavorited(!isFavorited);
+  const addToWatchList = () => {
+    setIsWatchListed(!isWatchListed);
   };
 
   const styles = rounded
@@ -13,10 +19,10 @@ export const FavoriteButton = ({ rounded }: { rounded?: boolean }) => {
     : "border-2 text-accent-one ";
   return (
     <button
-      onClick={addToFavorite}
+      onClick={addToWatchList}
       className={`flex justify-center items-center cursor-pointer ${styles}`}
     >
-      {isFavorited === true ? (
+      {isWatchListed === true ? (
         <FaBookmark className="text-accent-one" />
       ) : (
         <FaRegBookmark />
@@ -25,11 +31,17 @@ export const FavoriteButton = ({ rounded }: { rounded?: boolean }) => {
   );
 };
 
-export const LikeButton = ({ rounded }: { rounded?: boolean }) => {
-  const [isLiked, setIsLiked] = useState(false);
+export const FavoriteButton = ({
+  rounded,
+  initialIsFavorited,
+}: {
+  rounded?: boolean;
+  initialIsFavorited: boolean;
+}) => {
+  const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
 
-  const addToLikes = () => {
-    setIsLiked(!isLiked);
+  const addToFavorites = () => {
+    setIsFavorited(!isFavorited);
   };
 
   const styles = rounded
@@ -37,10 +49,10 @@ export const LikeButton = ({ rounded }: { rounded?: boolean }) => {
     : "border-2 text-accent-one ";
   return (
     <button
-      onClick={addToLikes}
+      onClick={addToFavorites}
       className={`flex justify-center items-center cursor-pointer ${styles}`}
     >
-      {isLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+      {isFavorited ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
     </button>
   );
 };

@@ -5,8 +5,9 @@ import { Card } from "../shared/Card";
 import { FreeMode, Navigation } from "swiper/modules";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState } from "react";
+import { Media } from "@/types";
 
-export const MiniCarousel = () => {
+export const MiniCarousel = ({ medias }: { medias: Media[] }) => {
   const [position, setPosition] = useState<"beginning" | "end" | "middle">(
     "beginning"
   );
@@ -23,8 +24,10 @@ export const MiniCarousel = () => {
 
       <div className="pt-3.5 lg:-mx-15 -mx-5">
         <Swiper
-          className="mySwiper"
+          className="mini-carousel"
           modules={[Navigation, FreeMode]}
+          slideVisibleClass="swiper-visible"
+          simulateTouch={false}
           breakpoints={{
             768: {
               slidesPerView: 3,
@@ -66,9 +69,9 @@ export const MiniCarousel = () => {
             prevEl: ".prevEl",
           }}
         >
-          {Array.from({ length: 35 }).map((_, i) => (
+          {medias.map((media, i) => (
             <SwiperSlide key={i}>
-              <Card />
+              <Card media={media} />
             </SwiperSlide>
           ))}
 

@@ -56,6 +56,11 @@ body {
   opacity: 1;
 }
 
+.swiper-visible {
+  opacity: 0.5 !important;
+  border: 4px red solid !important;
+}
+
 /* Expand active bullet */
 .custom-bullet.swiper-pagination-bullet-active {
   width: 3rem;

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { FaPlay, FaRegDotCircle } from "react-icons/fa";
 import { DescriptionUi } from "../shared/DescriptionUtil";
 import { streamingPlatforms } from "@/data";
-import { FavoriteButton, LikeButton } from "../shared/ActionButtons";
+import { WatchListButton, FavoriteButton } from "../shared/ActionButtons";
 
 export const HeroSliderContent = ({ media }: { media: Media }) => {
   const title = media.title.english || media.title.romaji;
@@ -23,6 +23,8 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
     );
   })?.url;
   const externalLink = media.externalLinks[0].url;
+  const isFavorited = media.isFavorite;
+  const isWatchListed = media.isWatchListed;
 
   return (
     <div className="md:pt-15 lg:pl-15! md:pl-5 md:pb-0 pb-15 h-full flex md:items-stretch items-end md:justify-start justify-center relative md:mask-b-from-97% mask-b-from-93%">
@@ -80,9 +82,9 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
             {streamingLink ? "Start Watching Now" : "See Socials"}
           </Link>
           <div className="grid grid-cols-2 gap-x-2.5 w-23 h-10 text-xl">
-            <FavoriteButton />
+            <WatchListButton initialIsWatchListed={isWatchListed} />
 
-            <LikeButton />
+            <FavoriteButton initialIsFavorited={isFavorited} />
           </div>
         </div>
       </div>

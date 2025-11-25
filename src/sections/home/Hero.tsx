@@ -6,7 +6,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper as Swipe, SwiperSlide } from "swiper/react";
 
-export const Hero = ({ peakTrendingAnime }: { peakTrendingAnime: Media[] }) => {
+export const Hero = ({ featuredAnime }: { featuredAnime: Media[] }) => {
   return (
     <div className="caret-transparent md:h-185 h-[61vh]">
       <Swipe
@@ -42,7 +42,7 @@ export const Hero = ({ peakTrendingAnime }: { peakTrendingAnime: Media[] }) => {
           prevEl: ".prevEl",
         }}
       >
-        {peakTrendingAnime.map((media, i) => {
+        {featuredAnime.map((media, i) => {
           return (
             <SwiperSlide key={i}>
               <HeroSliderContent media={media} />

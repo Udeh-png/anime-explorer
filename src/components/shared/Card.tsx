@@ -1,25 +1,36 @@
 import Image from "next/image";
-import { BiStar } from "react-icons/bi";
-import { FavoriteButton, LikeButton } from "./ActionButtons";
+import { WatchListButton, FavoriteButton } from "./ActionButtons";
+import { Media } from "@/types";
+import { FaStar } from "react-icons/fa";
 
-export const Card = () => {
+export const Card = ({ media }: { media: Media }) => {
+  const imageSrc = media.coverImage.extraLarge;
+  const title = media.title.english || media.title.romaji;
+  const hasDub = Boolean(
+    media.characters.edges.some((edge) =>
+      edge.voiceActors.some((va) => va.languageV2.toLowerCase() === "english")
+    )
+  );
+  const score = ((media.averageScore * 5) / 100).toFixed(1);
+  const isWatchListed = media.isWatchListed;
+  const isFavorited = media.isFavorite;
   return (
-    <div className="md:h-92 h-80 md:px-3.5 px-1.5 flex flex-col">
-      <div className="relative mb-2 flex items-end justify-end flex-20">
-        <div className="absolute inset-0 bg-red-600" />
+    <div className="md:px-3.5 px-1.5 flex flex-col">
+      <div className="relative mb-2 flex items-end justify-end h-80 shrink-0">
+        <Image src={imageSrc} alt={`${title}s' cover image`} fill sizes="" />
         <div className="relative flex gap-x-2.5 px-1 pb-1">
-          <FavoriteButton rounded />
-          <LikeButton rounded />
+          <WatchListButton rounded initialIsWatchListed={isWatchListed} />
+          <FavoriteButton rounded initialIsFavorited={isFavorited} />
         </div>
       </div>
       <div className="space-y-2 text-sm flex-1">
-        <p className="font-semibold line-clamp-3">Demon Slayer Season 5</p>
+        <p className="font-semibold line-clamp-3">{title}</p>
         <div className="flex justify-between text-white/50 font-light">
-          <p>Subtitle</p>
+          <p>{hasDub ? "Sub | Dub" : "Subtitle"}</p>
           <div className="flex items-center gap-x-1">
-            <p>4.5</p>
-            <p className="text-yellow-500">
-              <BiStar />
+            <p>{score}</p>
+            <p className="text-yellow-500 pb-0.5">
+              <FaStar />
             </p>
           </div>
         </div>
