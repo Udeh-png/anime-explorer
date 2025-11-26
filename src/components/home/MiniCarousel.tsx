@@ -29,21 +29,23 @@ export const MiniCarousel = ({ medias }: { medias: Media[] }) => {
           slideVisibleClass="swiper-visible"
           simulateTouch={false}
           breakpoints={{
-            768: {
+            480: {
               slidesPerView: 3,
               slidesPerGroup: 3,
-              slidesOffsetBefore: 10,
-              slidesOffsetAfter: 12,
+              slidesOffsetBefore: 48,
+              slidesOffsetAfter: 40,
+              freeMode: false,
             },
 
-            821: {
+            570: {
               slidesPerView: 4,
-              slidesPerGroup: 5,
-              slidesOffsetBefore: 14,
-              slidesOffsetAfter: 12,
+              slidesPerGroup: 4,
+              slidesOffsetBefore: 48,
+              slidesOffsetAfter: 40,
+              freeMode: false,
             },
 
-            1025: {
+            1024: {
               slidesPerView: 5,
               slidesPerGroup: 5,
               slidesOffsetBefore: 48,

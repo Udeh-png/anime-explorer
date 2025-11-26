@@ -16,7 +16,7 @@ export const Card = ({ media }: { media: Media }) => {
   const isFavorited = media.isFavorite;
   return (
     <div className="md:px-3.5 px-1.5 flex flex-col">
-      <div className="relative mb-2 flex items-end justify-end h-80 shrink-0">
+      <div className="relative mb-2 flex items-end justify-end aspect-[2/3] w-full">
         <Image src={imageSrc} alt={`${title}s' cover image`} fill sizes="" />
         <div className="relative flex gap-x-2.5 px-1 pb-1">
           <WatchListButton rounded initialIsWatchListed={isWatchListed} />
@@ -38,3 +38,10 @@ export const Card = ({ media }: { media: Media }) => {
     </div>
   );
 };
+
+{
+  /* 
+      
+    
+  */
+}
