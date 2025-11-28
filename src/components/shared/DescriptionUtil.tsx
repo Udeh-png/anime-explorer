@@ -18,7 +18,7 @@ export const DescriptionUi = ({
     <p
       ref={descriptionRef}
       {...props}
-      className="md:[display:-webkit-box] max-w-md hidden text-sm text-white/60 font-light line-clamp-4 mb-9 leading-relaxed"
+      className="3md:[display:-webkit-box] max-w-md hidden text-sm text-white/60 font-light lg:line-clamp-4 line-clamp-3 mb-8 leading-relaxed"
     ></p>
   );
 };

@@ -33,7 +33,10 @@ html::selection {
   --font-poppins: var(--font-poppins);
   --font-noto-sans: var(--font-noto-sans);
   --text-xxs: 0.625rem;
-  --breakpoint-lg: 1025px;
+  --breakpoint-md: 480px;
+  --breakpoint-2md: 570px;
+  --breakpoint-3md: 800px;
+  --breakpoint-lg: 1024px;
 }
 
 body {

@@ -27,13 +27,13 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
   const isWatchListed = media.isWatchListed;
 
   return (
-    <div className="md:pt-15 lg:pl-15! md:pl-5 md:pb-0 pb-15 h-full flex md:items-stretch items-end md:justify-start justify-center relative md:mask-b-from-97% mask-b-from-93%">
+    <div className="h-full flex relative md:mask-b-from-97% mask-b-from-93% lg:pl-15 lg:pt-17 3md:pl-10 3md:pt-30 3md:justify-start 3md:items-stretch justify-center items-end 3md:pb-0 md:pb-25 pb-15">
       <Image
         src={media.bannerImage}
         alt=""
         fill
         sizes=""
-        className="object-cover lg:block hidden select-none"
+        className="object-cover 3md:block hidden select-none"
         quality={100}
       />
 
@@ -42,21 +42,21 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         alt=""
         fill
         sizes=""
-        className="object-cover lg:hidden block"
+        className="object-cover 3md:hidden block"
         quality={100}
       />
 
       <div
-        className="absolute inset-0 md:block hidden"
+        className="absolute inset-0 3md:block hidden"
         style={{
           background:
             "linear-gradient(to right, rgba(0,0,0,0.95), transparent), linear-gradient(to top, rgba(0,0,0,0.95) 5%, transparent 15%)",
         }}
       />
 
-      <div className="absolute inset-0 md:hidden block bg-linear-to-t from-black from-12% to-transparent to-50%" />
-      <div className="flex flex-col md:items-start items-center relative">
-        <p className="font-bold lg:text-7xl! md:text-5xl text-3xl mb-2 md:line-clamp-1 line-clamp-2 md:leading-23 text-center md:text-left md:max-w-full max-w-2xs">
+      <div className="absolute inset-0 3md:hidden block bg-linear-to-t from-black/90 from-12% to-transparent to-50%" />
+      <div className="flex flex-col 3md:items-start items-center relative 3md:gap-y-1.5 gap-y-2.5">
+        <p className="font-bold lg:text-7xl! 3md:text-6xl 2md:text-4xl text-3xl 3md:line-clamp-1 line-clamp-2 3md:mb-2 mb-1 text-center md:text-left md:max-w-full max-w-2xs">
           {title}
         </p>
         <div className="text-xs text-white/60 font-light flex items-center space-x-2 mb-3 md:max-w-md max-w-2xs pr-1">
