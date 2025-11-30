@@ -22,6 +22,10 @@ html::selection {
   --background: rgb(0, 0, 0);
   --blanka: "Blanka Regular";
   --accent-one: rgb(43, 127, 255);
+  --hero-padding-b: 8.75rem;
+  --hero-padding-b-sm: 3.75rem;
+  --pagination-neg-margin: calc(var(--hero-padding-b) - 2.5rem);
+  --pagination-neg-margin-sm: calc(var(--hero-padding-b-sm) - 2rem);
 }
 
 @theme inline {
@@ -37,6 +41,10 @@ html::selection {
   --breakpoint-2md: 570px;
   --breakpoint-3md: 800px;
   --breakpoint-lg: 1024px;
+  --spacing-hpb: var(--hero-padding-b);
+  --spacing-hpb-sm: var(--hero-padding-b-sm);
+  --spacing-pnm: var(--pagination-neg-margin);
+  --spacing-pnm-sm: var(--pagination-neg-margin-sm);
 }
 
 body {

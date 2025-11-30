@@ -52,7 +52,7 @@ export const Hero = ({ featuredAnime }: { featuredAnime: Media[] }) => {
             </SwiperSlide>
           );
         })}
-        <div className="3md:mt-15 3md:ml-15 w-full 3md:block flex justify-center md:-mt-15 -mt-5">
+        <div className="3md:mt-15 3md:ml-15 w-full 3md:block flex justify-center md:-mt-pnm -mt-pnm-sm">
           <div className="space-x-2! el z-1 relative w-fit!"></div>
         </div>
       </Swipe>

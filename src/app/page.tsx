@@ -27,12 +27,12 @@ export default async function Home() {
   });
 
   return (
-    <div className="grid grid-rows-[auto_1fr] grid-cols-1">
-      <div className="">
+    <div className="grid grid-rows-[auto_1fr] grid-cols-1 md:gap-y-15 gap-y-7">
+      <div>
         <Hero featuredAnime={featuredAnime} />
       </div>
 
-      <div className="z-1 lg:px-15 px-5 hidden">
+      <div className="z-1 lg:px-15 2md:px-10 px-5">
         <MiniCarousel medias={trendingAnime} />
       </div>
     </div>

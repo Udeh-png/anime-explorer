@@ -14,7 +14,7 @@ export const MiniCarousel = ({ medias }: { medias: Media[] }) => {
   return (
     <div>
       <div>
-        <p className="md:text-3xl text-xl font-bold md:mb-3 mb-1">
+        <p className="3md:text-3xl 2md:text-2xl text-xl font-bold md:mb-3 mb-1">
           Trending Around The World
         </p>
         <p className="text-white/50 font-light md:text-base text-sm">
@@ -22,26 +22,25 @@ export const MiniCarousel = ({ medias }: { medias: Media[] }) => {
         </p>
       </div>
 
-      <div className="pt-3.5 lg:-mx-15 -mx-5">
+      <div className="pt-3.5 lg:-mx-15 2md:-mx-10 -mx-5">
         <Swiper
           className="mini-carousel"
           modules={[Navigation, FreeMode]}
-          slideVisibleClass="swiper-visible"
           simulateTouch={false}
           breakpoints={{
             480: {
               slidesPerView: 3,
               slidesPerGroup: 3,
-              slidesOffsetBefore: 48,
-              slidesOffsetAfter: 40,
+              slidesOffsetBefore: 30,
+              slidesOffsetAfter: 20,
               freeMode: false,
             },
 
             570: {
               slidesPerView: 4,
               slidesPerGroup: 4,
-              slidesOffsetBefore: 48,
-              slidesOffsetAfter: 40,
+              slidesOffsetBefore: 30,
+              slidesOffsetAfter: 20,
               freeMode: false,
             },
 
@@ -54,8 +53,8 @@ export const MiniCarousel = ({ medias }: { medias: Media[] }) => {
             },
           }}
           slidesPerView={2}
-          slidesOffsetBefore={16}
-          slidesOffsetAfter={12}
+          slidesOffsetBefore={17}
+          slidesOffsetAfter={10}
           freeMode={true}
           onSlideChange={(swiper) => {
             if (swiper.isBeginning) {
