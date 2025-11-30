@@ -8,9 +8,12 @@ import { Swiper as Swipe, SwiperSlide } from "swiper/react";
 
 export const Hero = ({ featuredAnime }: { featuredAnime: Media[] }) => {
   return (
-    <div className="caret-transparent w-full 3md:h-183! h-auto 3md:aspect-auto aspect-[3/4]">
+    <div className="caret-transparent relative">
+      <div className="hidden w-15 absolute z-10 left-0 top-0 bottom-0 3md:flex items-center justify-center lg:text-5xl text-4xl">
+        <MdChevronLeft className="prevEl cursor-pointer absolute top-1/2 left-0" />
+      </div>
       <Swipe
-        className="h-full"
+        className="h-full overflow-visible! overflow-x-clip!"
         modules={[Navigation, Autoplay, EffectFade, Pagination]}
         effect="fade"
         speed={1100}
@@ -49,15 +52,13 @@ export const Hero = ({ featuredAnime }: { featuredAnime: Media[] }) => {
             </SwiperSlide>
           );
         })}
-
-        <div className="hidden w-15 absolute z-10 left-0 top-0 bottom-0 3md:flex items-center justify-center lg:text-5xl text-4xl">
-          <MdChevronLeft className="prevEl cursor-pointer absolute top-50 left-0" />
+        <div className="3md:mt-15 3md:ml-15 w-full 3md:block flex justify-center md:-mt-15 -mt-5">
+          <div className="space-x-2! el z-1 relative w-fit!"></div>
         </div>
-        <div className="hidden w-15 absolute z-10 right-0 top-0 bottom-0 3md:flex items-center justify-center lg:text-5xl text-4xl">
-          <MdChevronRight className="nextEl cursor-pointer absolute top-50 left-0" />
-        </div>
-        <div className="flex space-x-2! el absolute 3md:top-105! top-[94%]! bottom-auto! 3md:left-10! lg:left-15! 3md:translate-0 -translate-x-1/2 left-1/2! z-1 w-fit!"></div>
       </Swipe>
+      <div className="hidden w-15 absolute z-10 right-0 top-0 bottom-0 3md:flex items-center justify-center lg:text-5xl text-4xl">
+        <MdChevronRight className="nextEl cursor-pointer absolute top-1/2 left-0" />
+      </div>
     </div>
   );
 };

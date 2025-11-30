@@ -52,7 +52,11 @@ export const FavoriteButton = ({
       onClick={addToFavorites}
       className={`flex justify-center items-center cursor-pointer ${styles}`}
     >
-      {isFavorited ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+      {isFavorited ? (
+        <FaHeart className={rounded ? "text-red-500" : "text-accent-one"} />
+      ) : (
+        <FaRegHeart />
+      )}
     </button>
   );
 };
