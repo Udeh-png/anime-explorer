@@ -1,5 +1,14 @@
+"use client";
+
+import Link from "next/link";
 import { useState } from "react";
-import { FaBookmark, FaHeart, FaRegBookmark, FaRegHeart } from "react-icons/fa";
+import {
+  FaBookmark,
+  FaHeart,
+  FaPlay,
+  FaRegBookmark,
+  FaRegHeart,
+} from "react-icons/fa";
 
 export const WatchListButton = ({
   rounded,
@@ -15,12 +24,12 @@ export const WatchListButton = ({
   };
 
   const styles = rounded
-    ? "rounded-full size-10 bg-black/30 text-white"
+    ? "rounded-full bg-black/50 text-white"
     : "border-2 text-accent-one ";
   return (
     <button
       onClick={addToWatchList}
-      className={`flex justify-center items-center cursor-pointer ${styles}`}
+      className={`flex size-10 justify-center items-center cursor-pointer ${styles}`}
     >
       {isWatchListed === true ? (
         <FaBookmark className="text-accent-one" />
@@ -45,18 +54,41 @@ export const FavoriteButton = ({
   };
 
   const styles = rounded
-    ? "rounded-full size-10 bg-black/30 text-white"
+    ? "rounded-full bg-black/50 text-white"
     : "border-2 text-accent-one ";
   return (
     <button
       onClick={addToFavorites}
-      className={`flex justify-center items-center cursor-pointer ${styles}`}
+      className={`flex size-10 justify-center items-center cursor-pointer ${styles}`}
     >
       {isFavorited ? (
-        <FaHeart className={rounded ? "text-red-500" : "text-accent-one"} />
+        <FaHeart className={rounded ? "text-red-600" : "text-accent-one"} />
       ) : (
         <FaRegHeart />
       )}
     </button>
+  );
+};
+
+export const PlayButton = ({
+  streamingLink,
+  externalLink,
+  rounded,
+}: {
+  streamingLink: string | undefined;
+  externalLink: string;
+  rounded?: boolean;
+}) => {
+  const styles = rounded
+    ? "rounded-full w-10! bg-black/50"
+    : "px-4 bg-accent-one";
+  return (
+    <Link
+      href={streamingLink || externalLink}
+      className={`flex items-center text-sm h-10 gap-x-2 uppercase w-fit justify-center text-white ${styles}`}
+    >
+      <FaPlay className="" />
+      {rounded ? "" : streamingLink ? "Start Watching Now" : "See Socials"}
+    </Link>
   );
 };

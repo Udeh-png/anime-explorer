@@ -6,7 +6,11 @@ import Link from "next/link";
 import { FaPlay, FaRegDotCircle } from "react-icons/fa";
 import { DescriptionUi } from "../shared/DescriptionUtil";
 import { streamingPlatforms } from "@/data";
-import { WatchListButton, FavoriteButton } from "../shared/ActionButtons";
+import {
+  WatchListButton,
+  FavoriteButton,
+  PlayButton,
+} from "../shared/ActionButtons";
 
 export const HeroSliderContent = ({ media }: { media: Media }) => {
   const title = media.title.english || media.title.romaji;
@@ -79,14 +83,11 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
         <DescriptionUi description={description} />
 
         <div className="flex gap-x-2.5">
-          <Link
-            href={streamingLink || externalLink}
-            className="flex items-center text-sm gap-x-2 px-4 bg-accent-one uppercase"
-          >
-            <FaPlay className="" />
-            {streamingLink ? "Start Watching Now" : "See Socials"}
-          </Link>
-          <div className="grid grid-cols-2 gap-x-2.5 w-23 h-10 text-xl">
+          <PlayButton
+            externalLink={externalLink}
+            streamingLink={streamingLink}
+          />
+          <div className="grid grid-cols-2 gap-x-2.5 w-23 text-xl">
             <WatchListButton initialIsWatchListed={isWatchListed} />
 
             <FavoriteButton initialIsFavorited={isFavorited} />

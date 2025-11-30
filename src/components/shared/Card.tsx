@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { WatchListButton, FavoriteButton } from "./ActionButtons";
+import { WatchListButton, FavoriteButton, PlayButton } from "./ActionButtons";
 import { Media } from "@/types";
 import { FaStar } from "react-icons/fa";
+import { streamingPlatforms } from "@/data";
 
 export const Card = ({ media }: { media: Media }) => {
   const imageSrc = media.coverImage.extraLarge;
@@ -14,12 +15,23 @@ export const Card = ({ media }: { media: Media }) => {
   const score = ((media.averageScore * 5) / 100).toFixed(1);
   const isWatchListed = media.isWatchListed;
   const isFavorited = media.isFavorite;
+  const streamingLink = media.externalLinks.find((link) => {
+    return streamingPlatforms.some((platform) =>
+      link.url.toLowerCase().includes(platform)
+    );
+  })?.url;
+  const externalLink = media.externalLinks[0].url;
   return (
     <div className="3md:px-3.5 2md:px-2.5 px-1 flex flex-col">
       <div className="relative mb-2 flex items-end justify-end aspect-[2/3] w-full overflow-clip">
         <Image src={imageSrc} alt={`${title}s' cover image`} fill sizes="" />
-        <div>
-          <div className="relative flex gap-x-2.5 px-1 pb-1">
+        <div className="relative flex justify-between w-full px-1 pb-1">
+          <PlayButton
+            rounded
+            streamingLink={streamingLink}
+            externalLink={externalLink}
+          />
+          <div className="flex gap-x-2.5">
             <WatchListButton rounded initialIsWatchListed={isWatchListed} />
             <FavoriteButton rounded initialIsFavorited={isFavorited} />
           </div>

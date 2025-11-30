@@ -1,4 +1,5 @@
 import { MiniCarousel } from "@/components/home/MiniCarousel";
+import { PlayButton } from "@/components/shared/ActionButtons";
 import { featuredAnime as featuredAnimeArr, featuredId } from "@/data";
 import { getPageObject } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
