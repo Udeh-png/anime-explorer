@@ -1,5 +1,4 @@
 import { MiniCarousel } from "@/components/home/MiniCarousel";
-import { PlayButton } from "@/components/shared/ActionButtons";
 import { featuredAnime as featuredAnimeArr, featuredId } from "@/data";
 import { getPageObject } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
@@ -12,6 +11,7 @@ export default async function Home() {
   });
   const trendingAnimeFetch = getPageObject({
     type: "trending",
+    perPage: 20,
   });
 
   const [featuredAnimePO, trendingAnimePO] = await Promise.all([

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import {
   FaBookmark,
@@ -29,7 +28,7 @@ export const WatchListButton = ({
   return (
     <button
       onClick={addToWatchList}
-      className={`flex size-10 justify-center items-center cursor-pointer ${styles}`}
+      className={`flex 3md:size-10 size-8 justify-center items-center cursor-pointer ${styles}`}
     >
       {isWatchListed === true ? (
         <FaBookmark className="text-accent-one" />
@@ -55,11 +54,11 @@ export const FavoriteButton = ({
 
   const styles = rounded
     ? "rounded-full bg-black/50 text-white"
-    : "border-2 text-accent-one ";
+    : "border-2 text-accent-one";
   return (
     <button
       onClick={addToFavorites}
-      className={`flex size-10 justify-center items-center cursor-pointer ${styles}`}
+      className={`flex 3md:size-10 size-8 justify-center items-center cursor-pointer ${styles}`}
     >
       {isFavorited ? (
         <FaHeart className={rounded ? "text-red-600" : "text-accent-one"} />
@@ -73,22 +72,20 @@ export const FavoriteButton = ({
 export const PlayButton = ({
   streamingLink,
   externalLink,
-  rounded,
 }: {
   streamingLink: string | undefined;
   externalLink: string;
   rounded?: boolean;
 }) => {
-  const styles = rounded
-    ? "rounded-full w-10! bg-black/50"
-    : "px-4 bg-accent-one";
+  const link = streamingLink || externalLink;
   return (
-    <Link
-      href={streamingLink || externalLink}
-      className={`flex items-center text-sm h-10 gap-x-2 uppercase w-fit justify-center text-white ${styles}`}
+    <div
+      className="flex items-center text-sm 3md:size-10 size-8 gap-x-2 uppercase justify-center text-white rounded-full bg-black/50"
+      onClick={() => {
+        window.open(link, "_blank");
+      }}
     >
       <FaPlay className="" />
-      {rounded ? "" : streamingLink ? "Start Watching Now" : "See Socials"}
-    </Link>
+    </div>
   );
 };
