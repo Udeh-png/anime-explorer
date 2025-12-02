@@ -21,7 +21,7 @@ export const Card = ({ media }: { media: Media }) => {
       link.url.toLowerCase().includes(platform)
     );
   })?.url;
-  const externalLink = media.externalLinks[0].url;
+  const externalLink = media.externalLinks[0]?.url || "/";
   return (
     <div className="3md:px-3.5 2md:px-2.5 px-[0.3rem]">
       <Link href={"/"} className="flex flex-col">

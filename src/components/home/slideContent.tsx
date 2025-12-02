@@ -22,7 +22,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
       link.url.toLowerCase().includes(platform)
     );
   })?.url;
-  const externalLink = media.externalLinks[0].url;
+  const externalLink = media.externalLinks[0]?.url || "/";
   const isFavorited = media.isFavorite;
   const isWatchListed = media.isWatchListed;
 

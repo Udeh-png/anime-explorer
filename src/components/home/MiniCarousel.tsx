@@ -7,7 +7,15 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState } from "react";
 import { Media } from "@/types";
 
-export const MiniCarousel = ({ medias }: { medias: Media[] }) => {
+export const MiniCarousel = ({
+  medias,
+  title,
+  subtitle,
+}: {
+  medias: Media[];
+  title: string;
+  subtitle: string;
+}) => {
   const [position, setPosition] = useState<"beginning" | "end" | "middle">(
     "beginning"
   );
@@ -15,10 +23,10 @@ export const MiniCarousel = ({ medias }: { medias: Media[] }) => {
     <div>
       <div>
         <p className="3md:text-3xl 2md:text-2xl text-xl font-bold md:mb-3 mb-1">
-          Trending Around The World
+          {title}
         </p>
         <p className="text-white/50 font-light md:text-base text-sm">
-          Some subtext related to the header text
+          {subtitle}
         </p>
       </div>
 

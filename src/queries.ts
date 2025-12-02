@@ -1,7 +1,32 @@
 import { AiringSchedule, Character, Media, PageObject } from "./types";
 import { timeConverter } from "./utils/sharedUtils";
 
-export type PresetType = "trending" | "classics" | "airing" | "top_fifty";
+export type PresetType = "trending" | "airing" | "short" | "completed";
+
+export const getTags = async () => {
+  const query = `
+      query {
+        MediaTagCollection {
+          name
+          description
+          category
+        }
+      }
+    `;
+
+  console.log(
+    await (
+      await fetch("https://graphql.anilist.co", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ query }),
+      })
+    ).json()
+  );
+};
 
 export async function getPageObject({
   pageNo = 1,
@@ -18,30 +43,34 @@ export async function getPageObject({
   customFilter?: object;
   cacheTimeMills?: number;
 }): Promise<PageObject> {
-  const presets: Record<PresetType, { sort: string[]; filter: object }> = {
+  const presets: Record<PresetType, { sort?: string[]; filter: object }> = {
     trending: {
       sort: ["TRENDING_DESC"],
       filter: {},
     },
 
-    classics: {
-      sort: ["SCORE_DESC"],
-      filter: { startDate_lesser: "20100000" },
-    },
-
     airing: {
-      sort: ["SCORE_DESC"],
       filter: {
         status_not_in: "[FINISHED, HIATUS, NOT_YET_RELEASED, CANCELLED]",
       },
     },
 
-    top_fifty: {
-      sort: ["SCORE_DESC"],
-      filter: {},
+    short: {
+      filter: {
+        episodes_lesser: "14",
+        format_in: "[TV, ONA]",
+      },
+    },
+
+    completed: {
+      filter: {
+        format_not_in: "[MOVIE, TV_SHORT, SPECIAL, MUSIC]",
+        status_in: "[FINISHED]",
+      },
+      sort: ["TRENDING_DESC"],
     },
   };
-  const preset: { sort: string[]; filter: object } = presets[type];
+  const preset: { sort?: string[]; filter: object } = presets[type];
   const sort = customSort || preset.sort || ["SCORE_DESC"];
   const filter = customFilter || preset.filter;
   const query = `
@@ -64,10 +93,19 @@ export async function getPageObject({
           bannerImage
           averageScore
           description
+          episodes
+          genres
+          relations {
+            edges {
+              node {
+                status
+              }
+              relationType
+            }
+          }
           streamingEpisodes {
             url
           }
-          genres
           externalLinks{
             url
           }
@@ -119,6 +157,9 @@ export async function getPageObject({
 
   return await fetch(url, options)
     .then(async (res) => {
+      if (!res.ok) {
+        console.log(res);
+      }
       return await res.json();
     })
     .then((jsonResponse) => {
