@@ -8,6 +8,7 @@ import {
   FaRegBookmark,
   FaRegHeart,
 } from "react-icons/fa";
+import { MdPlayDisabled } from "react-icons/md";
 
 export const WatchListButton = ({
   rounded,
@@ -77,7 +78,7 @@ export const PlayButton = ({
   externalLink: string;
   rounded?: boolean;
 }) => {
-  const link = streamingLink || externalLink;
+  const link = streamingLink || externalLink || "unavailable";
   return (
     <div
       className="flex items-center text-sm 3md:size-10 size-8 gap-x-2 uppercase justify-center text-white rounded-full bg-black/50"
@@ -85,7 +86,11 @@ export const PlayButton = ({
         window.open(link, "_blank");
       }}
     >
-      <FaPlay className="" />
+      {link === "unavailable" ? (
+        <MdPlayDisabled className="text-2xl" />
+      ) : (
+        <FaPlay className="" />
+      )}
     </div>
   );
 };

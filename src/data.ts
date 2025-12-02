@@ -2,11 +2,13 @@ export const streamingPlatforms = [
   "crunchyroll",
   "netflix",
   "hulu",
-  "funimation",
-  "hidive",
   "amazon",
+  "hidive",
   "disney",
   "hbo",
+  "funimation",
+  "bilibili",
+  "youtube",
 ];
 
 export const featuredAnime = [

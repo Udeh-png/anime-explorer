@@ -49,7 +49,6 @@ export const fetchOneCourAnime: () => Promise<Media[]> = async () => {
     );
     shortAnime.push(...filtered);
   }
-  console.log(pageNo);
 
   return shortAnime;
 };

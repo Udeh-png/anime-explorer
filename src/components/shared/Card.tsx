@@ -2,8 +2,8 @@ import Image from "next/image";
 import { WatchListButton, FavoriteButton, PlayButton } from "./ActionButtons";
 import { Media } from "@/types";
 import { FaStar } from "react-icons/fa";
-import { streamingPlatforms } from "@/data";
 import Link from "next/link";
+import { getStreamingLink } from "@/utils/sharedUtils";
 
 export const Card = ({ media }: { media: Media }) => {
   const imageSrc = media.coverImage.extraLarge;
@@ -16,12 +16,8 @@ export const Card = ({ media }: { media: Media }) => {
   const score = ((media.averageScore * 5) / 100).toFixed(1);
   const isWatchListed = media.isWatchListed;
   const isFavorited = media.isFavorite;
-  const streamingLink = media.externalLinks.find((link) => {
-    return streamingPlatforms.some((platform) =>
-      link.url.toLowerCase().includes(platform)
-    );
-  })?.url;
-  const externalLink = media.externalLinks[0]?.url || "/";
+  const streamingLink = getStreamingLink(media.externalLinks);
+  const externalLink = media.externalLinks[0]?.url;
   return (
     <div className="3md:px-3.5 2md:px-2.5 px-[0.3rem]">
       <Link href={"/"} className="flex flex-col">

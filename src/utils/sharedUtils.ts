@@ -1,3 +1,5 @@
+import { streamingPlatforms } from "@/data";
+
 export function formatTitle(title: string) {
   return title
     .replace(/[^\w\s-]/g, "")
@@ -103,3 +105,12 @@ export function getStarCount(
     emptyStars,
   };
 }
+
+export const getStreamingLink = (externalLinks: { url: string }[]) => {
+  for (const platform of streamingPlatforms) {
+    const match = externalLinks.find((link) => link.url.includes(platform));
+    if (match) {
+      return match.url;
+    }
+  }
+};
