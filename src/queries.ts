@@ -1,12 +1,12 @@
 import { AiringSchedule, Character, Media, PageObject } from "./types";
 import { timeConverter } from "./utils/sharedUtils";
 
-export type PresetType = "trending" | "airing" | "short" | "completed";
+export type PresetType = "trending" | "airing" | "short" | "none";
 
 export async function getPageObject({
   pageNo = 1,
   perPage = 10,
-  type = "trending",
+  type = "none",
   customSort,
   customFilter,
   cacheTimeMills,
@@ -18,7 +18,10 @@ export async function getPageObject({
   customFilter?: object;
   cacheTimeMills?: number;
 }): Promise<PageObject> {
-  const presets: Record<PresetType, { sort?: string[]; filter: object }> = {
+  const presets: Record<
+    PresetType,
+    { sort?: string[] | undefined; filter: object | undefined }
+  > = {
     trending: {
       sort: ["TRENDING_DESC"],
       filter: {},
@@ -37,17 +40,15 @@ export async function getPageObject({
       },
     },
 
-    completed: {
-      filter: {
-        format_not_in: "[MOVIE, TV_SHORT, SPECIAL, MUSIC]",
-        status_in: "[FINISHED]",
-      },
-      // sort: ["TRENDING_DESC"],
+    none: {
+      filter: undefined,
+      sort: undefined,
     },
   };
-  const preset: { sort?: string[]; filter: object } = presets[type];
+  const preset: { sort?: string[] | undefined; filter: object | undefined } =
+    presets[type];
   const sort = customSort || preset.sort || ["SCORE_DESC"];
-  const filter = customFilter || preset.filter;
+  const filter = customFilter || preset.filter || {};
   const query = `
     query {
       Page (page: ${pageNo},perPage: ${perPage}) {
@@ -115,6 +116,8 @@ export async function getPageObject({
       }
     }
 `;
+
+  console.log(filter, sort, type);
 
   const url = "https://graphql.anilist.co",
     options: RequestInit = {

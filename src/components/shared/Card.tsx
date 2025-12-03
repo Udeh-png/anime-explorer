@@ -1,9 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import { WatchListButton, FavoriteButton, PlayButton } from "./ActionButtons";
 import { Media } from "@/types";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaTv } from "react-icons/fa";
 import Link from "next/link";
 import { getStreamingLink } from "@/utils/sharedUtils";
+import { useState } from "react";
+import { ImageWithFallback } from "./ImageWithFallback";
 
 export const Card = ({ media }: { media: Media }) => {
   const imageSrc = media.coverImage.extraLarge;
@@ -21,8 +25,13 @@ export const Card = ({ media }: { media: Media }) => {
   return (
     <div className="3md:px-3.5 2md:px-2.5 px-[0.3rem]">
       <Link href={"/"} className="flex flex-col">
-        <div className="relative mb-2 flex items-end justify-end aspect-[2/3] w-full overflow-clip">
-          <Image src={imageSrc} alt={`${title}s' cover image`} fill sizes="" />
+        <div className="relative mb-2 flex items-end justify-end aspect-[2/3] w-full overflow-clip bg-[rgb(25,25,25)]">
+          <ImageWithFallback
+            src={imageSrc}
+            alt={`${title}s' cover image`}
+            fill
+            sizes=""
+          />
           <div
             className="relative flex justify-between w-full px-1 pb-1"
             onClick={(e) => {
