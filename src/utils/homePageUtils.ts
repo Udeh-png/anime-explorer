@@ -59,3 +59,50 @@ export const fetchTrendingAnime = async () => {
     perPage: 20,
   }).then((e) => e.media);
 };
+
+export const fetchAiringAnime = async () => {
+  return await getPageObject({
+    type: "airing",
+    perPage: 20,
+  }).then((e) => e.media);
+};
+
+export const fetchFemaleLeadAnime = async () => {
+  return await getPageObject({
+    customFilter: {
+      tag_in: '["Female Protagonist", "Primarily Female Cast"]',
+    },
+    perPage: 20,
+  }).then((e) => e.media);
+};
+
+export const fetchFantasyThemedAnime = async () => {
+  return await getPageObject({
+    customFilter: {
+      format_in: "[TV, ONA]",
+      genre_in: '["Sci-Fi"]',
+      averageScore_greater: 81,
+    },
+    customSort: ["POPULARITY"],
+    perPage: 20,
+  }).then((e) => e.media);
+};
+
+export const fetchMartialArtsAnime = async () => {
+  return await getPageObject({
+    customFilter: {
+      tag_in: '["Martial Arts"]',
+    },
+    customSort: ["SCORE_DESC"],
+    perPage: 20,
+  }).then((e) => e.media);
+};
+
+export const fetchMysteryAnime = async () => {
+  return await getPageObject({
+    customFilter: {
+      genre: '"Mystery"',
+    },
+    perPage: 20,
+  }).then((e) => e.media);
+};

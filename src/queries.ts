@@ -3,31 +3,6 @@ import { timeConverter } from "./utils/sharedUtils";
 
 export type PresetType = "trending" | "airing" | "short" | "completed";
 
-export const getTags = async () => {
-  const query = `
-      query {
-        MediaTagCollection {
-          name
-          description
-          category
-        }
-      }
-    `;
-
-  console.log(
-    await (
-      await fetch("https://graphql.anilist.co", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ query }),
-      })
-    ).json()
-  );
-};
-
 export async function getPageObject({
   pageNo = 1,
   perPage = 10,
@@ -51,7 +26,7 @@ export async function getPageObject({
 
     airing: {
       filter: {
-        status_not_in: "[FINISHED, HIATUS, NOT_YET_RELEASED, CANCELLED]",
+        status_in: "[RELEASING]",
       },
     },
 
@@ -67,7 +42,7 @@ export async function getPageObject({
         format_not_in: "[MOVIE, TV_SHORT, SPECIAL, MUSIC]",
         status_in: "[FINISHED]",
       },
-      sort: ["TRENDING_DESC"],
+      // sort: ["TRENDING_DESC"],
     },
   };
   const preset: { sort?: string[]; filter: object } = presets[type];
@@ -87,7 +62,7 @@ export async function getPageObject({
             `${key}:${
               typeof value === "object" ? `[${value.join(",")}]` : value
             }`
-        )}, sort: [${sort.join(",")}]) {
+        )}, ${sort ? `sort: [${sort.join(",")}]` : ""}) {
           id
           trending
           bannerImage
@@ -158,12 +133,14 @@ export async function getPageObject({
   return await fetch(url, options)
     .then(async (res) => {
       if (!res.ok) {
-        console.log(res);
+        console.log(res.statusText);
       }
       return await res.json();
     })
     .then((jsonResponse) => {
-      // console.log(jsonResponse);
+      if (jsonResponse.errors) {
+        console.log(jsonResponse.errors);
+      }
       return jsonResponse.data.Page;
     })
     .catch((e) => {

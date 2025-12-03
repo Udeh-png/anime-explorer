@@ -24,12 +24,12 @@ export const WatchListButton = ({
   };
 
   const styles = rounded
-    ? "rounded-full bg-black/50 text-white"
-    : "border-2 text-accent-one ";
+    ? "rounded-full bg-black/50 text-white 3md:size-10 size-8"
+    : "border-2 text-accent-one size-10";
   return (
     <button
       onClick={addToWatchList}
-      className={`flex 3md:size-10 size-8 justify-center items-center cursor-pointer ${styles}`}
+      className={`flex justify-center items-center cursor-pointer ${styles}`}
     >
       {isWatchListed === true ? (
         <FaBookmark className="text-accent-one" />
@@ -54,12 +54,12 @@ export const FavoriteButton = ({
   };
 
   const styles = rounded
-    ? "rounded-full bg-black/50 text-white"
-    : "border-2 text-accent-one";
+    ? "rounded-full bg-black/50 text-white 3md:size-10 size-8"
+    : "border-2 text-accent-one size-10";
   return (
     <button
       onClick={addToFavorites}
-      className={`flex 3md:size-10 size-8 justify-center items-center cursor-pointer ${styles}`}
+      className={`flex justify-center items-center cursor-pointer ${styles}`}
     >
       {isFavorited ? (
         <FaHeart className={rounded ? "text-red-600" : "text-accent-one"} />
