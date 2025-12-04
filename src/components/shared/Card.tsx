@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { WatchListButton, FavoriteButton, PlayButton } from "./ActionButtons";
 import { Media } from "@/types";
-import { FaStar, FaTv } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 import { getStreamingLink } from "@/utils/sharedUtils";
-import { useState } from "react";
 import { ImageWithFallback } from "./ImageWithFallback";
 
 export const Card = ({ media }: { media: Media }) => {

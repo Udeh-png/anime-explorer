@@ -116,9 +116,6 @@ export async function getPageObject({
       }
     }
 `;
-
-  console.log(filter, sort, type);
-
   const url = "https://graphql.anilist.co",
     options: RequestInit = {
       method: "POST",

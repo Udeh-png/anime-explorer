@@ -102,7 +102,9 @@ export const fetchMysteryAnime = async () => {
   return await getPageObject({
     customFilter: {
       genre: '"Mystery"',
+      averageScore_greater: 81,
     },
+    customSort: ["TRENDING"],
     perPage: 20,
   }).then((e) => e.media);
 };

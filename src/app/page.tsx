@@ -1,4 +1,5 @@
 import { MiniCarousel } from "@/components/home/MiniCarousel";
+import { SpotlightCard } from "@/components/home/SpotlightCard";
 import { Hero } from "@/sections/home/Hero";
 import { Media } from "@/types";
 import {
@@ -48,12 +49,14 @@ export default async function Home() {
         <Hero featuredAnime={featuredAnime} />
       </div>
 
-      <div className="z-1 lg:px-15 2md:px-10 px-5 flex flex-col gap-y-25">
+      <div className="z-1 lg:px-15 2md:px-10 px-5 flex flex-col lg:gap-y-15 gap-y-11">
         <MiniCarousel
           medias={trendingAnime}
           title="Trending Around The World"
           subtitle="What everyone's watching right now"
         />
+
+        <SpotlightCard />
 
         <MiniCarousel
           medias={airingAnime}
