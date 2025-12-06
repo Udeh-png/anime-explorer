@@ -84,33 +84,34 @@ export function getCurrentSeason() {
   }
 }
 
-export function getStarCount(
-  score: number,
-  totalStars: number
+export const calculateScore = (averageScore: number) =>
+  ((averageScore * 5) / 100).toFixed(1);
+
+export function getStreamingLink(
+  externalLinks: { url: string }[],
+  cantBeNull?: boolean
 ): {
-  scoreInRange: number;
-  fullStars: number;
-  hasHalfStars: boolean;
-  emptyStars: number;
+  url: string;
+  platform: string | null;
+  linkType: "streaming" | "social" | "none";
 } {
-  const scoreInRange = Number(((score * totalStars) / 100).toFixed(1));
-  const fullStars = Math.floor(scoreInRange);
-  const hasHalfStars = scoreInRange % 1 !== 0;
-  const emptyStars = totalStars - (fullStars + (hasHalfStars ? 1 : 0));
-
-  return {
-    scoreInRange,
-    fullStars,
-    hasHalfStars,
-    emptyStars,
-  };
-}
-
-export const getStreamingLink = (externalLinks: { url: string }[]) => {
   for (const platform of streamingPlatforms) {
     const match = externalLinks.find((link) => link.url.includes(platform));
     if (match) {
-      return match.url;
+      return { url: match.url, platform: platform, linkType: "streaming" };
     }
   }
-};
+
+  if (externalLinks.length > 0 || cantBeNull) {
+    return {
+      url: externalLinks[0].url,
+      platform: null,
+      linkType: "social",
+    };
+  }
+  return {
+    url: "/",
+    platform: null,
+    linkType: "none",
+  };
+}

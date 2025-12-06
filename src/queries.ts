@@ -173,9 +173,12 @@ export async function getMediaWithId(
         duration
         source
         studios {
-          nodes {
-            name
-            siteUrl
+          edges {
+            node {
+              name
+              siteUrl
+            }
+            isMain
           }
         }
         streamingEpisodes {
@@ -280,12 +283,14 @@ export async function getMediaWithId(
   return await fetch(url, options)
     .then(async (res) => {
       if (!res.ok) {
-        console.log(res);
+        console.log(res.statusText);
       }
       return await res.json();
     })
     .then((jsonResponse) => {
-      // console.log(jsonResponse);
+      if (jsonResponse.errors) {
+        console.log(jsonResponse.errors);
+      }
       return jsonResponse.data.Media;
     })
     .catch((e) => {

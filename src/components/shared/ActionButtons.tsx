@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import {
+  FaArrowRight,
   FaBookmark,
   FaHeart,
+  FaInfo,
   FaPlay,
   FaRegBookmark,
   FaRegHeart,
 } from "react-icons/fa";
-import { MdPlayDisabled } from "react-icons/md";
 
 export const WatchListButton = ({
   rounded,
@@ -72,25 +73,25 @@ export const FavoriteButton = ({
 
 export const PlayButton = ({
   streamingLink,
-  externalLink,
 }: {
-  streamingLink: string | undefined;
-  externalLink: string;
+  streamingLink: {
+    url: string;
+    platform: string | null;
+    linkType: "streaming" | "social" | "none";
+  };
   rounded?: boolean;
 }) => {
-  const link = streamingLink || externalLink || "unavailable";
+  const link = streamingLink;
   return (
     <div
       className="flex items-center text-sm 3md:size-10 size-8 gap-x-2 uppercase justify-center text-white rounded-full bg-black/50"
       onClick={() => {
-        window.open(link, "_blank");
+        window.open(link.url, "_blank");
       }}
     >
-      {link === "unavailable" ? (
-        <MdPlayDisabled className="text-2xl" />
-      ) : (
-        <FaPlay className="" />
-      )}
+      {streamingLink.linkType === "streaming" && <FaPlay />}
+      {streamingLink.linkType === "social" && <FaArrowRight />}
+      {streamingLink.linkType === "none" && <FaInfo />}
     </div>
   );
 };

@@ -3,10 +3,10 @@
 import { Media } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { FaPlay, FaRegDotCircle } from "react-icons/fa";
+import { FaArrowRight, FaInfo, FaPlay, FaRegDotCircle } from "react-icons/fa";
 import { DescriptionUi } from "../shared/DescriptionUtil";
-import { streamingPlatforms } from "@/data";
 import { WatchListButton, FavoriteButton } from "../shared/ActionButtons";
+import { getStreamingLink } from "@/utils/sharedUtils";
 
 export const HeroSliderContent = ({ media }: { media: Media }) => {
   const title = media.title.english || media.title.romaji;
@@ -17,12 +17,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
       edge.voiceActors.some((va) => va.languageV2.toLowerCase() === "english")
     );
   const genres = media.genres;
-  const streamingLink = media.externalLinks.find((link) => {
-    return streamingPlatforms.some((platform) =>
-      link.url.toLowerCase().includes(platform)
-    );
-  })?.url;
-  const externalLink = media.externalLinks[0]?.url || "/";
+  const streamingLink = getStreamingLink(media.externalLinks);
   const isFavorited = media.isFavorite;
   const isWatchListed = media.isWatchListed;
 
@@ -80,11 +75,24 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
 
         <div className="flex gap-x-2.5">
           <Link
-            href={streamingLink || externalLink}
+            href={streamingLink.url}
             className="flex items-center text-sm gap-x-2 px-4 bg-accent-one uppercase"
           >
-            <FaPlay className="" />
-            {streamingLink ? "Start Watching Now" : "See Socials"}
+            {streamingLink.linkType === "streaming" && (
+              <span className="contents">
+                <FaPlay /> <p>Start Watching Now</p>
+              </span>
+            )}
+            {streamingLink.linkType === "social" && (
+              <span className="contents">
+                <FaArrowRight /> <p>Learn More</p>
+              </span>
+            )}
+            {streamingLink.linkType === "none" && (
+              <span className="contents">
+                <FaInfo /> <p>Start Watching Now</p>
+              </span>
+            )}
           </Link>
           <div className="grid grid-cols-2 gap-x-2.5 w-23 text-xl">
             <WatchListButton initialIsWatchListed={isWatchListed} />

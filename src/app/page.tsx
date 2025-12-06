@@ -1,5 +1,6 @@
 import { MiniCarousel } from "@/components/home/MiniCarousel";
 import { SpotlightCard } from "@/components/home/SpotlightCard";
+import { getMediaWithId } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
 import { Media } from "@/types";
 import {
@@ -22,6 +23,7 @@ export default async function Home() {
   const mysteryAnimeFetch = fetchMysteryAnime();
   const femaleLeadAnimeFetch = fetchFemaleLeadAnime();
   const fantasyAnimeThemedFetch = fetchFantasyThemedAnime();
+  const spotlightOne = await getMediaWithId(5);
 
   const [
     featuredAnime,
@@ -56,7 +58,7 @@ export default async function Home() {
           subtitle="What everyone's watching right now"
         />
 
-        <SpotlightCard />
+        <SpotlightCard media={spotlightOne} />
 
         <MiniCarousel
           medias={airingAnime}

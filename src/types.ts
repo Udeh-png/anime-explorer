@@ -68,9 +68,12 @@ export type Media = {
   episodes: number;
   nextAiringEpisode: { episode: number };
   studios: {
-    nodes: {
-      name: string;
-      siteUrl: string;
+    edges: {
+      node: {
+        name: string;
+        siteUrl: string;
+      };
+      isMain: boolean;
     }[];
   };
   duration: number;

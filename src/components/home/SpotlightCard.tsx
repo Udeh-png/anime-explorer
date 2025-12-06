@@ -1,59 +1,105 @@
+"use client";
+
 import Image from "next/image";
-import { FaStar } from "react-icons/fa";
-import { DescriptionUi } from "../shared/DescriptionUtil";
+import { Media } from "@/types";
+import Link from "next/link";
+import { getStreamingLink } from "@/utils/sharedUtils";
 
-const Background = ({ children }: { children?: React.ReactNode }) => {
+export const SpotlightCard = ({ media }: { media: Media }) => {
+  const {
+    season,
+    seasonYear,
+    format,
+    episodes,
+    bannerImage,
+    title,
+    genres,
+    coverImage,
+    studios,
+    externalLinks,
+    duration,
+  } = media;
+  const titleVar = title.english || title.romaji;
+  const color = coverImage.color;
+  const studio = studios.edges.find((studio) => studio.isMain)?.node.name;
+
+  const streamingLink = getStreamingLink(externalLinks);
+
   return (
-    <div className="relative aspect-[3/1] bg-[rgb(24,24,24)]">
-      <div className="absolute inset-0 flex gap-x-15"></div>
-      <div className="absolute inset-0 backdrop-blur-2xl"></div>
-      <div className="relative h-full w-full">{children}</div>
-    </div>
-  );
-};
+    <Link
+      href={"/details"}
+      className="relative md:aspect-[3/1] aspect-video bg-[rgb(24,24,24)] grid md:grid-cols-1 grid-cols-[1.5fr_1fr] overflow-clip"
+    >
+      <Image src={bannerImage} alt="" fill sizes="" className="object-cover" />
+      <div className="md:block hidden absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
+      <div className="absolute inset-0 backdrop-blur-2xl md:hidden block"></div>
+      <div className="flex flex-col justify-between lg:justify-start lg:gap-y-10 h-full lg:pl-15 2md:pl-10 pl-5 lg:py-13 2md:py-8 py-5 relative">
+        <div className="flex flex-col gap-y-2">
+          <div className="text-2xl flex items-center gap-x-1 text-white/60 leading-0.5">
+            <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold capitalize">
+              {season.toLowerCase()} {seasonYear}
+            </span>
+            &middot;
+            <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold capitalize">
+              {format.toLowerCase()}
+            </span>
+            &middot;
+            <p className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold flex items-center gap-x-0.5">
+              {format.toLowerCase() === "movie"
+                ? Math.floor(duration / 60) + "h " + (duration % 60) + "m"
+                : episodes + "Episodes"}
+            </p>
+          </div>
 
-export const SpotlightCard = () => {
-  return (
-    <Background>
-      <div className="grid grid-cols-[2fr_1fr] h-full">
-        <div className="lg:pl-15 2md:pl-10 md:pl-3 pl-2 lg:py-7 2md:py-5 md:py-2.5 py-1.5 flex-2">
-          <div className="flex flex-col justify-between h-full w-3/4">
-            <div className="">
-              <div className="flex 2md:gap-x-2 gap-x-1 2md:text-sm text-xs text-white/50 2md:mb-2">
-                <p className="">Winter 2025</p>
-                &middot;
-                <p>TV</p>
-                &middot;
-                <p className="flex 2md:gap-x-1 gap-x-0.5 items-center">
-                  4.4 <FaStar className="text-yellow-500" />
-                </p>
-              </div>
-              <h3 className="lg:text-4xl 2md:text-3xl font-semibold line-clamp-2 lg:mb-3 2md:mb-2">
-                The Apothecary Diaries Season 2
-              </h3>
-
-              <DescriptionUi
-                description="Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Perspiciatis ipsa dignissimos autem blanditiis aliquid molestiae
-                voluptate sit voluptatem debitis facilis dolores architecto
-                omnis, repellat ad labore libero iure nostrum deleniti!"
-              />
-            </div>
-
-            <div className="2md:space-y-4 2md:mt-0 mt-2 space-y-1">
-              <button className="lg:w-53 lg:h-10 2md:h-7 2md:w-50 w-40 h-6 bg-accent-one rounded-full lg:text-lg 2md:text-base text-sm font-semibold">
-                Watch Now On Hulu
-              </button>
-              <div>
-                <span className="2md:text-sm text-xs px-2 py-0.5 bg-white/20 rounded-full">
-                  Drama
-                </span>
-              </div>
-            </div>
+          <div className="md:w-1/2 w-40 flex flex-col gap-y-1 m-0">
+            <p className="font-bold leading-[1.3] m-0 2md:text-xl 3md:text-3xl lg:text-4xl text-base">
+              {titleVar}
+            </p>
+            <span className="2md:text-sm md:text-xs text-xxs m-0 text-orange-300">
+              {studio}
+            </span>
           </div>
         </div>
-        <div className="bg-green-500 [clip-path:polygon(5%_0,100%_0,100%_100%,0_100%)]"></div>
+
+        <div className="lg:space-y-3 2md:space-y-2 space-y-1.5">
+          <div className="flex items-center gap-x-1 font-semibold">
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                window.open(streamingLink.url, "_blank");
+              }}
+              className={`2md:px-4 2md:py-1 py-0.5 px-2 2md:text-base text-xxs rounded-full`}
+              style={{ backgroundColor: color }}
+            >
+              {streamingLink.linkType === "streaming" &&
+                `Watch Now On ${streamingLink.platform}`}
+              {streamingLink.linkType === "social" && `Learn More`}
+              {streamingLink.linkType === "none" &&
+                `View ${
+                  format.toLowerCase() === "movie" ? "Movie" : "Show"
+                } Details`}
+            </div>
+          </div>
+
+          <div className="text-[0.45rem] 2md:text-xs space-x-1">
+            {genres.map((genre, i) => (
+              <span key={i} className="md:px-1.5 px-1 bg-white/10 rounded-full">
+                {genre}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
-    </Background>
+
+      <div className="relative [clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] md:hidden block">
+        <Image
+          src={coverImage.extraLarge}
+          alt=""
+          fill
+          sizes=""
+          className="object-cover"
+        />
+      </div>
+    </Link>
   );
 };

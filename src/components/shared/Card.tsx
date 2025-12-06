@@ -19,7 +19,6 @@ export const Card = ({ media }: { media: Media }) => {
   const isWatchListed = media.isWatchListed;
   const isFavorited = media.isFavorite;
   const streamingLink = getStreamingLink(media.externalLinks);
-  const externalLink = media.externalLinks[0]?.url;
   return (
     <div className="3md:px-3.5 2md:px-2.5 px-[0.3rem]">
       <Link href={"/"} className="flex flex-col">
@@ -36,11 +35,7 @@ export const Card = ({ media }: { media: Media }) => {
               e.preventDefault();
             }}
           >
-            <PlayButton
-              rounded
-              streamingLink={streamingLink}
-              externalLink={externalLink}
-            />
+            <PlayButton rounded streamingLink={streamingLink} />
             <div className="flex gap-x-2.5">
               <WatchListButton rounded initialIsWatchListed={isWatchListed} />
               <FavoriteButton rounded initialIsFavorited={isFavorited} />
