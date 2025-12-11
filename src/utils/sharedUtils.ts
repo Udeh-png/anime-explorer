@@ -115,3 +115,12 @@ export function getStreamingLink(
     linkType: "none",
   };
 }
+
+export function getDuration(time: number, unit: string) {
+  switch (unit) {
+    case "mins":
+      return `${Math.floor(time / 60)}h ${time % 60}m`;
+    default:
+      break;
+  }
+}

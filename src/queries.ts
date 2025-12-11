@@ -1,21 +1,237 @@
 import { AiringSchedule, Character, Media, PageObject } from "./types";
 import { timeConverter } from "./utils/sharedUtils";
 
+const MEDIA_FIELDS_FRAGMENT = `
+  fragment MediaFields on Media {
+    id
+    trending
+    bannerImage
+    averageScore
+    status
+    popularity
+    format
+    genres
+    seasonYear
+    season
+    description
+    episodes
+    duration
+    source
+    nextAiringEpisode {
+      episode
+    }
+    streamingEpisodes {
+      title
+      thumbnail
+      url
+    }
+    relations {
+      edges {
+        relationType
+        node {
+          id
+          status
+          type
+          title {
+            english
+            romaji
+          }
+          coverImage {
+            extraLarge
+            large
+            medium
+          }
+        }
+      }
+    }
+    externalLinks {
+      url
+    }
+    studios {
+      edges {
+        node {
+          name
+          siteUrl
+        }
+        isMain
+      }
+    }
+    coverImage {
+      extraLarge
+      large
+      medium
+      color
+    }
+    title {
+      english
+      romaji
+    }
+  }
+`;
+
+const buildCharacterFields = (
+  pageNo: number = 1
+) => `characters(sort: FAVOURITES_DESC, perPage: 50, page: ${pageNo}) {
+    pageInfo {
+      currentPage
+      perPage
+      hasNextPage
+    }
+    edges {
+      id
+      role
+      media {
+        id
+      }
+      voiceActors {
+        languageV2
+        image {
+          large
+          medium
+        }
+        name {
+          full
+        }
+      }
+      node {
+        id
+        name {
+          full
+          native
+          alternative
+          alternativeSpoiler
+        }
+        image {
+          large
+          medium
+        }
+        description(asHtml: true)
+        dateOfBirth {
+          day
+          month
+          year
+        }
+        age
+        bloodType
+        gender
+      }
+    }
+  }
+`;
+
 export type PresetType = "trending" | "airing" | "short" | "none";
+
+export async function getMedia({
+  type,
+  customSorts,
+  customFilters,
+}: {
+  type: "action" | "romance" | "mystery" | "comedy";
+  customSorts?: string[];
+  customFilters?: object;
+}): Promise<Media> {
+  const twoMonthsAgo = new Date();
+  twoMonthsAgo.setMonth(new Date().getMonth() - 1);
+  twoMonthsAgo.setDate(1);
+  const twoMonthsAgoSec = Math.round(
+    timeConverter(twoMonthsAgo.getTime(), "millisToSecs")
+  );
+
+  const presets: Record<string, { filter: object; sort: string[] }> = {
+    action: {
+      filter: {
+        genre: '"action"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+
+    romance: {
+      filter: {
+        genre: '"romance"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+
+    mystery: {
+      filter: {
+        genre: '"mystery"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+
+    comedy: {
+      filter: {
+        genre: '"comedy"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+  };
+
+  const filters = customFilters || {};
+  const presetFilter = presets[type].filter;
+  const sorts = customSorts || presets[type].sort;
+  const query = `
+    ${MEDIA_FIELDS_FRAGMENT}
+    query {
+      Media (${Object.entries(filters).map(
+        ([key, value]) =>
+          `${key}: ${
+            typeof value === "object" ? `[${value.join(",")}]` : value
+          }`
+      )}, ${Object.entries(presetFilter).map(
+    ([key, value]) =>
+      `${key}: ${typeof value === "object" ? `[${value.join(",")}]` : value}`
+  )}, sort: ${sorts.join(",")}) {
+        ...MediaFields
+      }
+    }
+  `;
+  const url = "https://graphql.anilist.co",
+    options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query: query,
+      }),
+    };
+  return await fetch(url, options)
+    .then(async (res) => {
+      if (!res.ok) {
+        console.log(res.statusText);
+      }
+      return await res.json();
+    })
+    .then((jsonResponse) => {
+      if (jsonResponse.errors) {
+        console.log(jsonResponse.errors);
+      }
+      return jsonResponse.data.Media;
+    })
+    .catch((e) => {
+      console.error(`Error ${e} occurred`);
+    });
+}
 
 export async function getPageObject({
   pageNo = 1,
   perPage = 10,
   type = "none",
-  customSort,
-  customFilter,
+  customSorts,
+  customFilters,
   cacheTimeMills,
 }: {
   pageNo?: number;
   perPage?: number;
   type?: PresetType;
-  customSort?: string[];
-  customFilter?: object;
+  customSorts?: string[];
+  customFilters?: object;
   cacheTimeMills?: number;
 }): Promise<PageObject> {
   const presets: Record<
@@ -47,9 +263,10 @@ export async function getPageObject({
   };
   const preset: { sort?: string[] | undefined; filter: object | undefined } =
     presets[type];
-  const sort = customSort || preset.sort || ["SCORE_DESC"];
-  const filter = customFilter || preset.filter || {};
+  const sort = customSorts || preset.sort || ["SCORE_DESC"];
+  const filter = customFilters || preset.filter || {};
   const query = `
+    ${MEDIA_FIELDS_FRAGMENT}
     query {
       Page (page: ${pageNo},perPage: ${perPage}) {
         pageInfo {
@@ -64,54 +281,8 @@ export async function getPageObject({
               typeof value === "object" ? `[${value.join(",")}]` : value
             }`
         )}, ${sort ? `sort: [${sort.join(",")}]` : ""}) {
-          id
-          trending
-          bannerImage
-          averageScore
-          description
-          episodes
-          genres
-          relations {
-            edges {
-              node {
-                status
-              }
-              relationType
-            }
-          }
-          streamingEpisodes {
-            url
-          }
-          externalLinks{
-            url
-          }
-          seasonYear
-          coverImage {
-            extraLarge
-            large
-            medium
-            color
-          }
-          title {
-            english
-            romaji
-          }
-          characters {
-            edges {
-              role
-              node {
-                name {
-                  full
-                }
-              }
-              voiceActors (language: ENGLISH) {
-                name {
-                  first
-                }
-                languageV2
-              } 
-            }
-          }
+          ...MediaFields
+          ${buildCharacterFields()}
         }
       }
     }
@@ -153,119 +324,11 @@ export async function getMediaWithId(
   CharacterPageNo?: number
 ): Promise<Media> {
   const query = `
+    ${MEDIA_FIELDS_FRAGMENT}
     query {
       Media (id: ${id}) {
-        id
-        trending
-        bannerImage
-        averageScore
-        status
-        popularity
-        format
-        genres
-        seasonYear
-        season
-        description
-        episodes
-        nextAiringEpisode {
-          episode
-        }
-        duration
-        source
-        studios {
-          edges {
-            node {
-              name
-              siteUrl
-            }
-            isMain
-          }
-        }
-        streamingEpisodes {
-          title
-          thumbnail
-          url
-        }
-        relations {
-          edges {
-            relationType
-            node {
-              id
-              status
-              type
-              title {
-                english
-                romaji
-              }
-              coverImage {
-                extraLarge
-                large
-                medium
-              }
-            }
-          }
-        }
-        externalLinks {
-          url
-        }
-        coverImage {
-          extraLarge
-          large
-          medium
-          color
-        }
-        title {
-          english
-          romaji
-        }
-        characters (sort: FAVOURITES_DESC, perPage: 50, page: ${
-          CharacterPageNo || 1
-        }) {
-          pageInfo {
-            currentPage
-            perPage
-            hasNextPage
-          }
-          edges {
-            id
-            role
-            media {
-              id
-            }
-            voiceActors {
-              languageV2
-              image {
-                large
-                medium
-              }
-              name {
-                full
-              }
-            }
-            node {
-              id
-              name {
-                full
-                native
-                alternative
-                alternativeSpoiler
-              }
-              image {
-                large
-                medium
-              }
-              description (asHtml: true)
-              dateOfBirth {
-                day
-                month
-                year
-              }
-              age
-              bloodType
-              gender
-            }
-          }
-        }
+        ...MediaFields
+        ${buildCharacterFields(CharacterPageNo)}
       }
     }
   `;

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Media } from "@/types";
 import Link from "next/link";
 import { getStreamingLink } from "@/utils/sharedUtils";
-
+import { getDuration } from "@/utils/sharedUtils";
 export const SpotlightCard = ({ media }: { media: Media }) => {
   const {
     season,
@@ -22,7 +22,6 @@ export const SpotlightCard = ({ media }: { media: Media }) => {
   const titleVar = title.english || title.romaji;
   const color = coverImage.color;
   const studio = studios.edges.find((studio) => studio.isMain)?.node.name;
-
   const streamingLink = getStreamingLink(externalLinks);
 
   return (
@@ -40,14 +39,14 @@ export const SpotlightCard = ({ media }: { media: Media }) => {
               {season.toLowerCase()} {seasonYear}
             </span>
             &middot;
-            <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold capitalize">
-              {format.toLowerCase()}
+            <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold">
+              {format}
             </span>
             &middot;
             <p className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold flex items-center gap-x-0.5">
               {format.toLowerCase() === "movie"
-                ? Math.floor(duration / 60) + "h " + (duration % 60) + "m"
-                : episodes + "Episodes"}
+                ? getDuration(duration, "mins")
+                : episodes + " Episodes"}
             </p>
           </div>
 
@@ -62,15 +61,16 @@ export const SpotlightCard = ({ media }: { media: Media }) => {
         </div>
 
         <div className="lg:space-y-3 2md:space-y-2 space-y-1.5">
-          <div className="flex items-center gap-x-1 font-semibold">
-            <div
-              onClick={(e) => {
-                e.preventDefault();
-                window.open(streamingLink.url, "_blank");
-              }}
-              className={`2md:px-4 2md:py-1 py-0.5 px-2 2md:text-base text-xxs rounded-full`}
-              style={{ backgroundColor: color }}
-            >
+          <div
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(streamingLink.url, "_blank");
+            }}
+            className={`2md:px-4 2md:py-1 py-0.5 px-2 2md:text-base text-xxs rounded-full w-fit relative overflow-clip`}
+            style={{ backgroundColor: color }}
+          >
+            <div className="absolute inset-0 bg-black/20"></div>
+            <div className="relative">
               {streamingLink.linkType === "streaming" &&
                 `Watch Now On ${streamingLink.platform}`}
               {streamingLink.linkType === "social" && `Learn More`}
@@ -81,11 +81,11 @@ export const SpotlightCard = ({ media }: { media: Media }) => {
             </div>
           </div>
 
-          <div className="text-[0.45rem] 2md:text-xs space-x-1">
+          <div className="text-[0.45rem] 2md:text-xs flex gap-1 flex-wrap">
             {genres.map((genre, i) => (
-              <span key={i} className="md:px-1.5 px-1 bg-white/10 rounded-full">
+              <p key={i} className="md:px-1.5 px-1 bg-white/10 rounded-full">
                 {genre}
-              </span>
+              </p>
             ))}
           </div>
         </div>

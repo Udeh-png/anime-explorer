@@ -1,8 +1,6 @@
 import { MiniCarousel } from "@/components/home/MiniCarousel";
 import { SpotlightCard } from "@/components/home/SpotlightCard";
-import { getMediaWithId } from "@/queries";
 import { Hero } from "@/sections/home/Hero";
-import { Media } from "@/types";
 import {
   fetchAiringAnime,
   fetchFantasyThemedAnime,
@@ -11,6 +9,7 @@ import {
   fetchMartialArtsAnime,
   fetchMysteryAnime,
   fetchOneCourAnime,
+  fetchSpotLights,
   fetchTrendingAnime,
 } from "@/utils/homePageUtils";
 
@@ -23,7 +22,7 @@ export default async function Home() {
   const mysteryAnimeFetch = fetchMysteryAnime();
   const femaleLeadAnimeFetch = fetchFemaleLeadAnime();
   const fantasyAnimeThemedFetch = fetchFantasyThemedAnime();
-  const spotlightOne = await getMediaWithId(5);
+  const spotlightsFetch = fetchSpotLights();
 
   const [
     featuredAnime,
@@ -34,7 +33,8 @@ export default async function Home() {
     mysteryAnime,
     femaleLeadAnime,
     fantasyThemedAnime,
-  ]: Media[][] = await Promise.all([
+    spotlights,
+  ] = await Promise.all([
     featuredAnimeFetch,
     trendingAnimeFetch,
     airingAnimeFetch,
@@ -43,6 +43,7 @@ export default async function Home() {
     mysteryAnimeFetch,
     femaleLeadAnimeFetch,
     fantasyAnimeThemedFetch,
+    spotlightsFetch,
   ]);
 
   return (
@@ -55,10 +56,10 @@ export default async function Home() {
         <MiniCarousel
           medias={trendingAnime}
           title="Trending Around The World"
-          subtitle="What everyone's watching right now"
+          subtitle="What everyone's talking about right now"
         />
 
-        <SpotlightCard media={spotlightOne} />
+        <SpotlightCard media={spotlights[0]} />
 
         <MiniCarousel
           medias={airingAnime}
@@ -66,17 +67,23 @@ export default async function Home() {
           subtitle="Sub-title for Airing Anime"
         />
 
+        <SpotlightCard media={spotlights[1]} />
+
         <MiniCarousel
           medias={oneCourAnime}
           title="Zero-Commitment Anime"
           subtitle="Quick shows you can binge in one night"
         />
 
+        <SpotlightCard media={spotlights[2]} />
+
         <MiniCarousel
           medias={martialArtsAnime}
           title="Title For Martial Arts Anime"
           subtitle="Sub-title for Martial Arts Anime"
         />
+
+        <SpotlightCard media={spotlights[3]} />
 
         <MiniCarousel
           medias={mysteryAnime}

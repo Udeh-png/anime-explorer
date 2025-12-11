@@ -1,11 +1,11 @@
 import { featuredAnime as featuredAnimeArr, featuredId } from "@/data";
-import { getPageObject } from "@/queries";
+import { getMedia, getPageObject } from "@/queries";
 import { Media } from "@/types";
 
 export const fetchFeaturedAnime: () => Promise<Media[]> = async () => {
   const featuredAnime = (
     await getPageObject({
-      customFilter: {
+      customFilters: {
         id_in: featuredId,
       },
     })
@@ -69,7 +69,7 @@ export const fetchAiringAnime = async () => {
 
 export const fetchFemaleLeadAnime = async () => {
   return await getPageObject({
-    customFilter: {
+    customFilters: {
       tag_in: '["Female Protagonist", "Primarily Female Cast"]',
     },
     perPage: 20,
@@ -78,33 +78,79 @@ export const fetchFemaleLeadAnime = async () => {
 
 export const fetchFantasyThemedAnime = async () => {
   return await getPageObject({
-    customFilter: {
+    customFilters: {
       format_in: "[TV, ONA]",
       genre_in: '["Sci-Fi"]',
       averageScore_greater: 81,
     },
-    customSort: ["POPULARITY"],
+    customSorts: ["POPULARITY"],
     perPage: 20,
   }).then((e) => e.media);
 };
 
 export const fetchMartialArtsAnime = async () => {
   return await getPageObject({
-    customFilter: {
+    customFilters: {
       tag_in: '["Martial Arts"]',
     },
-    customSort: ["SCORE_DESC"],
+    customSorts: ["SCORE_DESC"],
     perPage: 20,
   }).then((e) => e.media);
 };
 
 export const fetchMysteryAnime = async () => {
   return await getPageObject({
-    customFilter: {
+    customFilters: {
       genre: '"Mystery"',
       averageScore_greater: 81,
     },
-    customSort: ["TRENDING"],
+    customSorts: ["TRENDING"],
     perPage: 20,
   }).then((e) => e.media);
+};
+
+export const fetchSpotLights = async () => {
+  const genres: ["action", "romance", "comedy", "mystery"] = [
+    "action",
+    "romance",
+    "comedy",
+    "mystery",
+  ];
+  const fetchedId: number[] = [];
+  const spotlights = [];
+
+  for (const genre of genres) {
+    let anime = null;
+    let attempts = 0;
+    const maxAttempts = 10; // Safety limit
+
+    // Keep fetching until we get one with a banner
+    while (!anime?.bannerImage && attempts < maxAttempts) {
+      anime = await getMedia({
+        type: genre,
+        customFilters: { id_not_in: fetchedId },
+      });
+
+      if (anime?.id) {
+        fetchedId.push(anime.id);
+
+        // If it has a banner, we're done
+        if (anime.bannerImage) {
+          spotlights.push(anime);
+          break;
+        }
+      }
+
+      attempts++;
+    }
+
+    // If we exhausted attempts and still no banner, skip this genre
+    if (attempts >= maxAttempts) {
+      console.warn(
+        `Could not find ${genre} anime with banner after ${maxAttempts} attempts`
+      );
+    }
+  }
+
+  return spotlights;
 };
