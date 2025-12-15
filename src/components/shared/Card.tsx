@@ -4,7 +4,7 @@ import { WatchListButton, FavoriteButton, PlayButton } from "./ActionButtons";
 import { Media } from "@/types";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
-import { getStreamingLink } from "@/utils/sharedUtils";
+import { formatTitle, getStreamingLink } from "@/utils/sharedUtils";
 import { ImageWithFallback } from "./ImageWithFallback";
 
 export const Card = ({ media }: { media: Media }) => {
@@ -19,9 +19,11 @@ export const Card = ({ media }: { media: Media }) => {
   const isWatchListed = media.isWatchListed;
   const isFavorited = media.isFavorite;
   const streamingLink = getStreamingLink(media.externalLinks);
+  const id = media.id;
+  const linkTitle = formatTitle(title);
   return (
     <div className="3md:px-3.5 2md:px-2.5 px-[0.3rem]">
-      <Link href={"/"} className="flex flex-col">
+      <Link href={`/details/${id}/${linkTitle}`} className="flex flex-col">
         <div className="relative mb-2 flex items-end justify-end aspect-[2/3] w-full overflow-clip bg-[rgb(25,25,25)]">
           <ImageWithFallback
             src={imageSrc}

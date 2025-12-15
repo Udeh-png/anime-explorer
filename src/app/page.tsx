@@ -91,11 +91,15 @@ export default async function Home() {
           subtitle="Sub-title for Mystery Anime"
         />
 
+        <SpotlightCard media={spotlights[4]} />
+
         <MiniCarousel
           medias={femaleLeadAnime}
           title="Title For Female Lead Anime"
           subtitle="Sub-title for Female Lead Anime"
         />
+
+        <SpotlightCard media={spotlights[5]} />
 
         <MiniCarousel
           medias={fantasyThemedAnime}

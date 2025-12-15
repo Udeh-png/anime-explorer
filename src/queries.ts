@@ -126,7 +126,7 @@ export async function getMedia({
   customSorts,
   customFilters,
 }: {
-  type: "action" | "romance" | "mystery" | "comedy";
+  type: "fantasy" | "action" | "comedy";
   customSorts?: string[];
   customFilters?: object;
 }): Promise<Media> {
@@ -146,25 +146,17 @@ export async function getMedia({
       sort: ["TRENDING_DESC"],
     },
 
-    romance: {
-      filter: {
-        genre: '"romance"',
-        startDate_lesser: twoMonthsAgoSec,
-      },
-      sort: ["TRENDING_DESC"],
-    },
-
-    mystery: {
-      filter: {
-        genre: '"mystery"',
-        startDate_lesser: twoMonthsAgoSec,
-      },
-      sort: ["TRENDING_DESC"],
-    },
-
     comedy: {
       filter: {
         genre: '"comedy"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+
+    fantasy: {
+      filter: {
+        genre: '"fantasy"',
         startDate_lesser: twoMonthsAgoSec,
       },
       sort: ["TRENDING_DESC"],
@@ -177,7 +169,7 @@ export async function getMedia({
   const query = `
     ${MEDIA_FIELDS_FRAGMENT}
     query {
-      Media (${Object.entries(filters).map(
+      Media (type: ANIME, ${Object.entries(filters).map(
         ([key, value]) =>
           `${key}: ${
             typeof value === "object" ? `[${value.join(",")}]` : value

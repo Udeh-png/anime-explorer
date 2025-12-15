@@ -35,23 +35,33 @@ export const SpotlightCard = ({ media }: { media: Media }) => {
       <div className="flex flex-col justify-between lg:justify-start lg:gap-y-10 h-full lg:pl-15 2md:pl-10 pl-5 lg:py-13 2md:py-8 py-5 relative">
         <div className="flex flex-col gap-y-2">
           <div className="text-2xl flex items-center gap-x-1 text-white/60 leading-0.5">
-            <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold capitalize">
-              {season.toLowerCase()} {seasonYear}
-            </span>
-            &middot;
-            <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold">
-              {format}
-            </span>
-            &middot;
-            <p className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold flex items-center gap-x-0.5">
-              {format.toLowerCase() === "movie"
-                ? getDuration(duration, "mins")
-                : episodes + " Episodes"}
-            </p>
+            {season && (
+              <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold capitalize">
+                {season.toLowerCase()} {seasonYear}
+              </span>
+            )}
+            {format && (
+              <div className="contents">
+                &middot;
+                <span className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold">
+                  {format}
+                </span>
+              </div>
+            )}
+            {duration && episodes && (
+              <div className="contents">
+                &middot;
+                <p className="text-[0.45rem] md:text-xxs 2md:text-xs font-semibold flex items-center gap-x-0.5">
+                  {format.toLowerCase() === "movie"
+                    ? getDuration(duration, "mins")
+                    : episodes + " Episodes"}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="md:w-1/2 w-40 flex flex-col gap-y-1 m-0">
-            <p className="font-bold leading-[1.3] m-0 2md:text-xl 3md:text-3xl lg:text-4xl text-base">
+            <p className="font-bold leading-[1.3] md:line-clamp-2 line-clamp-3 m-0 2md:text-xl 3md:text-3xl lg:text-4xl text-base">
               {titleVar}
             </p>
             <span className="2md:text-sm md:text-xs text-xxs m-0 text-orange-300">

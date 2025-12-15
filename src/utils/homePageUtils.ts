@@ -109,24 +109,21 @@ export const fetchMysteryAnime = async () => {
   }).then((e) => e.media);
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const fetchSpotLights = async () => {
-  const genres: ["action", "romance", "comedy", "mystery"] = [
-    "action",
-    "romance",
-    "comedy",
-    "mystery",
-  ];
+  const genres: ["fantasy", "action", "comedy", "fantasy", "action", "comedy"] =
+    ["fantasy", "action", "comedy", "fantasy", "action", "comedy"];
   const fetchedId: number[] = [];
   const spotlights = [];
 
   for (const genre of genres) {
-    let anime = null;
+    let foundWithBanner = false;
     let attempts = 0;
-    const maxAttempts = 10; // Safety limit
+    const maxAttempts = 10;
 
-    // Keep fetching until we get one with a banner
-    while (!anime?.bannerImage && attempts < maxAttempts) {
-      anime = await getMedia({
+    while (!foundWithBanner && attempts < maxAttempts) {
+      const anime = await getMedia({
         type: genre,
         customFilters: { id_not_in: fetchedId },
       });
@@ -134,20 +131,24 @@ export const fetchSpotLights = async () => {
       if (anime?.id) {
         fetchedId.push(anime.id);
 
-        // If it has a banner, we're done
         if (anime.bannerImage) {
           spotlights.push(anime);
-          break;
+          foundWithBanner = true;
         }
+      } else {
+        break;
       }
 
       attempts++;
-    }
 
-    // If we exhausted attempts and still no banner, skip this genre
-    if (attempts >= maxAttempts) {
-      console.warn(
-        `Could not find ${genre} anime with banner after ${maxAttempts} attempts`
+      // Add delay if we need to try again
+      if (!foundWithBanner && attempts < maxAttempts) {
+        await sleep(500); // Wait 500ms between requests
+      }
+    }
+    if (!foundWithBanner && attempts >= maxAttempts) {
+      console.error(
+        `Could not find media with banner for ${genre} genre after ${attempts} attempts`
       );
     }
   }
