@@ -15,34 +15,10 @@ import {
 
 export default async function Home() {
   const featuredAnimeFetch = fetchFeaturedAnime();
-  const trendingAnimeFetch = fetchTrendingAnime();
-  const airingAnimeFetch = fetchAiringAnime();
-  const oneCourAnimeFetch = fetchOneCourAnime();
-  const martialArtsAnimeFetch = fetchMartialArtsAnime();
-  const mysteryAnimeFetch = fetchMysteryAnime();
-  const femaleLeadAnimeFetch = fetchFemaleLeadAnime();
-  const fantasyAnimeThemedFetch = fetchFantasyThemedAnime();
   const spotlightsFetch = fetchSpotLights();
 
-  const [
-    featuredAnime,
-    trendingAnime,
-    airingAnime,
-    oneCourAnime,
-    martialArtsAnime,
-    mysteryAnime,
-    femaleLeadAnime,
-    fantasyThemedAnime,
-    spotlights,
-  ] = await Promise.all([
+  const [featuredAnime, spotlights] = await Promise.all([
     featuredAnimeFetch,
-    trendingAnimeFetch,
-    airingAnimeFetch,
-    oneCourAnimeFetch,
-    martialArtsAnimeFetch,
-    mysteryAnimeFetch,
-    femaleLeadAnimeFetch,
-    fantasyAnimeThemedFetch,
     spotlightsFetch,
   ]);
 
@@ -54,55 +30,55 @@ export default async function Home() {
 
       <div className="z-1 lg:px-15 2md:px-10 px-5 flex flex-col lg:gap-y-15 gap-y-11">
         <MiniCarousel
-          medias={trendingAnime}
+          fetchMediaArray={fetchTrendingAnime}
           title="Trending Around The World"
           subtitle="What everyone's talking about right now"
         />
 
-        <SpotlightCard media={spotlights[0]} />
+        {/* <SpotlightCard media={spotlights[0]} />*/}
 
         <MiniCarousel
-          medias={airingAnime}
+          fetchMediaArray={fetchAiringAnime}
           title="Title For Airing Anime"
           subtitle="Sub-title for Airing Anime"
         />
 
-        <SpotlightCard media={spotlights[1]} />
+        {/* <SpotlightCard media={spotlights[1]} /> */}
 
         <MiniCarousel
-          medias={oneCourAnime}
+          fetchMediaArray={fetchOneCourAnime}
           title="Zero-Commitment Anime"
           subtitle="Quick shows you can binge in one night"
         />
 
-        <SpotlightCard media={spotlights[2]} />
+        {/* <SpotlightCard media={spotlights[2]} /> */}
 
         <MiniCarousel
-          medias={martialArtsAnime}
+          fetchMediaArray={fetchMartialArtsAnime}
           title="Title For Martial Arts Anime"
           subtitle="Sub-title for Martial Arts Anime"
         />
 
-        <SpotlightCard media={spotlights[3]} />
+        {/* <SpotlightCard media={spotlights[3]} /> */}
 
         <MiniCarousel
-          medias={mysteryAnime}
+          fetchMediaArray={fetchMysteryAnime}
           title="Title For Mystery Anime"
           subtitle="Sub-title for Mystery Anime"
         />
 
-        <SpotlightCard media={spotlights[4]} />
+        {/* <SpotlightCard media={spotlights[4]} /> */}
 
         <MiniCarousel
-          medias={femaleLeadAnime}
+          fetchMediaArray={fetchFemaleLeadAnime}
           title="Title For Female Lead Anime"
           subtitle="Sub-title for Female Lead Anime"
         />
 
-        <SpotlightCard media={spotlights[5]} />
+        {/* <SpotlightCard media={spotlights[5]} /> */}
 
         <MiniCarousel
-          medias={fantasyThemedAnime}
+          fetchMediaArray={fetchFantasyThemedAnime}
           title="Title For Fantasy Themed Anime"
           subtitle="Sub-title for Fantasy Themed Anime"
         />

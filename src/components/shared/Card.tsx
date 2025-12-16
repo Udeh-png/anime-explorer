@@ -7,6 +7,34 @@ import Link from "next/link";
 import { formatTitle, getStreamingLink } from "@/utils/sharedUtils";
 import { ImageWithFallback } from "./ImageWithFallback";
 
+export const CardSkeleton = () => {
+  return (
+    <div className="flex flex-col 3md:px-3.5 2md:px-2.5 px-[0.3rem]">
+      <div className="relative mb-2 flex items-end justify-end aspect-[2/3] w-full bg-[rgb(25,25,25)] shine">
+        <div className="relative flex justify-between w-full px-1.5 pb-1.5">
+          <div className="3md:size-10 size-8 rounded-full bg-white/10" />
+          <div className="flex gap-x-2.5">
+            <div className="3md:size-10 size-8 rounded-full bg-white/10" />
+            <div className="3md:size-10 size-8 rounded-full bg-white/10" />
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-5 text-sm flex-1">
+        <div className="space-y-2">
+          <div className="w-full h-3 bg-white/10 shine" />
+          <div className="w-[70%] h-3 bg-white/10 shine" />
+        </div>
+
+        <div className="flex justify-between font-light">
+          <div className="w-10 h-3 bg-white/10 shine" />
+          <div className="w-10 h-3 bg-white/10 shine" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const Card = ({ media }: { media: Media }) => {
   const imageSrc = media.coverImage.extraLarge;
   const title = media.title.english || media.title.romaji;

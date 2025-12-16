@@ -1,26 +1,40 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Card } from "../shared/Card";
+import { Card, CardSkeleton } from "../shared/Card";
 import { FreeMode, Navigation } from "swiper/modules";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState } from "react";
 import { Media } from "@/types";
+import { motion } from "motion/react";
 
 export const MiniCarousel = ({
-  medias,
+  fetchMediaArray,
   title,
   subtitle,
 }: {
-  medias: Media[];
+  fetchMediaArray: () => Promise<Media[]>;
   title: string;
   subtitle: string;
 }) => {
   const [position, setPosition] = useState<"beginning" | "end" | "middle">(
     "beginning"
   );
+  const [mediaArray, setMediaArray] = useState<Media[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFetching, setIsFetching] = useState(false);
   return (
-    <div>
+    <motion.div
+      onViewportEnter={async () => {
+        if (!isFetching) {
+          setIsFetching(true);
+          const mediaArr = await fetchMediaArray();
+          setMediaArray(mediaArr);
+          setIsFetching(false);
+          setIsLoading(false);
+        }
+      }}
+    >
       <div>
         <p className="3md:text-3xl 2md:text-2xl text-xl font-bold md:mb-3 mb-1">
           {title}
@@ -78,11 +92,17 @@ export const MiniCarousel = ({
             prevEl: ".prevEl",
           }}
         >
-          {medias.map((media, i) => (
-            <SwiperSlide key={i}>
-              <Card media={media} />
-            </SwiperSlide>
-          ))}
+          {isLoading
+            ? [...Array(10)].map((_, i) => (
+                <SwiperSlide key={i}>
+                  <CardSkeleton key={i} />
+                </SwiperSlide>
+              ))
+            : mediaArray.map((media, i) => (
+                <SwiperSlide key={i}>
+                  <Card media={media} key={i} />
+                </SwiperSlide>
+              ))}
 
           <div
             className={`text-4xl w-fit absolute top-1/2 -translate-y-1/2 z-5 cursor-pointer transition-opacity md:block hidden right-0 nextEl ${
@@ -104,6 +124,6 @@ export const MiniCarousel = ({
           </div>
         </Swiper>
       </div>
-    </div>
+    </motion.div>
   );
 };

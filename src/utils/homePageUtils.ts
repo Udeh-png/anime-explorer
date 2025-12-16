@@ -1,3 +1,5 @@
+"use server";
+
 import { featuredAnime as featuredAnimeArr, featuredId } from "@/data";
 import { getMedia, getPageObject } from "@/queries";
 import { Media } from "@/types";

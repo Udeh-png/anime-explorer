@@ -6,14 +6,16 @@ import { MdAccountCircle } from "react-icons/md";
 
 export function Navbar() {
   return (
-    <div className="sticky top-0 z-100">
-      <div className="h-14 w-full bg-[rgb(25,25,25)] flex items-center px-4 justify-between text-white/80">
+    <div className="fixed w-full top-0 z-100">
+      <div className="h-14 w-full backdrop-blur-xs backdrop-brightness-75 flex items-center px-4 justify-between text-white/80">
         <div className="flex md:gap-x-1 gap-x-7 items-center">
           <BiMenu className="md:hidden block text-3xl" />
-          <Image src={"/AE_Logo.svg"} alt="" width={25} height={25} />
-          <p className="font-blanka text-xl tracking-widest pb-[2px] hidden md:inline-block text-white">
-            <span className="text-accent-one">Ani</span>Explorer
-          </p>
+          <Link href={"/"} className="flex md:gap-x-1 gap-x-7 items-center">
+            <Image src={"/AE_Logo.svg"} alt="" width={25} height={25} />
+            <p className="font-blanka text-xl tracking-widest pb-[2px] hidden md:inline-block text-white">
+              <span className="text-accent-one">Ani</span>Explorer
+            </p>
+          </Link>
         </div>
 
         <div className="gap-x-10 md:flex hidden">
