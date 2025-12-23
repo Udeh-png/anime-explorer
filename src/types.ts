@@ -66,7 +66,7 @@ export type Media = {
   genres: string[];
   popularity: number;
   episodes: number;
-  nextAiringEpisode: { episode: number };
+  nextAiringEpisode: { airingAt: number; episode: number };
   studios: {
     edges: {
       node: {

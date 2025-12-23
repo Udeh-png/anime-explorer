@@ -18,6 +18,7 @@ const MEDIA_FIELDS_FRAGMENT = `
     duration
     source
     nextAiringEpisode {
+      airingAt
       episode
     }
     streamingEpisodes {
@@ -125,10 +126,12 @@ export async function getMedia({
   type,
   customSorts,
   customFilters,
+  cacheTimeMills,
 }: {
-  type: "fantasy" | "action" | "comedy";
+  type: "fantasy" | "action" | "comedy" | "romance" | "ecchi" | "adventure";
   customSorts?: string[];
   customFilters?: object;
+  cacheTimeMills?: number;
 }): Promise<Media> {
   const twoMonthsAgo = new Date();
   twoMonthsAgo.setMonth(new Date().getMonth() - 1);
@@ -157,6 +160,30 @@ export async function getMedia({
     fantasy: {
       filter: {
         genre: '"fantasy"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+
+    romance: {
+      filter: {
+        genre: '"romance"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+
+    ecchi: {
+      filter: {
+        genre: '"ecchi"',
+        startDate_lesser: twoMonthsAgoSec,
+      },
+      sort: ["TRENDING_DESC"],
+    },
+
+    adventure: {
+      filter: {
+        genre: '"adventure"',
         startDate_lesser: twoMonthsAgoSec,
       },
       sort: ["TRENDING_DESC"],
@@ -192,6 +219,8 @@ export async function getMedia({
       body: JSON.stringify({
         query: query,
       }),
+      cache: cacheTimeMills ? "force-cache" : "default",
+      next: cacheTimeMills ? { revalidate: cacheTimeMills } : {},
     };
   return await fetch(url, options)
     .then(async (res) => {
@@ -239,6 +268,7 @@ export async function getPageObject({
       filter: {
         status_in: "[RELEASING]",
       },
+      sort: ["TRENDING_DESC"],
     },
 
     short: {

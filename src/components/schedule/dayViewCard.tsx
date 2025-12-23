@@ -27,7 +27,7 @@ export const DayViewCard = ({
       secs: false,
     }
   );
-  const { title, coverImage, externalLinks } = selectedDayMedia;
+  const { title, coverImage } = selectedDayMedia;
   const animeTitle = title.english || title.romaji;
 
   return (

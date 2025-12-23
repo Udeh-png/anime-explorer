@@ -53,7 +53,7 @@ export const Hero = ({ featuredAnime }: { featuredAnime: Media[] }) => {
           );
         })}
         <div className="3md:mt-15 3md:ml-15 w-full 3md:block flex justify-center md:-mt-pnm -mt-pnm-sm">
-          <div className="space-x-2! el z-1 relative w-fit!"></div>
+          <div className="space-x-2! el z-1 relative w-fit! h-[1rem] flex items-center"></div>
         </div>
       </Swipe>
       <div className="hidden w-15 absolute z-10 right-0 top-0 bottom-0 3md:flex items-center justify-center lg:text-5xl text-4xl">

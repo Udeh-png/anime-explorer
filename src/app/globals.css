@@ -92,28 +92,19 @@ body {
 }
 
 .shine {
-  background-image: linear-gradient(
-    -55deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.05),
-    transparent 60%
-  );
-  background-size: 400% 400%;
-  animation-duration: 3.5s;
-  animation-name: shine-animation;
+  animation-duration: 1.5s;
+  animation-direction: alternate;
+  animation-name: pulse;
   animation-iteration-count: infinite;
-  animation-timing-function: cubic-bezier(0.75, 0.82, 0.165, 1);
+  animation-timing-function: linear;
 }
 
-@keyframes shine-animation {
-  0% {
-    background-position: 0% 50%; /* Start position */
+@keyframes pulse {
+  from {
+    opacity: 1;
   }
-  50% {
-    background-position: 100% 50%; /* Middle position */
-  }
-  100% {
-    background-position: 0% 50%; /* End position (loops back to start) */
+  to {
+    opacity: 0.9;
   }
 }
 

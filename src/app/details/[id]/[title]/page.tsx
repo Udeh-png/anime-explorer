@@ -8,7 +8,7 @@ export default async function Details({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const { bannerImage, coverImage, title } = await getMediaWithId(Number(id));
+  const { bannerImage, coverImage } = await getMediaWithId(Number(id));
 
   return (
     <div>

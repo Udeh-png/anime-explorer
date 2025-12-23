@@ -1,4 +1,5 @@
 export const monthDays: Date[] = [];
+export const weekDays: Date[] = [];
 
 const currentDate = new Date();
 const firstOfTheMonth = new Date(
@@ -8,7 +9,6 @@ const firstOfTheMonth = new Date(
 );
 
 export function getWeekDays(date: Date) {
-  const weekDays: Date[] = [];
   const firstWeekDay = new Date();
   firstWeekDay.setDate(date.getDate() - date.getDay());
   for (let i = 0; i < 7; i++) {

@@ -10,6 +10,7 @@ export const fetchFeaturedAnime: () => Promise<Media[]> = async () => {
       customFilters: {
         id_in: featuredId,
       },
+      cacheTimeMills: 3600 * 6,
     })
   ).media;
 
@@ -34,22 +35,24 @@ export const fetchOneCourAnime: () => Promise<Media[]> = async () => {
       media.relations?.edges?.some((r) => r.relationType === "SEQUEL") || false
     );
   };
-  let pageNo = 0;
+  let pageNo = 1;
   const PAGE_MAX = 5;
   const shortAnime: Media[] = [];
   while (shortAnime.length < 25 && pageNo < PAGE_MAX) {
-    pageNo++;
     const shortMedia = (
       await getPageObject({
         type: "short",
         pageNo: pageNo,
-        perPage: 50,
+        perPage: 25,
+        cacheTimeMills: 3600 * 6,
       })
     ).media;
     const filtered = shortMedia.filter(
       (sm) => !hasPrequel(sm) && !hasSequel(sm)
     );
     shortAnime.push(...filtered);
+    pageNo++;
+    await sleep(500);
   }
 
   return shortAnime;
@@ -59,6 +62,7 @@ export const fetchTrendingAnime = async () => {
   return await getPageObject({
     type: "trending",
     perPage: 20,
+    cacheTimeMills: 3600,
   }).then((e) => e.media);
 };
 
@@ -66,7 +70,14 @@ export const fetchAiringAnime = async () => {
   return await getPageObject({
     type: "airing",
     perPage: 20,
-  }).then((e) => e.media);
+    cacheTimeMills: 3600,
+  }).then((e) => {
+    return e.media.sort((a, b) => {
+      const compareA = a.nextAiringEpisode || { airingAt: 0 };
+      const compareB = b.nextAiringEpisode || { airingAt: 0 };
+      return compareB.airingAt - compareA.airingAt;
+    });
+  });
 };
 
 export const fetchFemaleLeadAnime = async () => {
@@ -75,6 +86,7 @@ export const fetchFemaleLeadAnime = async () => {
       tag_in: '["Female Protagonist", "Primarily Female Cast"]',
     },
     perPage: 20,
+    cacheTimeMills: 3600,
   }).then((e) => e.media);
 };
 
@@ -87,6 +99,7 @@ export const fetchFantasyThemedAnime = async () => {
     },
     customSorts: ["POPULARITY"],
     perPage: 20,
+    cacheTimeMills: 3600,
   }).then((e) => e.media);
 };
 
@@ -97,6 +110,7 @@ export const fetchMartialArtsAnime = async () => {
     },
     customSorts: ["SCORE_DESC"],
     perPage: 20,
+    cacheTimeMills: 3600,
   }).then((e) => e.media);
 };
 
@@ -108,14 +122,21 @@ export const fetchMysteryAnime = async () => {
     },
     customSorts: ["TRENDING"],
     perPage: 20,
+    cacheTimeMills: 3600,
   }).then((e) => e.media);
 };
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const fetchSpotLights = async () => {
-  const genres: ["fantasy", "action", "comedy", "fantasy", "action", "comedy"] =
-    ["fantasy", "action", "comedy", "fantasy", "action", "comedy"];
+  const genres: [
+    "fantasy",
+    "action",
+    "comedy",
+    "romance",
+    "adventure",
+    "ecchi"
+  ] = ["fantasy", "action", "comedy", "romance", "adventure", "ecchi"];
   const fetchedId: number[] = [];
   const spotlights = [];
 
@@ -128,6 +149,7 @@ export const fetchSpotLights = async () => {
       const anime = await getMedia({
         type: genre,
         customFilters: { id_not_in: fetchedId },
+        cacheTimeMills: attempts <= 2 ? 3600 : undefined,
       });
 
       if (anime?.id) {

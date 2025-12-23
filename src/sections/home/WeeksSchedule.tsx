@@ -8,7 +8,6 @@ const AiringSoonCard = ({
   imageSrc,
   name,
   epNumber,
-  airingTime,
   score,
   popularity,
 }: {
@@ -54,8 +53,6 @@ const AvailableNowCard = ({
   imageSrc,
   name,
   epNumber,
-  airingTime,
-  score,
   popularity,
   hasDub,
 }: {
