@@ -18,6 +18,13 @@ export const fetchFeaturedAnime: () => Promise<Media[]> = async () => {
     const featuredAnime = featuredAnimeArr.find((fa) => fa.id === anime.id);
     anime.bannerImage = `/customBanners/desktopBanners/${featuredAnime?.bannerPathname}.jpg`;
     anime.bannerImageMobile = `/customBanners/mobileBanners/${featuredAnime?.bannerPathname}.jpg`;
+    anime.featuredAnimeSort = featuredAnime?.featuredAnimeSort;
+  });
+
+  featuredAnime.sort((a, b) => {
+    const featuredAnimeSortA = a.featuredAnimeSort || 0;
+    const featuredAnimeSortB = b.featuredAnimeSort || 0;
+    return featuredAnimeSortA - featuredAnimeSortB;
   });
 
   return featuredAnime;

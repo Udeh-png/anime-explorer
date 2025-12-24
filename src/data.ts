@@ -13,23 +13,34 @@ export const streamingPlatforms = [
 
 export const featuredAnime = [
   {
+    id: 108928,
+    featuredAnimeSort: 0,
+    title: "Seven Deadly Sins",
+    bannerPathname: "seven_deadly_sins-banner",
+  },
+  {
     id: 178025,
+    featuredAnimeSort: 1,
     title: "Gachiakuta",
     bannerPathname: "gachiakuta-banner",
   },
   {
     id: 153800,
+    featuredAnimeSort: 2,
     title: "One Punch Man",
     bannerPathname: "one_punch_man-banner",
   },
   {
     id: 177937,
+    featuredAnimeSort: 3,
     title: "Spy x Family",
     bannerPathname: "spy_x_family-banner",
   },
 ];
 
-export const featuredId = featuredAnime.map((anime) => anime.id);
+export const featuredId = featuredAnime.map((anime) => {
+  return anime.id;
+});
 
 // const tags = {
 //   MediaTagCollection: [

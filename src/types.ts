@@ -56,6 +56,7 @@ export type Media = {
   season: string;
   description: string;
   isAdult: boolean;
+  featuredAnimeSort?: number;
   status:
     | "FINISHED"
     | "HIATUS"
