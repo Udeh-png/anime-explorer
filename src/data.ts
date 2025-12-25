@@ -13,7 +13,7 @@ export const streamingPlatforms = [
 
 export const featuredAnime = [
   {
-    id: 108928,
+    id: 99539,
     featuredAnimeSort: 0,
     title: "Seven Deadly Sins",
     bannerPathname: "seven_deadly_sins-banner",

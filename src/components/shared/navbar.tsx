@@ -6,7 +6,7 @@ import { MdAccountCircle } from "react-icons/md";
 
 export function Navbar() {
   return (
-    <div className="fixed w-full top-0 z-100">
+    <div className="sticky w-full top-0 z-100">
       <div className="h-14 w-full backdrop-blur-xs backdrop-brightness-75 flex items-center px-4 justify-between text-white/80">
         <div className="flex md:gap-x-1 gap-x-7 items-center">
           <BiMenu className="md:hidden block text-3xl" />

@@ -56,7 +56,7 @@ export const HeroSliderContent = ({ media }: { media: Media }) => {
       </div>
 
       <div className="flex flex-col 3md:items-start items-center relative 3md:gap-y-2 gap-y-2.5">
-        <p className="font-bold lg:text-7xl! 3md:text-6xl 2md:text-4xl text-3xl 3md:line-clamp-1 line-clamp-2 3md:mb-2 mb-1 text-center md:text-left md:max-w-full max-w-2xs">
+        <p className="font-bold lg:text-7xl! 3md:text-6xl 2md:text-4xl text-3xl 3md:line-clamp-1 line-clamp-2 3md:mb-2 mb-1 3md:text-left text-center">
           {title}
         </p>
         <div className="text-xs text-white/60 font-light flex items-center space-x-2 mb-3 md:max-w-md max-w-2xs pr-1">
