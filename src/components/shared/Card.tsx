@@ -48,12 +48,14 @@ export const Card = ({ media }: { media: Media }) => {
           <p className="font-semibold line-clamp-3">{title}</p>
           <div className="flex justify-between text-white/50 font-light">
             <p>{hasDub ? "Sub | Dub" : "Subtitle"}</p>
-            <div className="flex items-center gap-x-1">
-              <p>{score}</p>
-              <p className="text-yellow-500 pb-0.5">
-                <FaStar />
-              </p>
-            </div>
+            {Number(score) > 0 && (
+              <div className="flex items-center gap-x-1">
+                <p>{score}</p>
+                <p className="text-yellow-500 pb-0.5">
+                  <FaStar />
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </Link>
